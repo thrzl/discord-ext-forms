@@ -4,8 +4,9 @@ with open('README.md', 'r') as file:
     long_description = file.read()
 
 setuptools.setup(
-        name='discord.ext.forms',
+        name='discord-ext-forms',
         version='1.5.1',
+        packages=["discord.ext.forms"],
         author='Mikey B',
         author_email='mikey@mikeyo.ml',
         license='MIT',
