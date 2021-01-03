@@ -4,10 +4,10 @@ forms package
 Submodules
 ----------
 
-forms.form module
------------------
+forms.forms module
+------------------
 
-.. automodule:: forms.form
+.. automodule:: forms.forms
    :members:
    :undoc-members:
    :show-inheritance:
