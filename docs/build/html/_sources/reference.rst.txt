@@ -1,11 +1,10 @@
-Text Forms
-==========
+forms Module
+============
 
-.. automodule:: discord.ext.forms
-    :members:
-    :undoc-members:
-    :show-inheritance:
+.. toctree::
+    :maxdepth: 2
 
+    forms
 .. .. class:: Form(ctx:discord.ext.commands.Context,title:str)
 ..
     The base form object. It will eventually

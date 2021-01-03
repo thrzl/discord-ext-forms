@@ -23,8 +23,8 @@ class Form(object):
     def set_timeout(self,timeout:int) -> None:
         """Sets the timeout for the form.
 
-        Args:
-        -----
+        Parameters
+        ----------
 
             timeout (int): The timeout to be used.
         """        
@@ -53,7 +53,7 @@ class Form(object):
             Is raised when the input validation type is invalid.
 
         """
-                
+
         dictionary = {'question':question}
         if qtype:
             if qtype.lower() == 'invite':
@@ -69,7 +69,18 @@ class Form(object):
         return self._questions
 
     def edit_and_delete(self,choice:bool=None) -> bool:
-        """Set's whether the bot should edit the prompt and delete the input messages. """
+        """Toggles the edit and delete feature.
+
+        Parameters
+        ----------
+        choice : bool, optional
+            Whether you want the bot to edit the prompt and delete the input or not. If none, it toggles. The default for edit and delete is off. Default input is `None`
+
+        Returns
+        -------
+        bool
+            The state of edit and delete (after this is completed)
+        """
         if choice == None:
             if self.editanddelete == True:
                 self.editanddelete = False
@@ -81,7 +92,18 @@ class Form(object):
             self.editanddelete = choice
 
     async def set_color(self,color:discord.Color) -> None:
-        """Sets the color of the form embeds."""
+        """Sets the color of the embed used for the form's embeds.
+
+        Parameters
+        ----------
+        color : discord.Color
+            The color to be used.
+
+        Raises
+        ------
+        InvalidColor
+            Is raised if the color is invalid or incorrect.
+        """
         try:
             color = await commands.ColorConverter().convert(self._ctx,color)
         except Exception as e:
@@ -89,7 +111,18 @@ class Form(object):
         self.color = color
 
     async def start(self,channel=None) -> List[dict]:
-        """Starts the form in the specified channel. If none is specified, the channel will be fetched from the `context` parameter of the form's initialization."""
+        """Starts the form in the current channel.
+
+        Parameters
+        ----------
+        channel : discord.TextChannel, optional
+            The channel to open the form in. If none, it is gotten from the context object set during initialization.
+
+        Returns
+        -------
+        List[dict]
+            [description]
+        """        
         elist = []
         answers = []
         if not channel:

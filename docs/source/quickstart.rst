@@ -1,5 +1,7 @@
+Quickstart Guide and Examples:
+==============================
 Making a Basic Text Form
-========================
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 ::
 
@@ -10,11 +12,15 @@ Making a Basic Text Form
     @bot.command()
     async def testform(ctx):
         """Creates a basic form using discord.ext.forms!"""
-        form = Form(ctx,'Title')
-        form.add_question('Question 1')
-        form.add_question('Question 2')
+        form = Form(ctx,'Title') # Let's initialize our Form object!
+
+        form.add_question('Question 1') # Adding question 'Question 1'
+        form.add_question('Question 2') # So on...
         form.add_question('Question 3')
-        result = await form.start()
+        result = await form.start() # Let's start the form in the context's channel!
+        """
+        Result is a list of dictionaries containing each question and its answer.
+        """
         return result
 
     >> [{'Question 1','user input'},{'Question 2','user input'},{'Question 3','user input'}].

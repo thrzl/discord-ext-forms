@@ -18,10 +18,10 @@ This module is meant to make creating forms and surveys in discord.py a whole lo
    quickstart
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: Reference
 
-   reference
+   forms.rst
 
 Indices and tables
 ==================

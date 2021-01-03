@@ -1,10 +1,10 @@
 <!doctype html>
 <html class="no-js">
   <head><meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1"/><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1"/><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="prev" title="Quickstart Guide and Examples:" href="quickstart.html" />
 
     <meta name="generator" content="sphinx-3.4.1, furo 2020.12.30.beta24"/>
-        <title>forms package - discord-ext-forms 1.0.0 documentation</title>
+        <title>Submodules - discord-ext-forms 1.0.0 documentation</title>
       <link rel="stylesheet" href="_static/styles/furo.css?digest=33d2fc4f3f180ec1ffc6524e273e21d7d58cbe49">
     <link rel="stylesheet" href="_static/pygments.css">
     <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="_static/pygments_dark.css">
@@ -117,12 +117,15 @@
 </form><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption"><span class="caption-text">Quickstart Guide</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Making a Basic Text Form</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart Guide and Examples:</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html#making-a-basic-reaction-form">Making a Basic Reaction Form</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Reference</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="reference.html">Text Forms</a></li>
+<ul class="current">
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Submodules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#module-discord.ext.forms.forms">forms.forms module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#module-discord.ext.forms.reactions">forms.reactions module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#module-discord.ext.forms">Module contents</a></li>
 </ul>
 
 </div>
@@ -137,20 +140,127 @@
         <label class="toc-overlay-icon toc-content-icon" for="__toc">
           <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
         </label>
-        <div class="section" id="forms-package">
-<h1>forms package<a class="headerlink" href="#forms-package" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+        <div class="section" id="submodules">
+<h1>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h1>
 </div>
-<div class="section" id="forms-form-module">
-<h2>forms.form module<a class="headerlink" href="#forms-form-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-discord.ext.forms.forms">
+<span id="forms-forms-module"></span><h1>forms.forms module<a class="headerlink" href="#module-discord.ext.forms.forms" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="discord.ext.forms.forms.Form">
+<em class="property">class </em><code class="sig-prename descclassname">discord.ext.forms.forms.</code><code class="sig-name descname">Form</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ctx</span><span class="p">:</span> <span class="n">discord.ext.commands.context.Context</span></em>, <em class="sig-param"><span class="n">title</span></em><span class="sig-paren">)</span><a class="headerlink" href="#discord.ext.forms.forms.Form" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The basic form object.</p>
+<blockquote>
+<div><p>ctx (discord.ext.commands.Context): The context of the form.</p>
+<p>title (str): The title of the form.</p>
+</div></blockquote>
+<dl class="py method">
+<dt id="discord.ext.forms.forms.Form.add_question">
+<code class="sig-name descname">add_question</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">question</span></em>, <em class="sig-param"><span class="n">qtype</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span> → List<span class="p">[</span>dict<span class="p">]</span><a class="headerlink" href="#discord.ext.forms.forms.Form.add_question" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a question to the form.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>question</strong> (<em>str</em>) – The question as a string that should be added.</p></li>
+<li><p><strong>qtype</strong> (<em>str</em><em>, </em><em>optional</em>) – The input validation to be used (incomplete), by default None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of all of the questions, stored as dictionaries.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List[dict]</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="#discord.ext.forms.forms.InvalidFormType" title="discord.ext.forms.forms.InvalidFormType"><strong>InvalidFormType</strong></a> – Is raised when the input validation type is invalid.</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="discord.ext.forms.forms.Form.edit_and_delete">
+<code class="sig-name descname">edit_and_delete</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">choice</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>bool<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> → bool<a class="headerlink" href="#discord.ext.forms.forms.Form.edit_and_delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set’s whether the bot should edit the prompt and delete the input messages.</p>
+</dd></dl>
+<dl class="py method">
+<dt id="discord.ext.forms.forms.Form.set_color">
+<em class="property">async </em><code class="sig-name descname">set_color</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">color</span><span class="p">:</span> <span class="n">discord.colour.Colour</span></em><span class="sig-paren">)</span> → None<a class="headerlink" href="#discord.ext.forms.forms.Form.set_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the color of the form embeds.</p>
+</dd></dl>
+<dl class="py method">
+<dt id="discord.ext.forms.forms.Form.set_timeout">
+<code class="sig-name descname">set_timeout</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">timeout</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> → None<a class="headerlink" href="#discord.ext.forms.forms.Form.set_timeout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the timeout for the form.</p>
+<blockquote>
+<div><p>timeout (int): The timeout to be used.</p>
+</div></blockquote>
+</dd></dl>
+<dl class="py method">
+<dt id="discord.ext.forms.forms.Form.start">
+<em class="property">async </em><code class="sig-name descname">start</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">channel</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span> → List<span class="p">[</span>dict<span class="p">]</span><a class="headerlink" href="#discord.ext.forms.forms.Form.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts the form in the specified channel. If none is specified, the channel will be fetched from the <cite>context</cite> parameter of the form’s initialization.</p>
+</dd></dl>
+</dd></dl>
+<dl class="py exception">
+<dt id="discord.ext.forms.forms.InvalidColor">
+<em class="property">exception </em><code class="sig-prename descclassname">discord.ext.forms.forms.</code><code class="sig-name descname">InvalidColor</code><a class="headerlink" href="#discord.ext.forms.forms.InvalidColor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>The exception raised when the color type is invalid.</p>
+</dd></dl>
+<dl class="py exception">
+<dt id="discord.ext.forms.forms.InvalidFormType">
+<em class="property">exception </em><code class="sig-prename descclassname">discord.ext.forms.forms.</code><code class="sig-name descname">InvalidFormType</code><a class="headerlink" href="#discord.ext.forms.forms.InvalidFormType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>The exception raised when a form type is invalid.</p>
+</dd></dl>
 </div>
-<div class="section" id="forms-reactions-module">
-<h2>forms.reactions module<a class="headerlink" href="#forms-reactions-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-discord.ext.forms.reactions">
+<span id="forms-reactions-module"></span><h1>forms.reactions module<a class="headerlink" href="#module-discord.ext.forms.reactions" title="Permalink to this headline">¶</a></h1>
+<dl class="py exception">
+<dt id="discord.ext.forms.reactions.InvalidColor">
+<em class="property">exception </em><code class="sig-prename descclassname">discord.ext.forms.reactions.</code><code class="sig-name descname">InvalidColor</code><a class="headerlink" href="#discord.ext.forms.reactions.InvalidColor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+</dd></dl>
+<dl class="py class">
+<dt id="discord.ext.forms.reactions.ReactionForm">
+<em class="property">class </em><code class="sig-prename descclassname">discord.ext.forms.reactions.</code><code class="sig-name descname">ReactionForm</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">message</span><span class="p">:</span> <span class="n">discord.message.Message</span></em>, <em class="sig-param"><span class="n">bot</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>discord.client.Client<span class="p">, </span>discord.ext.commands.bot.Bot<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">user</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>Union<span class="p">[</span>discord.member.Member<span class="p">, </span>discord.user.User<span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#discord.ext.forms.reactions.ReactionForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The Reaction input object.</p>
+<p>…</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> (<em>discord.Message</em>) – The message of the reaction form object.</p></li>
+<li><p><strong>bot</strong> (<em>typing.Union</em><em>[</em><em>discord.CLient</em><em>, </em><em>discord.ext.commands.Bot</em><em>]</em>) – The bot being used for the form.</p></li>
+<li><p><strong>user</strong> (<em>typing.Union</em><em>[</em><em>discord.Member</em><em>, </em><em>discord.User</em><em>]</em>) – The member or user who should be able to use the form. If none, the form will be open to anyone.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="discord.ext.forms.reactions.ReactionForm.add_reaction">
+<code class="sig-name descname">add_reaction</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">reaction</span><span class="p">:</span> <span class="n">discord.emoji.Emoji</span></em>, <em class="sig-param"><span class="n">result</span></em><span class="sig-paren">)</span> → dict<a class="headerlink" href="#discord.ext.forms.reactions.ReactionForm.add_reaction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a question to the form.</p>
+<p>Returns the full list of questions the form has, including the newly added one. The questions are held
+in dictionaries containing the <cite>question</cite> and optionally <cite>type</cite> keys. The <cite>question</cite> key contains the
+question as a string, and the <cite>type</cite> key contains the input validation (if any is specified)</p>
+</dd></dl>
+<dl class="py method">
+<dt id="discord.ext.forms.reactions.ReactionForm.set_color">
+<em class="property">async </em><code class="sig-name descname">set_color</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">color</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> → None<a class="headerlink" href="#discord.ext.forms.reactions.ReactionForm.set_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the color of the form embeds.</p>
+</dd></dl>
+<dl class="py method">
+<dt id="discord.ext.forms.reactions.ReactionForm.set_timeout">
+<code class="sig-name descname">set_timeout</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">timeout</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> → None<a class="headerlink" href="#discord.ext.forms.reactions.ReactionForm.set_timeout" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py method">
+<dt id="discord.ext.forms.reactions.ReactionForm.start">
+<em class="property">async </em><code class="sig-name descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span> → dict<a class="headerlink" href="#discord.ext.forms.reactions.ReactionForm.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts the form in the specified channel. If none is specified, the channel will be fetched from the <cite>context</cite> parameter of the form’s initialization.</p>
+</dd></dl>
+</dd></dl>
 </div>
-<div class="section" id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
-</div>
+<div class="section" id="module-discord.ext.forms">
+<span id="module-contents"></span><h1>Module contents<a class="headerlink" href="#module-discord.ext.forms" title="Permalink to this headline">¶</a></h1>
 </div>
 
       </article>
@@ -158,7 +268,17 @@
         
         <div class="related-pages">
           
-          
+          <a class="prev-page" href="quickstart.html">
+              <svg><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Quickstart Guide and Examples:</div>
+                
+              </div>
+            </a>
         </div>
 
         <div class="related-information">
@@ -189,13 +309,10 @@
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">forms package</a><ul>
-<li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#forms-form-module">forms.form module</a></li>
-<li><a class="reference internal" href="#forms-reactions-module">forms.reactions module</a></li>
-<li><a class="reference internal" href="#module-contents">Module contents</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#">Submodules</a></li>
+<li><a class="reference internal" href="#module-discord.ext.forms.forms">forms.forms module</a></li>
+<li><a class="reference internal" href="#module-discord.ext.forms.reactions">forms.reactions module</a></li>
+<li><a class="reference internal" href="#module-discord.ext.forms">Module contents</a></li>
 </ul>
 
           </div>

@@ -1,7 +1,6 @@
-forms
-=====
+discord
+=======
 
 .. toctree::
    :maxdepth: 4
 
-   forms
