@@ -1,5 +1,8 @@
 # discord-ext-forms
 ### An easier way to make forms and surveys in discord.​py.
+![Lines of code](https://img.shields.io/tokei/lines/github/isigebengu-mikey/discord-ext-forms)
+![Downloads](https://img.shields.io/github/downloads/isigebengu-mikey/discord-ext-forms/total)
+
 This module is a very simple way to ask questions and create complete forms in discord.py without using an entire 30 lines!
 
 ## Example:
