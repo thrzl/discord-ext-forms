@@ -2,6 +2,7 @@ import typing
 from discord.ext import commands
 import discord
 from typing import List
+import asyncio
 import re
 class ReactionForm(object): # I don't like subclassing shut up
     """
@@ -12,16 +13,21 @@ class ReactionForm(object): # I don't like subclassing shut up
     Parameters
     ----------
     message : discord.Message
-        The context of the form object. If it is none, the `channel` attribute is required in the `start` method.
+        The message of the reaction form object.
 
     bot : typing.Union[discord.CLient, discord.ext.commands.Bot]
         The bot being used for the form.
+
+    user : typing.Union[discord.Member, discord.User]
+        The member or user who should be able to use the form. If none, the form will be open to anyone.
     """
-    def __init__(self, message:discord.Message, bot: typing.Union[discord.Client, commands.Bot]):
+    def __init__(self, message:discord.Message, bot: typing.Union[discord.Client, commands.Bot],user:typing.Union[discord.Member, discord.User]=None):
         self._msg = message
         self._bot = bot
         self._reactions = {}
         self.timeout = 120
+        self.persist = False
+        self._user = user
 
     def set_timeout(self,timeout:int) -> None:
         self.timeout = timeout
@@ -36,45 +42,41 @@ class ReactionForm(object): # I don't like subclassing shut up
         self._reactions[reaction] = result
         return self._reactions
 
-    async def set_color(self,color) -> None:
+    async def set_color(self,color:str) -> None:
         """Sets the color of the form embeds."""
-        match = re.search(r'^#(?:[0-9a-fA-F]{3}){1,2}$', str)
+        match = re.search(r'0x(\d|f){6}', str)
         if not match:
-            raise InvalidColor("")
+            raise InvalidColor(f"{color} is invalid. Be sure to use colors such as '0xffffff'")
         self._color = color
 
-    async def start(self,channel=None) -> List[dict]:
+    async def start(self) -> dict:
         """Starts the form in the specified channel. If none is specified, the channel will be fetched from the `context` parameter of the form's initialization."""
-        elist = []
-        answers = []
-        if not channel:
-            channel = self._ctx.channel
-        for q in self._questions:
-            embed=discord.Embed(description=q['question'])
-            embed.set_author(name=f"{self.title}: {self._questions.index(q)+1}/{len(self._questions)}",icon_url=self._bot.user.avatar_url)
-            if self._color:
-                embed.color=self._color
-            elist.append(embed)
-        prompt = None
-        for embed in elist:
-            if self.editanddelete:
-                if not prompt:
-                    prompt = await self._ctx.channel.send(embed=embed)
-                else:
-                    await prompt.edit(embed=embed)
+        message = self._msg
+        rl = []
+        for i in self._reactions.keys():
+            await message.add_reaction(str(i))
+            rl.append(str(i))
+
+        await asyncio.sleep(0.5)
+        for i in message.reactions:
+            rl.append(str(i.emoji))
+
+        def check(r):
+            if self._user is not None:
+                print("There was a user")
+                print(r.message_id == message.id)
+                print(str(r.emoji) in rl)
+                print(r.user_id == self._user.id)
+                return r.message_id == message.id and str(r.emoji) in rl and r.user_id == self._user.id
             else:
-                prompt = await self._ctx.channel.send(embed=embed)
-            def check(m):
-                return m.channel == prompt.channel and m.author == self._ctx.author
-            question = [x for x in self._questions if x['question'] == embed.description]
-            question = question[0]
-            msg = await self._bot.wait_for('message',check=check,timeout=self.timeout)
-            question['answer'] = msg.content
-            self._questions[self._questions.index(question)] = question
-            if 'type' in question.keys(): # TODO: Add input validation
-                #if question['type'] == 'invite'
-                pass
-        return self._questions
+                print("There was no user")
+                return r.message_id == message.id and str(r.emoji) in rl
+
+        try:
+            r = await self._bot.wait_for('raw_reaction_add',check=check,timeout=self.timeout)
+        except:
+            return await message.edit("Timeout!")
+        return self._reactions[str(r.emoji)]
 
 class InvalidColor(Exception):
     pass
