@@ -1,0 +1,18 @@
+discord.ext package
+===================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   discord.ext.forms
+
+Module contents
+---------------
+
+.. automodule:: discord.ext
+   :members:
+   :undoc-members:
+   :show-inheritance:

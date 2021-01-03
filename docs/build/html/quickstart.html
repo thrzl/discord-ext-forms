@@ -1,10 +1,10 @@
 <!doctype html>
 <html class="no-js">
   <head><meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1"/><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="prev" title="Welcome to discord-ext-forms’s documentation!" href="index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1"/><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Text Forms" href="reference.html" /><link rel="prev" title="Welcome to discord.ext.forms’s docs!" href="index.html" />
 
     <meta name="generator" content="sphinx-3.4.1, furo 2020.12.30.beta24"/>
-        <title>Quickstart - discord-ext-forms 1.0.0 documentation</title>
+        <title>Making a Basic Text Form - discord-ext-forms 1.0.0 documentation</title>
       <link rel="stylesheet" href="_static/styles/furo.css?digest=33d2fc4f3f180ec1ffc6524e273e21d7d58cbe49">
     <link rel="stylesheet" href="_static/pygments.css">
     <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="_static/pygments_dark.css">
@@ -21,6 +21,8 @@
     :root {
       --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #7289DA;
+  --color-brand-content: #7289DA;
   
     }
   }
@@ -34,6 +36,8 @@
   .override-dark {
     --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #7289DA;
+  --color-brand-content: #7289DA;
   
   }
 </style><link rel="stylesheet" href="_static/styles/furo-extensions.css?digest=26485485040e7aaf717c13fd0188a5ad2c2deb60">
@@ -111,8 +115,14 @@
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
 </form><div class="sidebar-scroll"><div class="sidebar-tree">
-  <ul class="current">
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Quickstart</a></li>
+  <p class="caption"><span class="caption-text">Quickstart Guide</span></p>
+<ul class="current">
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Making a Basic Text Form</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#making-a-basic-reaction-form">Making a Basic Reaction Form</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">Text Forms</a></li>
 </ul>
 
 </div>
@@ -127,10 +137,8 @@
         <label class="toc-overlay-icon toc-content-icon" for="__toc">
           <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
         </label>
-        <div class="section" id="quickstart">
-<h1>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="making-a-basic-text-form">
-<h2>Making a Basic Text Form<a class="headerlink" href="#making-a-basic-text-form" title="Permalink to this headline">¶</a></h2>
+        <div class="section" id="making-a-basic-text-form">
+<h1>Making a Basic Text Form<a class="headerlink" href="#making-a-basic-text-form" title="Permalink to this headline">¶</a></h1>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">discord.ext.forms</span> <span class="kn">import</span> <span class="n">Form</span>
 <span class="kn">from</span> <span class="nn">discord.ext</span> <span class="kn">import</span> <span class="n">commands</span>
 <span class="n">bot</span> <span class="o">=</span> <span class="n">commands</span><span class="o">.</span><span class="n">Bot</span><span class="p">(</span><span class="n">command_prefix</span><span class="o">=</span><span class="s2">"!"</span><span class="p">)</span>
@@ -151,13 +159,35 @@
 <p>This results in a form with 3 questions, as shown below (The output is not sent to the channel in the code above):</p>
 <img alt="https://mikey.has-no-bra.in/eWrLkN.gif" src="https://mikey.has-no-bra.in/eWrLkN.gif"/>
 </div>
+<div class="section" id="making-a-basic-reaction-form">
+<h1>Making a Basic Reaction Form<a class="headerlink" href="#making-a-basic-reaction-form" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@bot</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">reactionform</span><span class="p">(</span><span class="n">ctx</span><span class="p">):</span>
+    <span class="n">embed</span><span class="o">=</span><span class="n">discord</span><span class="o">.</span><span class="n">Embed</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">"Reaction Menu Test"</span><span class="p">,</span><span class="n">description</span><span class="o">=</span><span class="s2">"Delete 20 messages?"</span><span class="p">)</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">embed</span><span class="o">=</span><span class="n">embed</span><span class="p">)</span>
+    <span class="n">form</span> <span class="o">=</span> <span class="n">ReactionForm</span><span class="p">(</span><span class="n">message</span><span class="p">,</span><span class="n">bot</span><span class="p">,</span><span class="n">ctx</span><span class="o">.</span><span class="n">author</span><span class="p">)</span>
+    <span class="n">form</span><span class="o">.</span><span class="n">add_reaction</span><span class="p">(</span><span class="s2">"✅"</span><span class="p">,</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">form</span><span class="o">.</span><span class="n">add_reaction</span><span class="p">(</span><span class="s2">"❌"</span><span class="p">,</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">choice</span> <span class="o">=</span> <span class="k">await</span> <span class="n">form</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">choice</span><span class="p">:</span>
+        <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">purge</span><span class="p">(</span><span class="n">limit</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
 </div>
 
       </article>
       <footer>
         
         <div class="related-pages">
-          
+          <a class="next-page" href="reference.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Text Forms</div>
+              </div>
+              <svg><use href="#svg-arrow-right"></use></svg>
+            </a>
           <a class="prev-page" href="index.html">
               <svg><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
@@ -199,10 +229,8 @@
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">Quickstart</a><ul>
-<li><a class="reference internal" href="#making-a-basic-text-form">Making a Basic Text Form</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#">Making a Basic Text Form</a></li>
+<li><a class="reference internal" href="#making-a-basic-reaction-form">Making a Basic Reaction Form</a></li>
 </ul>
 
           </div>

@@ -2,19 +2,14 @@ import discord
 from discord.ext import commands
 from typing import List
 class Form(object):
-    """
-    The base form object.
+    """The basic form object.
 
-    ...
+    Parameters:
+    -----------
 
-    Parameters
-    ----------
-    ctx : discord.Context
-        The context of the form object. If it is none, the `channel` attribute is required in the `start` method.
+        ctx (discord.ext.commands.Context): The context of the form.
 
-    title : str
-        The title of the form.
-
+        title (str): The title of the form.
     """
     def __init__(self, ctx:commands.Context, title):
         self._ctx = ctx
@@ -26,15 +21,39 @@ class Form(object):
         self.color = None
 
     def set_timeout(self,timeout:int) -> None:
+        """Sets the timeout for the form.
+
+        Args:
+        -----
+
+            timeout (int): The timeout to be used.
+        """        
         self.timeout = timeout
 
     def add_question(self,question,qtype=None) -> List[dict]:
         """Adds a question to the form.
 
-        Returns the full list of questions the form has, including the newly added one. The questions are held
-        in dictionaries containing the `question` and optionally `type` keys. The `question` key contains the
-        question as a string, and the `type` key contains the input validation (if any is specified)
+        Parameters
+        ----------
+        question : str
+            The question as a string that should be added.
+
+        qtype : str, optional
+            The input validation to be used (incomplete), by default None
+
+        Returns
+        -------
+        List[dict]
+            A list of all of the questions, stored as dictionaries.
+
+        Raises
+        ------
+        InvalidFormType
+
+            Is raised when the input validation type is invalid.
+
         """
+                
         dictionary = {'question':question}
         if qtype:
             if qtype.lower() == 'invite':

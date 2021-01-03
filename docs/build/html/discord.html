@@ -1,10 +1,10 @@
 <!doctype html>
 <html class="no-js">
   <head><meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1"/><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Making a Basic Text Form" href="quickstart.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1"/><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" />
 
     <meta name="generator" content="sphinx-3.4.1, furo 2020.12.30.beta24"/>
-        <title>Home - discord-ext-forms 1.0.0 documentation</title>
+        <title>discord package - discord-ext-forms 1.0.0 documentation</title>
       <link rel="stylesheet" href="_static/styles/furo.css?digest=33d2fc4f3f180ec1ffc6524e273e21d7d58cbe49">
     <link rel="stylesheet" href="_static/pygments.css">
     <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="_static/pygments_dark.css">
@@ -94,7 +94,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="#"><div class="brand">discord-ext-forms 1.0.0 documentation</div></a>
+      <a href="index.html"><div class="brand">discord-ext-forms 1.0.0 documentation</div></a>
     </div>
     <div class="header-right">
       <label class="toc-overlay-icon toc-header-icon" for="__toc">
@@ -105,7 +105,7 @@
   <aside class="sidebar-drawer">
     <div class="sidebar-container">
       
-      <div class="sidebar-sticky"><a class="sidebar-brand" href="#">
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
   
   
   <span class="sidebar-brand-text">discord-ext-forms 1.0.0 documentation</span>
@@ -137,48 +137,83 @@
         <label class="toc-overlay-icon toc-content-icon" for="__toc">
           <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
         </label>
-        <div class="section" id="welcome-to-discord-ext-forms-s-docs">
-<h1>Welcome to discord.ext.forms’s docs!<a class="headerlink" href="#welcome-to-discord-ext-forms-s-docs" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="guide">
-<h2>Guide<a class="headerlink" href="#guide" title="Permalink to this headline">¶</a></h2>
-<p>This module is meant to make creating forms and surveys in discord.py a whole lot easier. It allows you to use simply 5 lines to create a 3 question form!</p>
+        <div class="section" id="discord-package">
+<h1>discord package<a class="headerlink" href="#discord-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Quickstart Guide</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Making a Basic Text Form</a></li>
-<li class="toctree-l1"><a class="reference internal" href="quickstart.html#making-a-basic-reaction-form">Making a Basic Reaction Form</a></li>
+<li class="toctree-l1"><a class="reference internal" href="discord.ext.html">discord.ext package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="discord.ext.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="discord.ext.forms.html">discord.ext.forms package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="discord.ext.forms.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="discord.ext.forms.html#discord-ext-forms-form-module">discord.ext.forms.form module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="discord.ext.forms.html#discord-ext-forms-reactions-module">discord.ext.forms.reactions module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="discord.ext.forms.html#module-contents">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="discord.ext.html#module-discord.ext">Module contents</a></li>
+</ul>
+</li>
 </ul>
 </div>
-<div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Reference</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="reference.html">Text Forms</a></li>
-</ul>
+</div>
+<div class="section" id="module-discord">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-discord" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="discord-api-wrapper">
+<h3>Discord API Wrapper<a class="headerlink" href="#discord-api-wrapper" title="Permalink to this headline">¶</a></h3>
+<p>A basic wrapper for the Discord API.</p>
+<dl class="field-list simple">
+<dt class="field-odd">copyright</dt>
+<dd class="field-odd"><ol class="loweralpha simple" start="3">
+<li><p>2015-2020 Rapptz</p></li>
+</ol>
+</dd>
+<dt class="field-even">license</dt>
+<dd class="field-even"><p>MIT, see LICENSE for more details.</p>
+</dd>
+</dl>
+<dl class="py class">
+<dt id="discord.VersionInfo">
+<em class="property">class </em><code class="sig-prename descclassname">discord.</code><code class="sig-name descname">VersionInfo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">major</span></em>, <em class="sig-param"><span class="n">minor</span></em>, <em class="sig-param"><span class="n">micro</span></em>, <em class="sig-param"><span class="n">releaselevel</span></em>, <em class="sig-param"><span class="n">serial</span></em><span class="sig-paren">)</span><a class="headerlink" href="#discord.VersionInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+<dl class="py attribute">
+<dt id="discord.VersionInfo.major">
+<code class="sig-name descname">major</code><a class="headerlink" href="#discord.VersionInfo.major" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+<dl class="py attribute">
+<dt id="discord.VersionInfo.micro">
+<code class="sig-name descname">micro</code><a class="headerlink" href="#discord.VersionInfo.micro" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 2</p>
+</dd></dl>
+<dl class="py attribute">
+<dt id="discord.VersionInfo.minor">
+<code class="sig-name descname">minor</code><a class="headerlink" href="#discord.VersionInfo.minor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+<dl class="py attribute">
+<dt id="discord.VersionInfo.releaselevel">
+<code class="sig-name descname">releaselevel</code><a class="headerlink" href="#discord.VersionInfo.releaselevel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 3</p>
+</dd></dl>
+<dl class="py attribute">
+<dt id="discord.VersionInfo.serial">
+<code class="sig-name descname">serial</code><a class="headerlink" href="#discord.VersionInfo.serial" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 4</p>
+</dd></dl>
+</dd></dl>
 </div>
 </div>
-</div>
-<div class="section" id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
-<ul class="simple">
-<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
-<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
-<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
-</ul>
 </div>
 
       </article>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="quickstart.html">
-              <div class="page-info">
-                <div class="context">
-                  <span>Next</span>
-                </div>
-                <div class="title">Making a Basic Text Form</div>
-              </div>
-              <svg><use href="#svg-arrow-right"></use></svg>
-            </a>
+          
           
         </div>
 
@@ -190,7 +225,7 @@
               <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
               <a href="https://github.com/pradyunsg/furo">Furo theme</a>.
             |
-            <a class="muted-link" href="_sources/index.rst.txt"
+            <a class="muted-link" href="_sources/discord.rst.txt"
                rel="nofollow">
               Show Source
             </a>
@@ -210,13 +245,14 @@
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">Welcome to discord.ext.forms’s docs!</a><ul>
-<li><a class="reference internal" href="#guide">Guide</a><ul>
+<li><a class="reference internal" href="#">discord package</a><ul>
+<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li><a class="reference internal" href="#module-discord">Module contents</a><ul>
+<li><a class="reference internal" href="#discord-api-wrapper">Discord API Wrapper</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
 
           </div>

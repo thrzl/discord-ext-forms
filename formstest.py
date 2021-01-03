@@ -9,6 +9,7 @@ async def testform(ctx):
     form.add_question('Question 1')
     form.add_question('Question 2')
     form.add_question('Question 3')
+
     result = await form.start()
     await ctx.send(f"```py\n{result}\n```")
 
