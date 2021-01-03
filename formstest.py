@@ -24,4 +24,4 @@ async def reactionform(ctx):
     if choice:
         await ctx.channel.purge(limit=20)
 
-bot.run('NzkxMjkwMDg1MzU3MTI1NjMz.X-NAUQ.nrLp5XyU8fvxoBumNAngjTqksBo')
+bot.run('token')

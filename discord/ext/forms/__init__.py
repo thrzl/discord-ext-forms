@@ -1,2 +1,2 @@
-from .form import Form
+from .forms import Form
 from .reactions import ReactionForm

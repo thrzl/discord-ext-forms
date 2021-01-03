@@ -5,7 +5,7 @@ with open('README.md', 'r') as file:
 
 setuptools.setup(
         name='discord.ext.forms',
-        version='1.5.0',
+        version='1.5.1',
         author='Mikey B',
         author_email='mikey@mikeyo.ml',
         license='MIT',
