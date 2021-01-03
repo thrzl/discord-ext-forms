@@ -5,19 +5,12 @@
 
 Welcome to discord-ext-forms's documentation!
 =============================================
-.. Guide
-   ^^^^^
-
-Example.::
-
-   print("ya yeet")
-
-yeah
+Guide
+^^^^^
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
-   
+
    quickstart
 
 Indices and tables
