@@ -1,8 +1,5 @@
-Quickstart Guide and Examples:
-==============================
-
 Making a Basic Text Form
-^^^^^^^^^^^^^^^^^^^^^^^^
+========================
 
 ::
 
@@ -31,7 +28,7 @@ This results in a form with 3 questions, as shown below (The output is not sent 
 .. image:: https://mikey.has-no-bra.in/eWrLkN.gif
 
 Making a Basic Reaction Form
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+============================
 
 ::
 

@@ -13,7 +13,7 @@ This module is meant to make creating forms and surveys in discord.py a whole lo
 
 .. toctree::
    :maxdepth: 2
-   :caption: Quickstart Guide
+   :caption: Usage
 
    quickstart
 
