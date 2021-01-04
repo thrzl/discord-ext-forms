@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 from typing import List
+
 class Form(object):
     """The basic form object.
 
