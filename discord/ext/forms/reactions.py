@@ -63,13 +63,8 @@ class ReactionForm(object): # I don't like subclassing shut up
 
         def check(r):
             if self._user is not None:
-                print("There was a user")
-                print(r.message_id == message.id)
-                print(str(r.emoji) in rl)
-                print(r.user_id == self._user.id)
                 return r.message_id == message.id and str(r.emoji) in rl and r.user_id == self._user.id
             else:
-                print("There was no user")
                 return r.message_id == message.id and str(r.emoji) in rl
 
         try:
