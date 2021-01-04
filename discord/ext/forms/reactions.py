@@ -108,6 +108,7 @@ class ReactionMenu(object):
 
 
     async def start(self, channel=None):
+        current = 0
         ctx = self._ctx
         embeds = self._embeds
         cemojis = self._mappings
@@ -131,18 +132,19 @@ class ReactionMenu(object):
                 return await msg.edit("Timeout!")
             if str(r.emoji) in emojis:
                 if str(r.emoji) == emojis[0]:
-                    emindex = embeds.index(msg.embeds[0])
-                    if emindex != 0:
-                        await msg.edit(embed=emindex-1)
+                    if current != 0:
+                        await msg.edit(embed=embeds[current-1])
+                        current = current-1
                 if str(r.emoji) == emojis[1]:
                     await msg.clear_reactions()
                     break
                 if str(r.emoji) == emojis[2]:
-                    emindex = embeds.index(msg.embeds[0])
-                    if emindex != 0:
-                        await msg.edit(embed=emindex+1)
+                    if current != 0:
+                        await msg.edit(embed=embeds[current+1])
+                        current += 1
             if str(r.emoji) in cemojis.keys():
                 await msg.edit(embed=embeds[cemojis[str(r.emoji)]]-1)
+                current = cemojis[str(r.emoji)]
             if self.removereaction:
                 await msg.remove_reaction(r.emoji,ctx.author)
 
