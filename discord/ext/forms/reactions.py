@@ -139,7 +139,7 @@ class ReactionMenu(object):
                     await msg.clear_reactions()
                     break
                 if str(r.emoji) == emojis[2]:
-                    if current != len(embeds):
+                    if current != len(embeds)-1:
                         await msg.edit(embed=embeds[current+1])
                         current += 1
             if str(r.emoji) in cemojis.keys():

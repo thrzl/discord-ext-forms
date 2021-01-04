@@ -4,10 +4,10 @@ forms package
 Submodules
 ----------
 
-forms.forms module
-------------------
+forms.form module
+-----------------
 
-.. automodule:: discord.ext.forms.forms
+.. automodule:: discord.ext.forms.form
    :members:
    :undoc-members:
    :show-inheritance:
