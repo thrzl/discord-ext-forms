@@ -1,1 +1,2 @@
 furo
+Sphinx==3.4.1
