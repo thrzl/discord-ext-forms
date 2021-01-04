@@ -33,4 +33,4 @@ async def reactionmenu(ctx):
     rmenu = forms.ReactionMenu(ctx,[embed1,embed2,embed3])
     await rmenu.start()
 
-bot.run('NzkxMjkwMDg1MzU3MTI1NjMz.X-NAUQ.ZycmgMWO56IegaE6fCdliUE5EVI')
+bot.run('token')
