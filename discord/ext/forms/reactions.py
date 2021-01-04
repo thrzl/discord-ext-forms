@@ -120,7 +120,7 @@ class ReactionMenu(object):
             if not ctx:
                 raise TypeError("start() missing 1 required positional argument: 'channel' or class 'ctx'")
             channel = ctx.channel
-        msg = await ctx.send(embeds[1])
+        msg = await ctx.send(embed=embeds[0])
         await msg.add_reaction("◀")
         await msg.add_reaction("⏹")
         await msg.add_reaction("▶")
