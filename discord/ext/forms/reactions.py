@@ -1,7 +1,6 @@
-import typing
 from discord.ext import commands
 import discord
-from typing import List
+from typing import List, Union
 import typing
 import asyncio
 import re
@@ -22,7 +21,7 @@ class ReactionForm(object): # I don't like subclassing shut up
     user : typing.Union[discord.Member, discord.User]
         The member or user who should be able to use the form. If none, the form will be open to anyone.
     """
-    def __init__(self, message:discord.Message, bot: typing.Union[discord.Client, commands.Bot],user:typing.Union[discord.Member, discord.User]=None):
+    def __init__(self, message:discord.Message, bot: Union[discord.Client, commands.Bot],user:Union[discord.Member, discord.User]=None):
         self._msg = message
         self._bot = bot
         self._reactions = {}
