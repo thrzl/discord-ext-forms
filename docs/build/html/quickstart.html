@@ -118,7 +118,6 @@
   <p class="caption"><span class="caption-text">Quickstart Guide</span></p>
 <ul class="current">
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Quickstart Guide and Examples:</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#making-a-basic-reaction-form">Making a Basic Reaction Form</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Reference</span></p>
 <ul>
@@ -168,20 +167,20 @@
 <p>This results in a form with 3 questions, as shown below (The output is not sent to the channel in the code above):</p>
 <img alt="https://mikey.has-no-bra.in/eWrLkN.gif" src="https://mikey.has-no-bra.in/eWrLkN.gif"/>
 </div>
-</div>
 <div class="section" id="making-a-basic-reaction-form">
-<h1>Making a Basic Reaction Form<a class="headerlink" href="#making-a-basic-reaction-form" title="Permalink to this headline">¶</a></h1>
+<h2>Making a Basic Reaction Form<a class="headerlink" href="#making-a-basic-reaction-form" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@bot</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
 <span class="k">async</span> <span class="k">def</span> <span class="nf">reactionform</span><span class="p">(</span><span class="n">ctx</span><span class="p">):</span>
-    <span class="n">embed</span><span class="o">=</span><span class="n">discord</span><span class="o">.</span><span class="n">Embed</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">"Reaction Menu Test"</span><span class="p">,</span><span class="n">description</span><span class="o">=</span><span class="s2">"Delete 20 messages?"</span><span class="p">)</span>
-    <span class="n">message</span> <span class="o">=</span> <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">embed</span><span class="o">=</span><span class="n">embed</span><span class="p">)</span>
-    <span class="n">form</span> <span class="o">=</span> <span class="n">ReactionForm</span><span class="p">(</span><span class="n">message</span><span class="p">,</span><span class="n">bot</span><span class="p">,</span><span class="n">ctx</span><span class="o">.</span><span class="n">author</span><span class="p">)</span>
-    <span class="n">form</span><span class="o">.</span><span class="n">add_reaction</span><span class="p">(</span><span class="s2">"✅"</span><span class="p">,</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">form</span><span class="o">.</span><span class="n">add_reaction</span><span class="p">(</span><span class="s2">"❌"</span><span class="p">,</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">choice</span> <span class="o">=</span> <span class="k">await</span> <span class="n">form</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">choice</span><span class="p">:</span>
-        <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">purge</span><span class="p">(</span><span class="n">limit</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">embed</span><span class="o">=</span><span class="n">discord</span><span class="o">.</span><span class="n">Embed</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">"Reaction Menu Test"</span><span class="p">,</span><span class="n">description</span><span class="o">=</span><span class="s2">"Delete 20 messages?"</span><span class="p">)</span> <span class="c1"># Let's make our embed here...</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">embed</span><span class="o">=</span><span class="n">embed</span><span class="p">)</span> <span class="c1"># And send it! But we want to capture it as a variable!</span>
+    <span class="n">form</span> <span class="o">=</span> <span class="n">ReactionForm</span><span class="p">(</span><span class="n">message</span><span class="p">,</span><span class="n">bot</span><span class="p">,</span><span class="n">ctx</span><span class="o">.</span><span class="n">author</span><span class="p">)</span> <span class="c1"># Initialize the reaction form...</span>
+    <span class="n">form</span><span class="o">.</span><span class="n">add_reaction</span><span class="p">(</span><span class="s2">"✅"</span><span class="p">,</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># Add the ✅ reaction which will return True.</span>
+    <span class="n">form</span><span class="o">.</span><span class="n">add_reaction</span><span class="p">(</span><span class="s2">"❌"</span><span class="p">,</span><span class="kc">False</span><span class="p">)</span> <span class="c1"># Add the ❌ reaction which will return False.</span>
+    <span class="n">choice</span> <span class="o">=</span> <span class="k">await</span> <span class="n">form</span><span class="o">.</span><span class="n">start</span><span class="p">()</span> <span class="c1"># Start the form! Choice will be True or False based on the input.</span>
+    <span class="k">if</span> <span class="n">choice</span><span class="p">:</span> <span class="c1"># If choice is true:</span>
+        <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">purge</span><span class="p">(</span><span class="n">limit</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span> <span class="c1"># delete 20 messages!</span>
 </pre></div>
+</div>
 </div>
 </div>
 
@@ -241,9 +240,9 @@
             <ul>
 <li><a class="reference internal" href="#">Quickstart Guide and Examples:</a><ul>
 <li><a class="reference internal" href="#making-a-basic-text-form">Making a Basic Text Form</a></li>
+<li><a class="reference internal" href="#making-a-basic-reaction-form">Making a Basic Reaction Form</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#making-a-basic-reaction-form">Making a Basic Reaction Form</a></li>
 </ul>
 
           </div>

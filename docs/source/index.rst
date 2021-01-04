@@ -21,7 +21,7 @@ This module is meant to make creating forms and surveys in discord.py a whole lo
    :maxdepth: 3
    :caption: Reference
 
-   forms.rst
+   forms
 
 Indices and tables
 ==================
