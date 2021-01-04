@@ -1,2 +1,2 @@
 furo
-Sphinx==3.4.1
+Sphinx==3.4.2
