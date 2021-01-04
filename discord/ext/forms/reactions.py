@@ -2,6 +2,7 @@ import typing
 from discord.ext import commands
 import discord
 from typing import List
+import typing
 import asyncio
 import re
 class ReactionForm(object): # I don't like subclassing shut up
