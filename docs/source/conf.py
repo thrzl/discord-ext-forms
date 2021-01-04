@@ -21,7 +21,7 @@ copyright = '2021, Mikey B'
 author = 'Mikey B'
 
 # The full version, including alpha/beta/rc tags
-release = '1.5.1'
+release = '2.0.0b'
 
 
 # -- General configuration ---------------------------------------------------
