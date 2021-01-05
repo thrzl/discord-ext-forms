@@ -15,7 +15,7 @@ class Form(object):
     def __init__(self, ctx:commands.Context, title):
         self._ctx = ctx
         self._bot = ctx.bot
-        self._questions = {}
+        self._questions = []
         self.title = title
         self.timeout = 120
         self.editanddelete = False
@@ -66,7 +66,7 @@ class Form(object):
             else:
                 raise InvalidFormType(f"Type '{qtype}' is invalid!")
             dictionary['type'] = qtype
-        self._questions[question] = None
+        self._questions.append(dictionary)
         return self._questions
 
     def edit_and_delete(self,choice:bool=None) -> bool:
@@ -128,8 +128,8 @@ class Form(object):
         answers = []
         if not channel:
             channel = self._ctx.channel
-        for q in self._questions.keys():
-            embed=discord.Embed(description=q)
+        for q in self._questions:
+            embed=discord.Embed(description=q['question'])
             embed.set_author(name=f"{self.title}: {self._questions.index(q)+1}/{len(self._questions)}",icon_url=self._bot.user.avatar_url)
             if self.color:
                 embed.color=self.color
@@ -148,8 +148,8 @@ class Form(object):
             question = [x for x in self._questions if x['question'] == embed.description]
             question = question[0]
             msg = await self._bot.wait_for('message',check=check,timeout=self.timeout)
-            ans = msg.content
-            self._questions[question] = ans
+            question['answer'] = msg.content
+            self._questions[self._questions.index(question)] = question
             if 'type' in question.keys(): # TODO: Add input validation
                 #if question['type'] == 'invite'
                 pass
