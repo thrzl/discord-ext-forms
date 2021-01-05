@@ -31,13 +31,16 @@ class Form(object):
         """        
         self.timeout = timeout
 
-    def add_question(self,question,qtype=None) -> List[dict]:
+    def add_question(self,question,key:str=None,qtype=None) -> List[dict]:
         """Adds a question to the form.
 
         Parameters
         ----------
         question : str
             The question as a string that should be added.
+
+        key : str, optional
+            The prefered key to be used. If none, defaults to the to the question. By default None.
 
         qtype : str, optional
             The input validation to be used (incomplete), by default None
@@ -54,20 +57,64 @@ class Form(object):
             Is raised when the input validation type is invalid.
 
         """
-
-        dictionary = {'question':question}
+        if not key:
+            key = question
+        valid_qtypes = ['invite','channel','user','member','role','category']
+        dictionary = {'res':None,'type':None}
         if qtype:
-            if qtype.lower() == 'invite':
-                pass
-            elif qtype.lower() == 'channel':
-                pass
-            elif qtype.lower() == 'user':
-                pass
-            else:
+            if qtype.lower() not in valid_qtypes:
                 raise InvalidFormType(f"Type '{qtype}' is invalid!")
+
             dictionary['type'] = qtype
-        self._questions[question] = None
+
+        self._questions[key] = None
         return self._questions
+
+    async def validate_input(self,qtype,answer):
+        if qtype.lower() == 'invite':
+            try:
+                await commands.InviteConverter.convert(self._ctx,answer)
+                return True
+            except:
+                return False
+        elif qtype.lower() == 'channel':
+            try:
+                await commands.TextChannelConverter.convert(self._ctx,answer)
+                return True
+            except:
+                return False
+        elif qtype.lower() == 'user':
+            try:
+                await commands.UserConverter.convert(self._ctx,answer)
+                return True
+            except:
+                return False
+        elif qtype.lower() == 'member':
+            try:
+                await commands.MemberConverter.convert(self._ctx,answer)
+                return True
+            except:
+                return False
+        elif qtype.lower() == 'role':
+            try:
+                await commands.RoleConverter.convert(self._ctx,answer)
+                return True
+            except:
+                return False
+        elif qtype.lower() == 'category':
+            try:
+                await commands.CategoryChannelConverter.convert(self._ctx,answer)
+                return True
+            except:
+                return False
+        elif qtype.lower() == 'emoji':
+            try:
+                await commands.EmojiConverter.convert(self._ctx,answer)
+                return True
+            except:
+                return False
+        else:
+            raise InvalidFormType(f"Type '{qtype}' is invalid!")
 
     def edit_and_delete(self,choice:bool=None) -> bool:
         """Toggles the edit and delete feature.
