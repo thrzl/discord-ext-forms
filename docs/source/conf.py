@@ -12,7 +12,9 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('..'))
+sys.path.insert(0, os.path.abspath('../discord'))
+sys.path.insert(0, os.path.abspath('../discord/ext'))
+sys.path.insert(0, os.path.abspath('../discord/ext/forms'))
 
 # -- Project information -----------------------------------------------------
 
@@ -21,7 +23,7 @@ copyright = '2021, Mikey B'
 author = 'Mikey B'
 
 # The full version, including alpha/beta/rc tags
-release = '2.0.0b'
+release = '2.0.4'
 
 
 # -- General configuration ---------------------------------------------------
@@ -29,7 +31,7 @@ release = '2.0.0b'
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ['sphinx.ext.autodoc','sphinx.ext.napoleon','sphinx.ext.autosummary','sphinx.ext.viewcode']
+extensions = ['sphinx.ext.autodoc','sphinx.ext.napoleon','sphinx.ext.autosummary','sphinx.ext.viewcode','numpydoc']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -57,4 +59,5 @@ html_theme_options = {
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
-autodoc_mock_imports = ['discord']
+autosummary_gernerate = True
+#autodoc_mock_imports = ['discord']

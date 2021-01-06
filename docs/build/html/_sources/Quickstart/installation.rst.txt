@@ -1,0 +1,10 @@
+Installation
+============
+
+All you have to do for this is: ::
+
+    pip install -U discord-ext-forms
+
+
+And there you go! You're all ready to start using discord.ext.forms! The following guides will help you use the different features of discord.ext.forms!
+

@@ -1,3 +1,7 @@
+Guide
+=====
+These examples are to help you with your development in discord.ext.forms! They are well commented and will help you out a lot! If you ever need more help, join the [Discord Server](https://discord.gg/bNtj2nFnYA)!
+
 Making a Basic Text Form
 ========================
 
@@ -43,4 +47,19 @@ Making a Basic Reaction Form
         if choice: # If choice is true:
             await ctx.channel.purge(limit=20) # delete 20 messages!
 
+.. image:: https://mikey.has-no-bra.in/0ODqXf.gif
 
+Making a Basic Reaction Menu
+============================
+
+::
+
+    @bot.command()
+    async def menu(ctx):
+        embed1=discord.Embed(description="This is embed1")
+        embed2=discord.Embed(description="This is embed2")
+        embed3=discord.Embed(description="This is embed3")
+        rmenu = forms.ReactionMenu(ctx,[embed1,embed2,embed3])
+        await rmenu.start()
+
+.. image:: https://mikey.has-no-bra.in/4XCG7t.gif

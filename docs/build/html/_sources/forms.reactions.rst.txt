@@ -1,0 +1,7 @@
+forms.reactions module
+======================
+
+.. automodule:: discord.ext.forms.reactions
+   :members:
+   :undoc-members:
+   :show-inheritance:

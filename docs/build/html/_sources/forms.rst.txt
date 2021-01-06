@@ -19,11 +19,3 @@ forms.reactions module
    :members:
    :undoc-members:
    :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: discord.ext.forms
-   :members:
-   :undoc-members:
-   :show-inheritance:

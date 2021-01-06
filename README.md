@@ -1,6 +1,16 @@
 # discord-ext-forms
 ![Downloads](https://img.shields.io/github/downloads/isigebengu-mikey/discord-ext-forms/total)
 [![Documentation Status](https://readthedocs.org/projects/discord-ext-forms/badge/?version=latest)](https://discord-ext-forms.readthedocs.io/en/latest/?badge=latest)
+[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/isigebengu-mikey/discord-ext-forms/LICENSE)
+[![PR's Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](http://makeapullrequest.com)
+[![Downloads](https://static.pepy.tech/personalized-badge/discord-ext-forms?period=month&units=international_system&left_color=grey&right_color=blue&left_text=Downloads)](https://pypi.org/project/discord-ext-forms)
+[![Code of Conduct](https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat)](https://github.com/isigebengu-mikey/discord-ext-forms/CODE_OF_CONDUCT.md)
+![GitHub last commit](https://img.shields.io/github/last-commit/google/skia.svg?style=flat)
+[![Open Source](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://opensource.org/)
+
+
+
+
 ### An easier way to make forms and surveys in discord.​py.
 This module is a very simple way to ask questions and create complete forms in discord.py without using an entire 30 lines!
 
