@@ -214,7 +214,6 @@ class Form(object):
             if self.editanddelete:
                 if not prompt:
                     prompt = await self._ctx.channel.send(embed=embed)
-
                 else:
                     await prompt.edit(embed=embed)
 
@@ -229,6 +228,7 @@ class Form(object):
 
             msg = await self._bot.wait_for('message',check=check,timeout=self.timeout)
             ans = msg.content
+            await msg.delete()
             if self._tries:
                 if 'qtype' in question.keys(): # TODO: Add input validation
                     correct = await self.validate_input(question['qtype',ans])
