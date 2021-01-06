@@ -1,5 +1,5 @@
 # discord-ext-forms
-![Downloads](https://img.shields.io/github/downloads/isigebengu-mikey/discord-ext-forms/total)
+<!-- ![Downloads](https://img.shields.io/github/downloads/isigebengu-mikey/discord-ext-forms/total) -->
 [![Documentation Status](https://readthedocs.org/projects/discord-ext-forms/badge/?version=latest)](https://discord-ext-forms.readthedocs.io/en/latest/?badge=latest)
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/isigebengu-mikey/discord-ext-forms/LICENSE)
 [![PR's Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](http://makeapullrequest.com)
