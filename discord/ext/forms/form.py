@@ -223,8 +223,7 @@ class Form(object):
             def check(m):
                 return m.channel == prompt.channel and m.author == self._ctx.author
 
-            question = [x for x in self._questions if x == embed.description]
-            question = question[0]
+            question = self._questions[elist.index(embed)]
 
             msg = await self._bot.wait_for('message',check=check,timeout=self.timeout)
             ans = msg.content
