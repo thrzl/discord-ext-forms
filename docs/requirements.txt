@@ -1,3 +1,4 @@
 furo
 Sphinx==3.4.2
 numpydoc
+sphinx-autoapi

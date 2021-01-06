@@ -1,0 +1,353 @@
+<!doctype html>
+<html class="no-js">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/><link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" />
+
+    <meta name="generator" content="sphinx-3.4.2, furo 2020.12.30.beta24"/>
+        <title>forms.reactions - discord-ext-forms 2.5.3b documentation</title>
+      <link rel="stylesheet" href="../../../_static/styles/furo.css?digest=33d2fc4f3f180ec1ffc6524e273e21d7d58cbe49">
+    <link rel="stylesheet" href="../../../_static/pygments.css">
+    <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="../../../_static/pygments_dark.css">
+    
+
+
+<style>
+  :root {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #7289DA;
+  --color-brand-content: #7289DA;
+  
+    }
+  }
+
+  /* For allowing end-user-specific overrides */
+  .override-light {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  .override-dark {
+    --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #7289DA;
+  --color-brand-content: #7289DA;
+  
+  }
+</style><link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <link rel="stylesheet" href="../../../_static/styles/furo-extensions.css?digest=26485485040e7aaf717c13fd0188a5ad2c2deb60">
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script defer="defer" src="../../../_static/jquery.js"></script>
+    <script defer="defer" src="../../../_static/underscore.js"></script>
+    <script defer="defer" src="../../../_static/doctools.js"></script>
+    <script defer src="../../../_static/scripts/main.js?digest=e931d09b2a40c1bb82b542effe772014573baf67"></script></head>
+  <body dir="">
+    
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+      stroke-width="1.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z"/>
+      <line x1="4" y1="6" x2="20" y2="6" />
+      <line x1="10" y1="12" x2="20" y2="12" />
+      <line x1="6" y1="18" x2="20" y2="18" />
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+      class="feather feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+      class="feather feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../index.html"><div class="brand">discord-ext-forms 2.5.3b documentation</div></a>
+    </div>
+    <div class="header-right">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../index.html">
+  
+  
+  <span class="sidebar-brand-text">discord-ext-forms 2.5.3b documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../../search.html">
+  <input class="sidebar-search" placeholder=Search name="q">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption"><span class="caption-text">Usage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html#making-a-basic-text-form">Making a Basic Text Form</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html#making-a-basic-reaction-form">Making a Basic Reaction Form</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html#making-a-basic-reaction-menu">Making a Basic Reaction Menu</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../API.html">forms.form module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../API.html#module-discord.ext.forms.reactions">forms.reactions module</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../../index.html">API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label for="toctree-checkbox-1"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2 current has-children"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">forms</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label for="toctree-checkbox-2"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../form/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">forms.form</span></code></a></li>
+<li class="toctree-l3 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">forms.reactions</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+      </div>
+      
+    </div>
+  </aside>
+  <main class="main">
+    <div class="content">
+      <article role="main">
+        <label class="toc-overlay-icon toc-content-icon" for="__toc">
+          <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+        </label>
+        <div class="section" id="module-forms.reactions">
+<span id="forms-reactions"></span><h1><a class="reference internal" href="#module-forms.reactions" title="forms.reactions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">forms.reactions</span></code></a><a class="headerlink" href="#module-forms.reactions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h3>
+<div class="table-wrapper"><table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%"/>
+<col style="width: 90%"/>
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#forms.reactions.ReactionForm" title="forms.reactions.ReactionForm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ReactionForm</span></code></a></p></td>
+<td><p>The Reaction input object.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#forms.reactions.ReactionMenu" title="forms.reactions.ReactionMenu"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ReactionMenu</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table></div>
+<dl class="py class">
+<dt id="forms.reactions.ReactionForm">
+<em class="property">class </em><code class="sig-prename descclassname">forms.reactions.</code><code class="sig-name descname">ReactionForm</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">message</span><span class="p">:</span> <span class="n">discord.Message</span></em>, <em class="sig-param"><span class="n">bot</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>discord.Client<span class="p">, </span>commands.Bot<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">user</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>discord.Member<span class="p">, </span>discord.User<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#forms.reactions.ReactionForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The Reaction input object.</p>
+<p>…</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> (<em>discord.Message</em>) – The message of the reaction form object.</p></li>
+<li><p><strong>bot</strong> (<em>typing.Union</em><em>[</em><em>discord.Client</em><em>, </em><em>discord.ext.commands.Bot</em><em>]</em>) – The bot being used for the form.</p></li>
+<li><p><strong>user</strong> (<em>typing.Union</em><em>[</em><em>discord.Member</em><em>, </em><em>discord.User</em><em>]</em>) – The member or user who should be able to use the form. If none, the form will be open to anyone.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="forms.reactions.ReactionForm.set_timeout">
+<code class="sig-name descname">set_timeout</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">timeout</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> → None<a class="headerlink" href="#forms.reactions.ReactionForm.set_timeout" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py method">
+<dt id="forms.reactions.ReactionForm.add_reaction">
+<code class="sig-name descname">add_reaction</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">reaction</span><span class="p">:</span> <span class="n">discord.Emoji</span></em>, <em class="sig-param"><span class="n">result</span></em><span class="sig-paren">)</span> → dict<a class="headerlink" href="#forms.reactions.ReactionForm.add_reaction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a question to the form.</p>
+<p>Returns the full list of questions the form has, including the newly added one. The questions are held
+in dictionaries containing the <cite>question</cite> and optionally <cite>type</cite> keys. The <cite>question</cite> key contains the
+question as a string, and the <cite>type</cite> key contains the input validation (if any is specified)</p>
+</dd></dl>
+<dl class="py method">
+<dt id="forms.reactions.ReactionForm.start">
+<em class="property">async </em><code class="sig-name descname">start</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span> → Any<a class="headerlink" href="#forms.reactions.ReactionForm.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts the reaction form on the given message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Whatever the given reaction was set to return.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt id="forms.reactions.ReactionMenu">
+<em class="property">class </em><code class="sig-prename descclassname">forms.reactions.</code><code class="sig-name descname">ReactionMenu</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ctx</span><span class="p">:</span> <span class="n">discord.ext.commands.Context</span></em>, <em class="sig-param"><span class="n">embeds</span><span class="p">:</span> <span class="n">List<span class="p">[</span>discord.Embed<span class="p">]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#forms.reactions.ReactionMenu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="forms.reactions.ReactionMenu.set_timeout">
+<code class="sig-name descname">set_timeout</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">timeout</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span><a class="headerlink" href="#forms.reactions.ReactionMenu.set_timeout" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py method">
+<dt id="forms.reactions.ReactionMenu.remove_reactions">
+<code class="sig-name descname">remove_reactions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">bool</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#forms.reactions.ReactionMenu.remove_reactions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets whether the bot should remove reactions or not. Useful if the bot doesn’t have <cite>Manage Messages</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>choice</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to remove reactions or not., by default True</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="forms.reactions.ReactionMenu.addemoji">
+<code class="sig-name descname">addemoji</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">emoji</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">page</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> → bool<a class="headerlink" href="#forms.reactions.ReactionMenu.addemoji" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds an emoji/page mapping to your menu.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>emoji</strong> (<em>str</em>) – The emoji to be used as a string. Custom emoji are supported.</p></li>
+<li><p><strong>page</strong> (<em>int</em>) – The page to be mapped. Uses normal indexing (e.g. 1 is the first page)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The result of the emoji being added. False means
+an error occurred (most likely you tried to add
+an emoji that was already set) and True means
+that everything was successful.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt id="forms.reactions.ReactionMenu.start">
+<em class="property">async </em><code class="sig-name descname">start</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">channel</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#forms.reactions.ReactionMenu.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts the menu in the given channel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>channel</strong> (<em>discord.TextChannel</em><em>, </em><em>optional</em>) – The channel to send the menu to. If none is specified, it uses the context’s channel object.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>TypeError</strong> – If channel isn’t specified and ctx wasn’t set on initialization, the form cannot continue.</p>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+<dl class="py exception">
+<dt id="forms.reactions.InvalidColor">
+<em class="property">exception </em><code class="sig-prename descclassname">forms.reactions.</code><code class="sig-name descname">InvalidColor</code><a class="headerlink" href="#forms.reactions.InvalidColor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Common base class for all non-exit exceptions.</p>
+</dd></dl>
+</div>
+</div>
+</div>
+
+      </article>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+
+        <div class="related-information">
+              Copyright &#169; 2021, Mikey B
+            |
+            Built with <a href="https://www.sphinx-doc.org/">Sphinx</a>
+              and
+              <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+              <a href="https://github.com/pradyunsg/furo">Furo theme</a>.
+            |
+            <a class="muted-link" href="../../../_sources/autoapi/forms/reactions/index.rst.txt"
+               rel="nofollow">
+              Show Source
+            </a>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            Contents
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">forms.reactions</span></code></a><ul>
+<li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
+<li><a class="reference internal" href="#classes">Classes</a><ul>
+<li><a class="reference internal" href="#forms.reactions.ReactionForm">ReactionForm</a><ul>
+<li><a class="reference internal" href="#forms.reactions.ReactionForm.set_timeout">set_timeout</a></li>
+<li><a class="reference internal" href="#forms.reactions.ReactionForm.add_reaction">add_reaction</a></li>
+<li><a class="reference internal" href="#forms.reactions.ReactionForm.start">start</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#forms.reactions.ReactionMenu">ReactionMenu</a><ul>
+<li><a class="reference internal" href="#forms.reactions.ReactionMenu.set_timeout">set_timeout</a></li>
+<li><a class="reference internal" href="#forms.reactions.ReactionMenu.remove_reactions">remove_reactions</a></li>
+<li><a class="reference internal" href="#forms.reactions.ReactionMenu.addemoji">addemoji</a></li>
+<li><a class="reference internal" href="#forms.reactions.ReactionMenu.start">start</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#forms.reactions.InvalidColor">InvalidColor</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </main>
+</div>
+  </body>
+</html>

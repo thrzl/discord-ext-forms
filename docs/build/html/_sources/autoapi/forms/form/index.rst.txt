@@ -1,0 +1,290 @@
+:mod:`forms.form`
+=================
+
+.. py:module:: forms.form
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   forms.form.Form
+
+
+
+.. py:class:: Form(ctx: commands.Context, title)
+
+   Bases: :class:`object`
+
+   The basic form object.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+   .. method:: set_timeout(self, timeout: int) -> None
+
+      Sets the timeout for the form.
+
+      :param timeout (int):
+      :type timeout (int): The timeout to be used.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+
+   .. method:: set_tries(self, tries: int) -> None
+
+
+   .. method:: add_question(self, question, key: str = None, qtype=None) -> List[dict]
+
+      Adds a question to the form.
+
+      :param question: The question as a string that should be added.
+      :type question: str
+      :param key: The prefered key to be used. If none, defaults to the to the question. By default None.
+      :type key: str, optional
+      :param qtype: The input validation to be used (incomplete), by default None
+      :type qtype: str, optional
+
+      :returns: A list of all of the questions, stored as dictionaries.
+      :rtype: List[dict]
+
+      :raises InvalidFormType: Is raised when the input validation type is invalid.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+
+   .. method:: validate_input(self, qtype, answer)
+      :async:
+
+
+   .. method:: edit_and_delete(self, choice: bool = None) -> bool
+
+      Toggles the edit and delete feature.
+
+      :param choice: Whether you want the bot to edit the prompt and delete the input or not. If none, it toggles. The default for edit and delete is off. Default input is `None`
+      :type choice: bool, optional
+
+      :returns: The state of edit and delete (after this is completed)
+      :rtype: bool
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+
+   .. method:: set_retry_message(self, message: str)
+
+      Sets the message to send if input validation fails.
+
+      :param message: The message to be set.
+      :type message: str
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+
+   .. method:: set_incorrect_message(self, message: str)
+
+      Sets the message to send if input validation fails and there are no more tries left..
+
+      :param message: The message to be set.
+      :type message: str
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+
+   .. method:: set_color(self, color: str) -> None
+      :async:
+
+      Sets the color of the form embeds.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+
+   .. method:: start(self, channel=None) -> List[dict]
+      :async:
+
+      Starts the form in the current channel.
+
+      :param channel: The channel to open the form in. If none, it is gotten from the context object set during initialization.
+      :type channel: discord.TextChannel, optional
+
+      :returns: [description]
+      :rtype: List[dict]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+
+
+.. py:exception:: InvalidColor
+
+   Bases: :class:`Exception`
+
+   Common base class for all non-exit exceptions.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+.. py:exception:: InvalidFormType
+
+   Bases: :class:`Exception`
+
+   The exception raised when a form type is invalid.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+

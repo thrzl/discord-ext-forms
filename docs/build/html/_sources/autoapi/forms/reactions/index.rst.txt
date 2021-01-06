@@ -1,0 +1,229 @@
+:mod:`forms.reactions`
+======================
+
+.. py:module:: forms.reactions
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   forms.reactions.ReactionForm
+   forms.reactions.ReactionMenu
+
+
+
+.. py:class:: ReactionForm(message: discord.Message, bot: Union[discord.Client, commands.Bot], user: Union[discord.Member, discord.User] = None)
+
+   Bases: :class:`object`
+
+   The Reaction input object.
+
+   ...
+
+   :param message: The message of the reaction form object.
+   :type message: discord.Message
+   :param bot: The bot being used for the form.
+   :type bot: typing.Union[discord.Client, discord.ext.commands.Bot]
+   :param user: The member or user who should be able to use the form. If none, the form will be open to anyone.
+   :type user: typing.Union[discord.Member, discord.User]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+   .. method:: set_timeout(self, timeout: int) -> None
+
+
+   .. method:: add_reaction(self, reaction: discord.Emoji, result) -> dict
+
+      Adds a question to the form.
+
+      Returns the full list of questions the form has, including the newly added one. The questions are held
+      in dictionaries containing the `question` and optionally `type` keys. The `question` key contains the
+      question as a string, and the `type` key contains the input validation (if any is specified)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+
+   .. method:: start(self) -> Any
+      :async:
+
+      Starts the reaction form on the given message.
+
+      :returns: Whatever the given reaction was set to return.
+      :rtype: Any
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+
+
+.. py:class:: ReactionMenu(ctx: discord.ext.commands.Context, embeds: List[discord.Embed])
+
+   Bases: :class:`object`
+
+   .. method:: set_timeout(self, timeout: int)
+
+
+   .. method:: remove_reactions(self, bool: bool = True)
+
+      Sets whether the bot should remove reactions or not. Useful if the bot doesn't have `Manage Messages`
+
+      :param choice: Whether to remove reactions or not., by default True
+      :type choice: bool, optional
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+
+   .. method:: addemoji(self, emoji: str, page: int) -> bool
+
+      Adds an emoji/page mapping to your menu.
+
+      :param emoji: The emoji to be used as a string. Custom emoji are supported.
+      :type emoji: str
+      :param page: The page to be mapped. Uses normal indexing (e.g. 1 is the first page)
+      :type page: int
+
+      :returns: The result of the emoji being added. False means
+                an error occurred (most likely you tried to add
+                an emoji that was already set) and True means
+                that everything was successful.
+      :rtype: bool
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+
+   .. method:: start(self, channel=None)
+      :async:
+
+      Starts the menu in the given channel.
+
+      :param channel: The channel to send the menu to. If none is specified, it uses the context's channel object.
+      :type channel: discord.TextChannel, optional
+
+      :returns:
+      :rtype: None
+
+      :raises TypeError: If channel isn't specified and ctx wasn't set on initialization, the form cannot continue.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+
+
+.. py:exception:: InvalidColor
+
+   Bases: :class:`Exception`
+
+   Common base class for all non-exit exceptions.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+

@@ -14,8 +14,6 @@ sphinx:
 #  configuration: mkdocs.yml
 
 python:
-  - method: setuptools
-  path: .
   version: 3.7
   install:
     - requirements: docs/requirements.txt

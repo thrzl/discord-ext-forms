@@ -1,3 +1,7 @@
+Guide
+=====
+These examples are to help you with your development in discord.ext.forms! They are well commented and will help you out a lot! If you ever need more help, join the [Discord Server](https://discord.gg/bNtj2nFnYA)!
+
 Making a Basic Text Form
 ========================
 
