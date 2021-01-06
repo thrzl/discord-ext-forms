@@ -1,3 +1,14 @@
+# Changelog v2.3.5b
+### Text Forms
+- The return type of a text form is now a single dictionary, and the `add_question` method now allows you to set a preferred dictionary key for the question.
+- Input validation is also in beta now!
+
+### Docs
+The documentation is now available, and it is located [here](https://discord-ext-forms.readthedocs.io/en/latest/index.html).
+
+### Contribute
+
+Again: please remember that I welcome contributions!
 # Changelog v2.0.4
 ### Reactions
 

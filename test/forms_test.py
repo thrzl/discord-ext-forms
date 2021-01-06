@@ -38,4 +38,4 @@ async def test_menu(ctx):
     await rmenu.start()
     assert True
 
-bot.run('NzkxMjkwMDg1MzU3MTI1NjMz.X-NAUQ.w4L8USKrZWe1Ltvjw4z-bVqd2Kg')
+bot.run('NzkxMjkwMDg1MzU3MTI1NjMz.X-NAUQ.iSo3rc17-wIBQcR1o8kZ0Uj7sJM')

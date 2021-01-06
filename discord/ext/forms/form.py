@@ -237,8 +237,6 @@ class Form(object):
                     else:
                         self._tries -= 1
 
-
-
         return self._questions
 
 class InvalidColor(Exception):
