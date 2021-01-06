@@ -14,7 +14,18 @@ sphinx:
 #  configuration: mkdocs.yml
 
 python:
-  setup_py_install: true
+  - method: setuptools
+  path: .
   version: 3.7
   install:
     - requirements: docs/requirements.txt
+
+submodules:
+  include: all
+
+search:
+  ranking:
+    api/v1/*: -1
+    api/v2/*: 4
+  ignore:
+    - 404.html
