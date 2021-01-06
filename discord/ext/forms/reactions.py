@@ -1,6 +1,7 @@
 from discord.ext import commands
 import discord
 from typing import Any, List, Union
+from emoji import UNICODE_EMOJI
 import typing
 import asyncio
 import re
@@ -30,15 +31,29 @@ class ReactionForm(object): # I don't like subclassing shut up
         self._user = user
 
     def set_timeout(self,timeout:int) -> None:
+        """Set the timeout for the form. Defaults to 120 seconds.
+
+        Parameters
+        ----------
+        timeout : int
+            The timeout in seconds.
+        """
         self.timeout = timeout
 
-    def add_reaction(self,reaction:discord.Emoji,result) -> dict:
+    def add_reaction(self,reaction:str,result) -> dict:
         """Adds a question to the form.
 
         Returns the full list of questions the form has, including the newly added one. The questions are held
         in dictionaries containing the `question` and optionally `type` keys. The `question` key contains the
         question as a string, and the `type` key contains the input validation (if any is specified)
+
+        Parameters
+        ----------
+        reaction : str
+            The emoji to add.
         """
+
+        assert reaction in UNICODE_EMOJI
         self._reactions[reaction] = result
         return self._reactions
 
@@ -81,6 +96,13 @@ class ReactionMenu(object):
         self.removereaction = True
 
     def set_timeout(self, timeout:int):
+        """Sets the timeout for the menu.
+
+        Parameters
+        ----------
+        timeout : int
+            The timeout to be set in seconds.
+        """        
         int(timeout)
         self._timeout = timeout
 

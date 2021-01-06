@@ -23,7 +23,7 @@ copyright = '2021, Mikey B'
 author = 'Mikey B'
 
 # The full version, including alpha/beta/rc tags
-release = '2.5.3b'
+release = '2.6.0'
 
 
 # -- General configuration ---------------------------------------------------
@@ -31,7 +31,7 @@ release = '2.5.3b'
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ['autoapi.extension','sphinx.ext.napoleon','sphinx.ext.viewcode','numpydoc']#,'sphinx.ext.autodoc','sphinx.ext.autosummary']
+extensions = ['sphinx.ext.napoleon','sphinx.ext.viewcode','numpydoc']#,'sphinx.ext.autodoc','sphinx.ext.autosummary']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
