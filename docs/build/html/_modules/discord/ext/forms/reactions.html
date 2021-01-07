@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1"/><link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" />
 
     <meta name="generator" content="sphinx-3.4.2, furo 2020.12.30.beta24"/>
-        <title>discord.ext.forms.reactions - discord-ext-forms 2.5.3b documentation</title>
+        <title>discord.ext.forms.reactions - discord-ext-forms 2.6.0 documentation</title>
       <link rel="stylesheet" href="../../../../_static/styles/furo.css?digest=33d2fc4f3f180ec1ffc6524e273e21d7d58cbe49">
     <link rel="stylesheet" href="../../../../_static/pygments.css">
     <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="../../../../_static/pygments_dark.css">
@@ -40,8 +40,7 @@
   --color-brand-content: #7289DA;
   
   }
-</style><link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css" />
-    <link rel="stylesheet" href="../../../../_static/styles/furo-extensions.css?digest=26485485040e7aaf717c13fd0188a5ad2c2deb60">
+</style><link rel="stylesheet" href="../../../../_static/styles/furo-extensions.css?digest=26485485040e7aaf717c13fd0188a5ad2c2deb60">
     <script id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
     <script defer="defer" src="../../../../_static/jquery.js"></script>
     <script defer="defer" src="../../../../_static/underscore.js"></script>
@@ -95,7 +94,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../../index.html"><div class="brand">discord-ext-forms 2.5.3b documentation</div></a>
+      <a href="../../../../index.html"><div class="brand">discord-ext-forms 2.6.0 documentation</div></a>
     </div>
     <div class="header-right">
       <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
@@ -109,7 +108,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../../index.html">
   
   
-  <span class="sidebar-brand-text">discord-ext-forms 2.5.3b documentation</span>
+  <span class="sidebar-brand-text">discord-ext-forms 2.6.0 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../../../search.html">
   <input class="sidebar-search" placeholder=Search name="q">
@@ -127,14 +126,6 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../API.html">forms.form module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../API.html#module-discord.ext.forms.reactions">forms.reactions module</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../autoapi/index.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label for="toctree-checkbox-1"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../autoapi/forms/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">forms</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label for="toctree-checkbox-2"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../../autoapi/forms/form/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">forms.form</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../../autoapi/forms/reactions/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">forms.reactions</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
 </ul>
 
 </div>
@@ -152,7 +143,7 @@
         <h1>Source code for discord.ext.forms.reactions</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">discord.ext</span> <span class="kn">import</span> <span class="n">commands</span>
 <span class="kn">import</span> <span class="nn">discord</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
 <span class="kn">import</span> <span class="nn">typing</span>
 <span class="kn">import</span> <span class="nn">asyncio</span>
 <span class="kn">import</span> <span class="nn">re</span>
@@ -167,7 +158,7 @@
 <span class="sd">    message : discord.Message</span>
 <span class="sd">        The message of the reaction form object.</span>
 
-<span class="sd">    bot : typing.Union[discord.CLient, discord.ext.commands.Bot]</span>
+<span class="sd">    bot : typing.Union[discord.Client, discord.ext.commands.Bot]</span>
 <span class="sd">        The bot being used for the form.</span>
 
 <span class="sd">    user : typing.Union[discord.Member, discord.User]</span>
@@ -194,15 +185,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_reactions</span><span class="p">[</span><span class="n">reaction</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reactions</span></div>
 
-<div class="viewcode-block" id="ReactionForm.set_color"><a class="viewcode-back" href="../../../../API.html#discord.ext.forms.reactions.ReactionForm.set_color">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">set_color</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">color</span><span class="p">:</span><span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">"""Sets the color of the form embeds."""</span>
-        <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">'0x(\d|f)</span><span class="si">{6}</span><span class="s1">'</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">match</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">InvalidColor</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">color</span><span class="si">}</span><span class="s2"> is invalid. Be sure to use colors such as '0xffffff'"</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_color</span> <span class="o">=</span> <span class="n">color</span></div>
+<div class="viewcode-block" id="ReactionForm.start"><a class="viewcode-back" href="../../../../API.html#discord.ext.forms.reactions.ReactionForm.start">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+        <span class="sd">"""Starts the reaction form on the given message.</span>
 
-<div class="viewcode-block" id="ReactionForm.start"><a class="viewcode-back" href="../../../../API.html#discord.ext.forms.reactions.ReactionForm.start">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-        <span class="sd">"""Starts the form in the specified channel. If none is specified, the channel will be fetched from the `context` parameter of the form's initialization."""</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Any</span>
+<span class="sd">            Whatever the given reaction was set to return.</span>
+<span class="sd">        """</span>
         <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_msg</span>
         <span class="n">rl</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reactions</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
@@ -233,6 +223,19 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_mappings</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">removereaction</span> <span class="o">=</span> <span class="kc">True</span>
 
+<div class="viewcode-block" id="ReactionMenu.set_timeout"><a class="viewcode-back" href="../../../../API.html#discord.ext.forms.reactions.ReactionMenu.set_timeout">[docs]</a>    <span class="k">def</span> <span class="nf">set_timeout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span><span class="nb">int</span><span class="p">):</span>
+        <span class="nb">int</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_timeout</span> <span class="o">=</span> <span class="n">timeout</span></div>
+
+<div class="viewcode-block" id="ReactionMenu.remove_reactions"><a class="viewcode-back" href="../../../../API.html#discord.ext.forms.reactions.ReactionMenu.remove_reactions">[docs]</a>    <span class="k">def</span> <span class="nf">remove_reactions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="nb">bool</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">"""Sets whether the bot should remove reactions or not. Useful if the bot doesn't have `Manage Messages`</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        choice : bool, optional</span>
+<span class="sd">            Whether to remove reactions or not., by default True</span>
+<span class="sd">        """</span></div>
+
 <div class="viewcode-block" id="ReactionMenu.addemoji"><a class="viewcode-back" href="../../../../API.html#discord.ext.forms.reactions.ReactionMenu.addemoji">[docs]</a>    <span class="k">def</span> <span class="nf">addemoji</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">emoji</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">page</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">"""Adds an emoji/page mapping to your menu.</span>
 
@@ -260,6 +263,22 @@
 
 
 <div class="viewcode-block" id="ReactionMenu.start"><a class="viewcode-back" href="../../../../API.html#discord.ext.forms.reactions.ReactionMenu.start">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">"""Starts the menu in the given channel.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        channel : discord.TextChannel, optional</span>
+<span class="sd">            The channel to send the menu to. If none is specified, it uses the context's channel object.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        TypeError</span>
+<span class="sd">            If channel isn't specified and ctx wasn't set on initialization, the form cannot continue.</span>
+<span class="sd">        """</span>        
         <span class="n">current</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">ctx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ctx</span>
         <span class="n">embeds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_embeds</span>

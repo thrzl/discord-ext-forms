@@ -91,7 +91,7 @@ class Form(object):
         self.set_retry_message(f'Please try again.')
         return self._questions
 
-    async def validate_input(self,qtype,answer):
+    async def __validate_input(self,qtype,answer):
         if qtype.lower() == 'invite':
             try:
                 invite = await commands.InviteConverter().convert(self._ctx,answer)
@@ -267,7 +267,7 @@ class Form(object):
                 question = self._questions[question]
                 if 'type' in question.keys():
                     while True:
-                        result = await self.validate_input(question['type'],ans)
+                        result = await self.__validate_input(question['type'],ans)
                         if result:
                             print("Input validation worked!")
                             nx = question
