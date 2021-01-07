@@ -1,6 +1,7 @@
 from discord.ext import commands
 import discord
-from typing import List, Union
+from typing import Any, List, Union
+from emoji import UNICODE_EMOJI
 import typing
 import asyncio
 import re
@@ -15,7 +16,7 @@ class ReactionForm(object): # I don't like subclassing shut up
     message : discord.Message
         The message of the reaction form object.
 
-    bot : typing.Union[discord.CLient, discord.ext.commands.Bot]
+    bot : typing.Union[discord.Client, discord.ext.commands.Bot]
         The bot being used for the form.
 
     user : typing.Union[discord.Member, discord.User]
@@ -30,27 +31,40 @@ class ReactionForm(object): # I don't like subclassing shut up
         self._user = user
 
     def set_timeout(self,timeout:int) -> None:
+        """Set the timeout for the form. Defaults to 120 seconds.
+
+        Parameters
+        ----------
+        timeout : int
+            The timeout in seconds.
+        """
         self.timeout = timeout
 
-    def add_reaction(self,reaction:discord.Emoji,result) -> dict:
+    def add_reaction(self,reaction:str,result) -> dict:
         """Adds a question to the form.
 
         Returns the full list of questions the form has, including the newly added one. The questions are held
         in dictionaries containing the `question` and optionally `type` keys. The `question` key contains the
         question as a string, and the `type` key contains the input validation (if any is specified)
+
+        Parameters
+        ----------
+        reaction : str
+            The emoji to add.
         """
+
+        assert reaction in UNICODE_EMOJI
         self._reactions[reaction] = result
         return self._reactions
 
-    async def set_color(self,color:str) -> None:
-        """Sets the color of the form embeds."""
-        match = re.search(r'0x(\d|f){6}', str)
-        if not match:
-            raise InvalidColor(f"{color} is invalid. Be sure to use colors such as '0xffffff'")
-        self._color = color
+    async def start(self) -> Any:
+        """Starts the reaction form on the given message.
 
-    async def start(self) -> dict:
-        """Starts the form in the specified channel. If none is specified, the channel will be fetched from the `context` parameter of the form's initialization."""
+        Returns
+        -------
+        Any
+            Whatever the given reaction was set to return.
+        """
         message = self._msg
         rl = []
         for i in self._reactions.keys():
@@ -81,6 +95,26 @@ class ReactionMenu(object):
         self._mappings = {}
         self.removereaction = True
 
+    def set_timeout(self, timeout:int):
+        """Sets the timeout for the menu.
+
+        Parameters
+        ----------
+        timeout : int
+            The timeout to be set in seconds.
+        """        
+        int(timeout)
+        self._timeout = timeout
+
+    def remove_reactions(self,bool:bool=True):
+        """Sets whether the bot should remove reactions or not. Useful if the bot doesn't have `Manage Messages`
+
+        Parameters
+        ----------
+        choice : bool, optional
+            Whether to remove reactions or not., by default True
+        """
+
     def addemoji(self, emoji:str, page:int) -> bool:
         """Adds an emoji/page mapping to your menu.
 
@@ -108,6 +142,22 @@ class ReactionMenu(object):
 
 
     async def start(self, channel=None):
+        """Starts the menu in the given channel.
+
+        Parameters
+        ----------
+        channel : discord.TextChannel, optional
+            The channel to send the menu to. If none is specified, it uses the context's channel object.
+
+        Returns
+        -------
+        None
+
+        Raises
+        ------
+        TypeError
+            If channel isn't specified and ctx wasn't set on initialization, the form cannot continue.
+        """        
         current = 0
         ctx = self._ctx
         embeds = self._embeds

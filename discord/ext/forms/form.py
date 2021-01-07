@@ -192,6 +192,7 @@ class Form(object):
             color = f"0x{newclr}"
         color = await commands.ColourConverter().convert(self._ctx,color)
         self._color = color
+        return
 
     async def start(self,channel=None) -> dict:
         """Starts the form in the current channel.
