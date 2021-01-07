@@ -263,24 +263,21 @@ class Form(object):
             if self.editanddelete:
                 await msg.delete()
             if self._tries:
-                print("Tries found...")
                 key = question
                 question = self._questions[question]
                 if 'type' in question.keys():
                     while True:
                         result = await self.__validate_input(question['type'],ans)
                         if result:
-                            print("Input validation worked!")
                             nx = question
                             nx['res'] = result
                             self._questions[key] = nx
-                            print(self._questions)
                                     #self._questions[x] = ans
                             #self._questions[question] = ans
                             break
                         else:
-                            await channel.send(self._retrymsg+f" You have `{self._tries}` remaining.")
-                            print("Input validation failed...")
+                            self._tries -= 1
+                            await channel.send(self._retrymsg+f" You have `{self._tries}` remaining.",delete_after=5)
                             msg = await self._bot.wait_for('message',check=check,timeout=self.timeout)
                             ans = msg.content
                             if self.editanddelete:
