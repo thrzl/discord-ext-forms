@@ -78,11 +78,11 @@ class Form(object):
         if not key:
             key = question
         valid_qtypes = ['invite','channel','user','member','role','category']
-        dictionary = {'res':None,'type':None,'question':question}
+        dictionary = {'res':None,'question':question}
         if qtype:
+            dictionary['type'] = None
             if qtype.lower() not in valid_qtypes:
                 raise InvalidFormType(f"Type '{qtype}' is invalid!")
-
             dictionary['type'] = qtype
             self._tries = 3
 
@@ -191,8 +191,7 @@ class Form(object):
             newclr = color.replace("#","")
             color = f"0x{newclr}"
         color = await commands.ColourConverter().convert(self._ctx,color)
-        self.color = color
-        return
+        self._color = color
 
     async def start(self,channel=None) -> dict:
         """Starts the form in the current channel.
@@ -227,7 +226,7 @@ class Form(object):
 
         qlist = []
         for n, q in enumerate(self._questions.values()):
-            embed=discord.Embed(description=q['question'],color=self.color)
+            embed=discord.Embed(description=q['question'],color=self._color)
 
             embed.set_author(name=f"{self.title}: {n+1}/{len(self._questions)}",icon_url=self._bot.user.avatar_url)
 
@@ -240,6 +239,8 @@ class Form(object):
         prompt = None
 
         for embed in elist:
+            ot = self._tries
+            self._tries = ot
             if self.editanddelete:
                 if not prompt:
                     prompt = await self._ctx.channel.send(embed=embed)
@@ -277,11 +278,13 @@ class Form(object):
                             break
                         else:
                             self._tries -= 1
-                            await channel.send(self._retrymsg+f" You have `{self._tries}` remaining.",delete_after=5)
+                            await channel.send(self._retrymsg+f" You have `{self._tries}` remaining.",delete_after=3)
                             msg = await self._bot.wait_for('message',check=check,timeout=self.timeout)
                             ans = msg.content
                             if self.editanddelete:
                                 await msg.delete()
+                else:
+                    self._questions[question] = ans
             else:
                 self._questions[question] = ans
         for i in self._questions.keys():
