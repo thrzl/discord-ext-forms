@@ -3,3 +3,4 @@ Sphinx==3.4.3
 numpydoc
 sphinx-autoapi
 discord.ext.forms
+autoapi

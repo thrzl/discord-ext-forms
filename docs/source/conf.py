@@ -12,18 +12,19 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../../discord'))
-sys.path.insert(0, os.path.abspath('../../discord/ext'))
-sys.path.insert(0, os.path.abspath('../../discord/ext/forms'))
+
+sys.path.insert(0, os.path.abspath("../../discord"))
+sys.path.insert(0, os.path.abspath("../../discord/ext"))
+sys.path.insert(0, os.path.abspath("../../discord/ext/forms"))
 
 # -- Project information -----------------------------------------------------
 
-project = 'discord-ext-forms'
-copyright = '2021, Mikey'
-author = 'Mikey'
+project = "discord-ext-forms"
+copyright = "2021, Mikey"
+author = "Mikey"
 
 # The full version, including alpha/beta/rc tags
-release = '2.6.12'
+release = "2.6.12"
 
 
 # -- General configuration ---------------------------------------------------
@@ -31,11 +32,17 @@ release = '2.6.12'
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ['autoapi.extensions','sphinx.ext.napoleon','sphinx.ext.viewcode','numpydoc','sphinx.ext.apidoc']#,'sphinx.ext.autodoc','sphinx.ext.autosummary']
+extensions = [
+    "autoapi.extensions",
+    "sphinx.ext.napoleon",
+    "sphinx.ext.viewcode",
+    "numpydoc",
+    "sphinx.ext.apidoc",
+]  # ,'sphinx.ext.autodoc','sphinx.ext.autosummary']
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
-autoapi_dirs = ['../../discord/ext/forms']
+templates_path = ["_templates"]
+autoapi_dirs = ["../../discord/ext/forms"]
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
@@ -47,17 +54,17 @@ exclude_patterns = []
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'furo'
+html_theme = "furo"
 html_theme_options = {
-    "dark_css_variables":
-        {
-        "color-brand-primary":'#7289DA',"color-brand-content":'#7289DA'
-        },
-        "navigation_with_keys":True
-    }
+    "dark_css_variables": {
+        "color-brand-primary": "#7289DA",
+        "color-brand-content": "#7289DA",
+    },
+    "navigation_with_keys": True,
+}
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+html_static_path = ["_static"]
 autosummary_gernerate = True
-#autodoc_mock_imports = ['discord']
+# autodoc_mock_imports = ['discord']
