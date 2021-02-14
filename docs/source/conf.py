@@ -13,9 +13,9 @@
 import os
 import sys
 
-sys.path.insert(0, os.path.abspath("../../discord"))
-sys.path.insert(0, os.path.abspath("../../discord/ext"))
-sys.path.insert(0, os.path.abspath("../../discord/ext/forms"))
+sys.path.insert(0, os.path.abspath("../discord"))
+sys.path.insert(0, os.path.abspath("../discord/ext"))
+sys.path.insert(0, os.path.abspath("../discord/ext/forms"))
 
 # -- Project information -----------------------------------------------------
 
