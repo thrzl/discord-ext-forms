@@ -3,8 +3,17 @@ from discord.ext import commands
 import re
 from typing import List
 import json
+from emoji import UNICODE_EMOJI
 
-class Form(object):
+class FormResponse:
+    def __init__(self,data:dict) -> None:
+        for d in data.keys():
+            if isinstance(data[d], dict):
+                setattr(self,d,data[d]['res'])
+            else:
+                setattr(self,d,data[d])
+
+class Form:
     """The basic form object.
 
     Parameters:
@@ -133,7 +142,11 @@ class Form(object):
                 emoji = await commands.EmojiConverter().convert(self._ctx,answer)
                 return emoji
             except:
-                return False
+                try:
+                    assert emoji in UNICODE_EMOJI
+                except:
+                    return emoji
+                return True
         else:
             self._tries -= 1
             raise InvalidFormType(f"Type '{qtype}' is invalid!")
@@ -208,16 +221,16 @@ class Form(object):
             Example:
             ::
 
-            {'Key Specified':{
+                {'Key Specified':{
+                        'res':'answer goes here',
+                        'type':'input validation type'
+                        'question':'Question here'
+                    },
+                'Next Key Specified':{
                     'res':'answer goes here',
                     'type':'input validation type'
                     'question':'Question here'
-                },
-            'Next Key Specified':{
-                'res':'answer goes here',
-                'type':'input validation type'
-                'question':'Question here'
-            }
+                }
         """
         elist = []
 
@@ -284,9 +297,9 @@ class Form(object):
                             if self.editanddelete:
                                 await msg.delete()
                 else:
-                    self._questions[question] = ans
+                    self._questions[key] = ans
             else:
-                self._questions[question] = ans
+                self._questions[key] = ans
         for i in self._questions.keys():
             self._questions[i] = self._questions[i]
         return self._questions

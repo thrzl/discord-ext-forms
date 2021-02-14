@@ -5,7 +5,9 @@ from emoji import UNICODE_EMOJI
 import typing
 import asyncio
 import re
-class ReactionForm(object): # I don't like subclassing shut up
+
+
+class ReactionForm:  # I don't like subclassing shut up
     """
     The Reaction input object.
 
@@ -22,7 +24,13 @@ class ReactionForm(object): # I don't like subclassing shut up
     user : typing.Union[discord.Member, discord.User]
         The member or user who should be able to use the form. If none, the form will be open to anyone.
     """
-    def __init__(self, message:discord.Message, bot: Union[discord.Client, commands.Bot],user:Union[discord.Member, discord.User]=None):
+
+    def __init__(
+        self,
+        message: discord.Message,
+        bot: Union[discord.Client, commands.Bot],
+        user: Union[discord.Member, discord.User] = None,
+    ):
         self._msg = message
         self._bot = bot
         self._reactions = {}
@@ -30,7 +38,7 @@ class ReactionForm(object): # I don't like subclassing shut up
         self.persist = False
         self._user = user
 
-    def set_timeout(self,timeout:int) -> None:
+    def set_timeout(self, timeout: int) -> None:
         """Set the timeout for the form. Defaults to 120 seconds.
 
         Parameters
@@ -40,7 +48,7 @@ class ReactionForm(object): # I don't like subclassing shut up
         """
         self.timeout = timeout
 
-    def add_reaction(self,reaction:str,result) -> dict:
+    def add_reaction(self, reaction: str, result) -> dict:
         """Adds a question to the form.
 
         Returns the full list of questions the form has, including the newly added one. The questions are held
@@ -77,36 +85,54 @@ class ReactionForm(object): # I don't like subclassing shut up
 
         def check(r):
             if self._user is not None:
-                return r.message_id == message.id and str(r.emoji) in rl and r.user_id == self._user.id
+                return (
+                    r.message_id == message.id
+                    and str(r.emoji) in rl
+                    and r.user_id == self._user.id
+                )
             else:
                 return r.message_id == message.id and str(r.emoji) in rl
 
         try:
-            r = await self._bot.wait_for('raw_reaction_add',check=check,timeout=self.timeout)
+            r = await self._bot.wait_for(
+                "raw_reaction_add", check=check, timeout=self.timeout
+            )
         except:
             return await message.edit("Timeout!")
         return self._reactions[str(r.emoji)]
 
+
+class ReactConfirm(ReactionForm):
+    def __init__(
+        self,
+        message: discord.Message,
+        bot: Union[discord.Client, commands.Bot],
+        user: Union[discord.Member, discord.User],
+    ):
+        super().__init__(message, bot, user=user)
+        self._reactions = {"✅": True, "❌": False}
+
+
 class ReactionMenu(object):
-    def __init__(self, ctx:discord.ext.commands.Context, embeds:List[discord.Embed]):
+    def __init__(self, ctx: discord.ext.commands.Context, embeds: List[discord.Embed]):
         self._ctx = ctx
         self._embeds = embeds
         self.timeout = 120
         self._mappings = {}
         self.removereaction = True
 
-    def set_timeout(self, timeout:int):
+    def set_timeout(self, timeout: int):
         """Sets the timeout for the menu.
 
         Parameters
         ----------
         timeout : int
             The timeout to be set in seconds.
-        """        
+        """
         int(timeout)
         self._timeout = timeout
 
-    def remove_reactions(self,bool:bool=True):
+    def remove_reactions(self, bool: bool = True):
         """Sets whether the bot should remove reactions or not. Useful if the bot doesn't have `Manage Messages`
 
         Parameters
@@ -115,7 +141,7 @@ class ReactionMenu(object):
             Whether to remove reactions or not., by default True
         """
 
-    def addemoji(self, emoji:str, page:int) -> bool:
+    def addemoji(self, emoji: str, page: int) -> bool:
         """Adds an emoji/page mapping to your menu.
 
         Parameters
@@ -134,12 +160,10 @@ class ReactionMenu(object):
             that everything was successful.
         """
         int(page)
-        if emoji in ["◀","⏹","▶"]:
+        if emoji in ["◀", "⏹", "▶"]:
             return False
         self._mappings[emoji] = page
         return True
-
-
 
     async def start(self, channel=None):
         """Starts the menu in the given channel.
@@ -157,46 +181,53 @@ class ReactionMenu(object):
         ------
         TypeError
             If channel isn't specified and ctx wasn't set on initialization, the form cannot continue.
-        """        
+        """
         current = 0
         ctx = self._ctx
         embeds = self._embeds
         cemojis = self._mappings
         if not channel:
             if not ctx:
-                raise TypeError("start() missing 1 required positional argument: 'channel' or class 'ctx'")
+                raise TypeError(
+                    "start() missing 1 required positional argument: 'channel' or 'ctx'"
+                )
             channel = ctx.channel
         msg = await ctx.send(embed=embeds[0])
         await msg.add_reaction("◀")
         await msg.add_reaction("⏹")
         await msg.add_reaction("▶")
-        emojis = ["◀","⏹","▶"]
+        emojis = ["◀", "⏹", "▶"]
         for e in cemojis.keys():
             await msg.add_reaction()
         while True:
+
             def check(r):
                 return str(r.emoji) in emojis and r.user_id == ctx.author.id
+
             try:
-                r = await ctx.bot.wait_for('raw_reaction_add',check=check,timeout=self.timeout)
+                r = await ctx.bot.wait_for(
+                    "raw_reaction_add", check=check, timeout=self.timeout
+                )
             except asyncio.TimeoutError:
                 return await msg.edit("Timeout!")
             if str(r.emoji) in emojis:
                 if str(r.emoji) == emojis[0]:
                     if current != 0:
-                        await msg.edit(embed=embeds[current-1])
-                        current = current-1
+                        await msg.edit(embed=embeds[current - 1])
+                        current = current - 1
                 if str(r.emoji) == emojis[1]:
                     await msg.clear_reactions()
                     break
                 if str(r.emoji) == emojis[2]:
-                    if current != len(embeds)-1:
-                        await msg.edit(embed=embeds[current+1])
+                    if current != len(embeds) - 1:
+                        await msg.edit(embed=embeds[current + 1])
                         current += 1
             if str(r.emoji) in cemojis.keys():
-                await msg.edit(embed=embeds[cemojis[str(r.emoji)]]-1)
+                await msg.edit(embed=embeds[cemojis[str(r.emoji)]] - 1)
                 current = cemojis[str(r.emoji)]
             if self.removereaction:
-                await msg.remove_reaction(r.emoji,ctx.author)
+                await msg.remove_reaction(r.emoji, ctx.author)
+
 
 """ # Soon...
 class NeoPaginator(object):
@@ -212,6 +243,7 @@ class NeoPaginator(object):
             else:
                 page.append(i)
 """
+
 
 class InvalidColor(Exception):
     pass
