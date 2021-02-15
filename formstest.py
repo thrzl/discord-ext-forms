@@ -7,12 +7,17 @@ bot = commands.Bot(command_prefix="!")
 @bot.command()
 async def testform(ctx):
     form = forms.Form(ctx,'Title')
-    form.add_question('Question 1')
-    form.add_question('Question 2')
-    form.add_question('Question 3')
-
+    form.add_question('Give me an invite link!','invite','invite')
+    form.add_question('Mention a Channel','channel','channel')
+    form.add_question('Ping a User!','member','member')
+    form.edit_and_delete(True)
+    form.set_timeout(60)
+    await form.set_color("#7289DA")
+    print("Starting form...")
     result = await form.start()
-    await ctx.send(f"```py\n{result}\n```")
+    print("Completed form!")
+    embed=discord.Embed(title="Data",description=f"Invite: {result.invite.guild}\nChannel: {result.channel.mention}\nMember: {result.member.mention}")
+    await ctx.send(embed=embed)
 
 @bot.command()
 async def reactionform(ctx):

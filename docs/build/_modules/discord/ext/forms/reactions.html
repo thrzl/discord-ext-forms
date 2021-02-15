@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1"/><link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" />
 
     <meta name="generator" content="sphinx-3.4.2, furo 2020.12.30.beta24"/>
-        <title>discord.ext.forms.reactions - discord-ext-forms 2.6.0 documentation</title>
+        <title>discord.ext.forms.reactions - discord-ext-forms 2.6.12 documentation</title>
       <link rel="stylesheet" href="../../../../_static/styles/furo.css?digest=33d2fc4f3f180ec1ffc6524e273e21d7d58cbe49">
     <link rel="stylesheet" href="../../../../_static/pygments.css">
     <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="../../../../_static/pygments_dark.css">
@@ -94,7 +94,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../../index.html"><div class="brand">discord-ext-forms 2.6.0 documentation</div></a>
+      <a href="../../../../index.html"><div class="brand">discord-ext-forms 2.6.12 documentation</div></a>
     </div>
     <div class="header-right">
       <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
@@ -108,7 +108,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../../index.html">
   
   
-  <span class="sidebar-brand-text">discord-ext-forms 2.6.0 documentation</span>
+  <span class="sidebar-brand-text">discord-ext-forms 2.6.12 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../../../search.html">
   <input class="sidebar-search" placeholder=Search name="q">
@@ -148,7 +148,9 @@
 <span class="kn">import</span> <span class="nn">typing</span>
 <span class="kn">import</span> <span class="nn">asyncio</span>
 <span class="kn">import</span> <span class="nn">re</span>
-<div class="viewcode-block" id="ReactionForm"><a class="viewcode-back" href="../../../../API.html#discord.ext.forms.reactions.ReactionForm">[docs]</a><span class="k">class</span> <span class="nc">ReactionForm</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span> <span class="c1"># I don't like subclassing shut up</span>
+
+
+<div class="viewcode-block" id="ReactionForm"><a class="viewcode-back" href="../../../../API.html#discord.ext.forms.reactions.ReactionForm">[docs]</a><span class="k">class</span> <span class="nc">ReactionForm</span><span class="p">:</span>  <span class="c1"># I don't like subclassing shut up</span>
     <span class="sd">"""</span>
 <span class="sd">    The Reaction input object.</span>
 
@@ -165,7 +167,13 @@
 <span class="sd">    user : typing.Union[discord.Member, discord.User]</span>
 <span class="sd">        The member or user who should be able to use the form. If none, the form will be open to anyone.</span>
 <span class="sd">    """</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span><span class="n">discord</span><span class="o">.</span><span class="n">Message</span><span class="p">,</span> <span class="n">bot</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">discord</span><span class="o">.</span><span class="n">Client</span><span class="p">,</span> <span class="n">commands</span><span class="o">.</span><span class="n">Bot</span><span class="p">],</span><span class="n">user</span><span class="p">:</span><span class="n">Union</span><span class="p">[</span><span class="n">discord</span><span class="o">.</span><span class="n">Member</span><span class="p">,</span> <span class="n">discord</span><span class="o">.</span><span class="n">User</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">message</span><span class="p">:</span> <span class="n">discord</span><span class="o">.</span><span class="n">Message</span><span class="p">,</span>
+        <span class="n">bot</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">discord</span><span class="o">.</span><span class="n">Client</span><span class="p">,</span> <span class="n">commands</span><span class="o">.</span><span class="n">Bot</span><span class="p">],</span>
+        <span class="n">user</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">discord</span><span class="o">.</span><span class="n">Member</span><span class="p">,</span> <span class="n">discord</span><span class="o">.</span><span class="n">User</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_msg</span> <span class="o">=</span> <span class="n">message</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_bot</span> <span class="o">=</span> <span class="n">bot</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_reactions</span> <span class="o">=</span> <span class="p">{}</span>
@@ -173,7 +181,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">persist</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_user</span> <span class="o">=</span> <span class="n">user</span>
 
-<div class="viewcode-block" id="ReactionForm.set_timeout"><a class="viewcode-back" href="../../../../API.html#discord.ext.forms.reactions.ReactionForm.set_timeout">[docs]</a>    <span class="k">def</span> <span class="nf">set_timeout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">timeout</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="ReactionForm.set_timeout"><a class="viewcode-back" href="../../../../API.html#discord.ext.forms.reactions.ReactionForm.set_timeout">[docs]</a>    <span class="k">def</span> <span class="nf">set_timeout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Set the timeout for the form. Defaults to 120 seconds.</span>
 
 <span class="sd">        Parameters</span>
@@ -183,7 +191,7 @@
 <span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span></div>
 
-<div class="viewcode-block" id="ReactionForm.add_reaction"><a class="viewcode-back" href="../../../../API.html#discord.ext.forms.reactions.ReactionForm.add_reaction">[docs]</a>    <span class="k">def</span> <span class="nf">add_reaction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">reaction</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">result</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<div class="viewcode-block" id="ReactionForm.add_reaction"><a class="viewcode-back" href="../../../../API.html#discord.ext.forms.reactions.ReactionForm.add_reaction">[docs]</a>    <span class="k">def</span> <span class="nf">add_reaction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reaction</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
         <span class="sd">"""Adds a question to the form.</span>
 
 <span class="sd">        Returns the full list of questions the form has, including the newly added one. The questions are held</span>
@@ -220,36 +228,54 @@
 
         <span class="k">def</span> <span class="nf">check</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_user</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">message_id</span> <span class="o">==</span> <span class="n">message</span><span class="o">.</span><span class="n">id</span> <span class="ow">and</span> <span class="nb">str</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">emoji</span><span class="p">)</span> <span class="ow">in</span> <span class="n">rl</span> <span class="ow">and</span> <span class="n">r</span><span class="o">.</span><span class="n">user_id</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_user</span><span class="o">.</span><span class="n">id</span>
+                <span class="k">return</span> <span class="p">(</span>
+                    <span class="n">r</span><span class="o">.</span><span class="n">message_id</span> <span class="o">==</span> <span class="n">message</span><span class="o">.</span><span class="n">id</span>
+                    <span class="ow">and</span> <span class="nb">str</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">emoji</span><span class="p">)</span> <span class="ow">in</span> <span class="n">rl</span>
+                    <span class="ow">and</span> <span class="n">r</span><span class="o">.</span><span class="n">user_id</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_user</span><span class="o">.</span><span class="n">id</span>
+                <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">message_id</span> <span class="o">==</span> <span class="n">message</span><span class="o">.</span><span class="n">id</span> <span class="ow">and</span> <span class="nb">str</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">emoji</span><span class="p">)</span> <span class="ow">in</span> <span class="n">rl</span>
 
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">r</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bot</span><span class="o">.</span><span class="n">wait_for</span><span class="p">(</span><span class="s1">'raw_reaction_add'</span><span class="p">,</span><span class="n">check</span><span class="o">=</span><span class="n">check</span><span class="p">,</span><span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">)</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bot</span><span class="o">.</span><span class="n">wait_for</span><span class="p">(</span>
+                <span class="s2">"raw_reaction_add"</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="n">check</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span>
+            <span class="p">)</span>
         <span class="k">except</span><span class="p">:</span>
             <span class="k">return</span> <span class="k">await</span> <span class="n">message</span><span class="o">.</span><span class="n">edit</span><span class="p">(</span><span class="s2">"Timeout!"</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reactions</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">emoji</span><span class="p">)]</span></div></div>
 
+
+<div class="viewcode-block" id="ReactConfirm"><a class="viewcode-back" href="../../../../API.html#discord.ext.forms.reactions.ReactConfirm">[docs]</a><span class="k">class</span> <span class="nc">ReactConfirm</span><span class="p">(</span><span class="n">ReactionForm</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">message</span><span class="p">:</span> <span class="n">discord</span><span class="o">.</span><span class="n">Message</span><span class="p">,</span>
+        <span class="n">bot</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">discord</span><span class="o">.</span><span class="n">Client</span><span class="p">,</span> <span class="n">commands</span><span class="o">.</span><span class="n">Bot</span><span class="p">],</span>
+        <span class="n">user</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">discord</span><span class="o">.</span><span class="n">Member</span><span class="p">,</span> <span class="n">discord</span><span class="o">.</span><span class="n">User</span><span class="p">],</span>
+    <span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">bot</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reactions</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"✅"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">"❌"</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span></div>
+
+
 <div class="viewcode-block" id="ReactionMenu"><a class="viewcode-back" href="../../../../API.html#discord.ext.forms.reactions.ReactionMenu">[docs]</a><span class="k">class</span> <span class="nc">ReactionMenu</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctx</span><span class="p">:</span><span class="n">discord</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">commands</span><span class="o">.</span><span class="n">Context</span><span class="p">,</span> <span class="n">embeds</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="n">discord</span><span class="o">.</span><span class="n">Embed</span><span class="p">]):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctx</span><span class="p">:</span> <span class="n">discord</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">commands</span><span class="o">.</span><span class="n">Context</span><span class="p">,</span> <span class="n">embeds</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">discord</span><span class="o">.</span><span class="n">Embed</span><span class="p">]):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ctx</span> <span class="o">=</span> <span class="n">ctx</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_embeds</span> <span class="o">=</span> <span class="n">embeds</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="mi">120</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_mappings</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">removereaction</span> <span class="o">=</span> <span class="kc">True</span>
 
-<div class="viewcode-block" id="ReactionMenu.set_timeout"><a class="viewcode-back" href="../../../../API.html#discord.ext.forms.reactions.ReactionMenu.set_timeout">[docs]</a>    <span class="k">def</span> <span class="nf">set_timeout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span><span class="nb">int</span><span class="p">):</span>
+<div class="viewcode-block" id="ReactionMenu.set_timeout"><a class="viewcode-back" href="../../../../API.html#discord.ext.forms.reactions.ReactionMenu.set_timeout">[docs]</a>    <span class="k">def</span> <span class="nf">set_timeout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
         <span class="sd">"""Sets the timeout for the menu.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        timeout : int</span>
 <span class="sd">            The timeout to be set in seconds.</span>
-<span class="sd">        """</span>        
+<span class="sd">        """</span>
         <span class="nb">int</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_timeout</span> <span class="o">=</span> <span class="n">timeout</span></div>
 
-<div class="viewcode-block" id="ReactionMenu.remove_reactions"><a class="viewcode-back" href="../../../../API.html#discord.ext.forms.reactions.ReactionMenu.remove_reactions">[docs]</a>    <span class="k">def</span> <span class="nf">remove_reactions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="nb">bool</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="ReactionMenu.remove_reactions"><a class="viewcode-back" href="../../../../API.html#discord.ext.forms.reactions.ReactionMenu.remove_reactions">[docs]</a>    <span class="k">def</span> <span class="nf">remove_reactions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">bool</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
         <span class="sd">"""Sets whether the bot should remove reactions or not. Useful if the bot doesn't have `Manage Messages`</span>
 
 <span class="sd">        Parameters</span>
@@ -258,7 +284,7 @@
 <span class="sd">            Whether to remove reactions or not., by default True</span>
 <span class="sd">        """</span></div>
 
-<div class="viewcode-block" id="ReactionMenu.addemoji"><a class="viewcode-back" href="../../../../API.html#discord.ext.forms.reactions.ReactionMenu.addemoji">[docs]</a>    <span class="k">def</span> <span class="nf">addemoji</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">emoji</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">page</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<div class="viewcode-block" id="ReactionMenu.addemoji"><a class="viewcode-back" href="../../../../API.html#discord.ext.forms.reactions.ReactionMenu.addemoji">[docs]</a>    <span class="k">def</span> <span class="nf">addemoji</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">emoji</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">page</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">"""Adds an emoji/page mapping to your menu.</span>
 
 <span class="sd">        Parameters</span>
@@ -277,12 +303,10 @@
 <span class="sd">            that everything was successful.</span>
 <span class="sd">        """</span>
         <span class="nb">int</span><span class="p">(</span><span class="n">page</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">emoji</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"◀"</span><span class="p">,</span><span class="s2">"⏹"</span><span class="p">,</span><span class="s2">"▶"</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">emoji</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"◀"</span><span class="p">,</span> <span class="s2">"⏹"</span><span class="p">,</span> <span class="s2">"▶"</span><span class="p">]:</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_mappings</span><span class="p">[</span><span class="n">emoji</span><span class="p">]</span> <span class="o">=</span> <span class="n">page</span>
         <span class="k">return</span> <span class="kc">True</span></div>
-
-
 
 <div class="viewcode-block" id="ReactionMenu.start"><a class="viewcode-back" href="../../../../API.html#discord.ext.forms.reactions.ReactionMenu.start">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">"""Starts the menu in the given channel.</span>
@@ -300,46 +324,53 @@
 <span class="sd">        ------</span>
 <span class="sd">        TypeError</span>
 <span class="sd">            If channel isn't specified and ctx wasn't set on initialization, the form cannot continue.</span>
-<span class="sd">        """</span>        
+<span class="sd">        """</span>
         <span class="n">current</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">ctx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ctx</span>
         <span class="n">embeds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_embeds</span>
         <span class="n">cemojis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mappings</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">channel</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">ctx</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"start() missing 1 required positional argument: 'channel' or class 'ctx'"</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                    <span class="s2">"start() missing 1 required positional argument: 'channel' or 'ctx'"</span>
+                <span class="p">)</span>
             <span class="n">channel</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">channel</span>
         <span class="n">msg</span> <span class="o">=</span> <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">embed</span><span class="o">=</span><span class="n">embeds</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
         <span class="k">await</span> <span class="n">msg</span><span class="o">.</span><span class="n">add_reaction</span><span class="p">(</span><span class="s2">"◀"</span><span class="p">)</span>
         <span class="k">await</span> <span class="n">msg</span><span class="o">.</span><span class="n">add_reaction</span><span class="p">(</span><span class="s2">"⏹"</span><span class="p">)</span>
         <span class="k">await</span> <span class="n">msg</span><span class="o">.</span><span class="n">add_reaction</span><span class="p">(</span><span class="s2">"▶"</span><span class="p">)</span>
-        <span class="n">emojis</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"◀"</span><span class="p">,</span><span class="s2">"⏹"</span><span class="p">,</span><span class="s2">"▶"</span><span class="p">]</span>
+        <span class="n">emojis</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"◀"</span><span class="p">,</span> <span class="s2">"⏹"</span><span class="p">,</span> <span class="s2">"▶"</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">cemojis</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
             <span class="k">await</span> <span class="n">msg</span><span class="o">.</span><span class="n">add_reaction</span><span class="p">()</span>
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+
             <span class="k">def</span> <span class="nf">check</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
                 <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">emoji</span><span class="p">)</span> <span class="ow">in</span> <span class="n">emojis</span> <span class="ow">and</span> <span class="n">r</span><span class="o">.</span><span class="n">user_id</span> <span class="o">==</span> <span class="n">ctx</span><span class="o">.</span><span class="n">author</span><span class="o">.</span><span class="n">id</span>
+
             <span class="k">try</span><span class="p">:</span>
-                <span class="n">r</span> <span class="o">=</span> <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">wait_for</span><span class="p">(</span><span class="s1">'raw_reaction_add'</span><span class="p">,</span><span class="n">check</span><span class="o">=</span><span class="n">check</span><span class="p">,</span><span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">)</span>
+                <span class="n">r</span> <span class="o">=</span> <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">wait_for</span><span class="p">(</span>
+                    <span class="s2">"raw_reaction_add"</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="n">check</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span>
+                <span class="p">)</span>
             <span class="k">except</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">TimeoutError</span><span class="p">:</span>
                 <span class="k">return</span> <span class="k">await</span> <span class="n">msg</span><span class="o">.</span><span class="n">edit</span><span class="p">(</span><span class="s2">"Timeout!"</span><span class="p">)</span>
             <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">emoji</span><span class="p">)</span> <span class="ow">in</span> <span class="n">emojis</span><span class="p">:</span>
                 <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">emoji</span><span class="p">)</span> <span class="o">==</span> <span class="n">emojis</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
                     <span class="k">if</span> <span class="n">current</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-                        <span class="k">await</span> <span class="n">msg</span><span class="o">.</span><span class="n">edit</span><span class="p">(</span><span class="n">embed</span><span class="o">=</span><span class="n">embeds</span><span class="p">[</span><span class="n">current</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-                        <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">-</span><span class="mi">1</span>
+                        <span class="k">await</span> <span class="n">msg</span><span class="o">.</span><span class="n">edit</span><span class="p">(</span><span class="n">embed</span><span class="o">=</span><span class="n">embeds</span><span class="p">[</span><span class="n">current</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
+                        <span class="n">current</span> <span class="o">=</span> <span class="n">current</span> <span class="o">-</span> <span class="mi">1</span>
                 <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">emoji</span><span class="p">)</span> <span class="o">==</span> <span class="n">emojis</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
                     <span class="k">await</span> <span class="n">msg</span><span class="o">.</span><span class="n">clear_reactions</span><span class="p">()</span>
                     <span class="k">break</span>
                 <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">emoji</span><span class="p">)</span> <span class="o">==</span> <span class="n">emojis</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span>
-                    <span class="k">if</span> <span class="n">current</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">embeds</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-                        <span class="k">await</span> <span class="n">msg</span><span class="o">.</span><span class="n">edit</span><span class="p">(</span><span class="n">embed</span><span class="o">=</span><span class="n">embeds</span><span class="p">[</span><span class="n">current</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
+                    <span class="k">if</span> <span class="n">current</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">embeds</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                        <span class="k">await</span> <span class="n">msg</span><span class="o">.</span><span class="n">edit</span><span class="p">(</span><span class="n">embed</span><span class="o">=</span><span class="n">embeds</span><span class="p">[</span><span class="n">current</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
                         <span class="n">current</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">emoji</span><span class="p">)</span> <span class="ow">in</span> <span class="n">cemojis</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-                <span class="k">await</span> <span class="n">msg</span><span class="o">.</span><span class="n">edit</span><span class="p">(</span><span class="n">embed</span><span class="o">=</span><span class="n">embeds</span><span class="p">[</span><span class="n">cemojis</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">emoji</span><span class="p">)]]</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                <span class="k">await</span> <span class="n">msg</span><span class="o">.</span><span class="n">edit</span><span class="p">(</span><span class="n">embed</span><span class="o">=</span><span class="n">embeds</span><span class="p">[</span><span class="n">cemojis</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">emoji</span><span class="p">)]]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
                 <span class="n">current</span> <span class="o">=</span> <span class="n">cemojis</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">emoji</span><span class="p">)]</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">removereaction</span><span class="p">:</span>
-                <span class="k">await</span> <span class="n">msg</span><span class="o">.</span><span class="n">remove_reaction</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">emoji</span><span class="p">,</span><span class="n">ctx</span><span class="o">.</span><span class="n">author</span><span class="p">)</span></div></div>
+                <span class="k">await</span> <span class="n">msg</span><span class="o">.</span><span class="n">remove_reaction</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">emoji</span><span class="p">,</span> <span class="n">ctx</span><span class="o">.</span><span class="n">author</span><span class="p">)</span></div></div>
+
 
 <span class="sd">""" # Soon...</span>
 <span class="sd">class NeoPaginator(object):</span>
@@ -356,6 +387,7 @@
 <span class="sd">                page.append(i)</span>
 <span class="sd">"""</span>
 
+
 <div class="viewcode-block" id="InvalidColor"><a class="viewcode-back" href="../../../../API.html#discord.ext.forms.reactions.InvalidColor">[docs]</a><span class="k">class</span> <span class="nc">InvalidColor</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
     <span class="k">pass</span></div>
 </pre></div>
@@ -368,7 +400,7 @@
         </div>
 
         <div class="related-information">
-              Copyright &#169; 2021, Mikey B
+              Copyright &#169; 2021, Mikey
             |
             Built with <a href="https://www.sphinx-doc.org/">Sphinx</a>
               and

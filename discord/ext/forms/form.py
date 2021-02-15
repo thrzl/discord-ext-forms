@@ -66,11 +66,11 @@ class Form:
         question : str
             The question as a string that should be added.
 
-        key : str, optional
-            The prefered key to be used. If none, defaults to the to the question. By default None.
+        key : str
+            What the attribute containing the answer should be called.
 
         qtype : str, optional
-            The input validation to be used (incomplete), by default None
+            The input validation to be used, by default None
 
         Returns
         -------
@@ -216,21 +216,8 @@ class Form:
 
         Returns
         -------
-        dict
-            A dictionary containing each question and its data.
-            Example:
-            ::
-
-                {'Key Specified':{
-                        'res':'answer goes here',
-                        'type':'input validation type'
-                        'question':'Question here'
-                    },
-                'Next Key Specified':{
-                    'res':'answer goes here',
-                    'type':'input validation type'
-                    'question':'Question here'
-                }
+        FormResponse
+            An object containing all of your keys as attributes.
         """
         elist = []
 
@@ -302,7 +289,7 @@ class Form:
                 self._questions[key] = ans
         for i in self._questions.keys():
             self._questions[i] = self._questions[i]
-        return self._questions
+        return FormResponse(self._questions)
 
 class InvalidColor(Exception):
     pass

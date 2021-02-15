@@ -14,22 +14,27 @@ Making a Basic Text Form
     @bot.command()
     async def testform(ctx):
         """Creates a basic form using discord.ext.forms!"""
-        form = Form(ctx,'Title') # Let's initialize our Form object!
+        form = forms.Form(ctx,'Title') # Initialize our form with the title "Title"
 
-        form.add_question('Question 1') # Adding question 'Question 1'
-        form.add_question('Question 2') # So on...
-        form.add_question('Question 3')
-        result = await form.start() # Let's start the form in the context's channel!
-        """
-        Result is a list of dictionaries containing each question and its answer.
-        """
-        return result
+        form.add_question('Give me an invite link!','invite','invite') # Add question "Give me an invite link" that should be called 'invite' and the type is an invite.
+        form.add_question('Mention a Channel','channel','channel') # Question: Mention a channel; Name: 'channel'; Type: Channel        form.add_question('Ping a User!','member','member')
+        form.add_question('Ping a User!','member','member') # Question: Ping a user; Name: 'member'; Type: member
 
-    >> [{'Question 1','user input'},{'Question 2','user input'},{'Question 3','user input'}].
+        form.edit_and_delete(True) # The form will now edit the existing embed and delete the response.
+
+        form.set_timeout(60) # Set the timeout to 60s
+        await form.set_color("#7289DA") # Set the color of the form's embeds
+
+        result = await form.start() # Run the form!
+        """
+        The form returned a FormResponse object with the attributes 'invite', 'channel', and 'member'. They return a discord.Invite, discord.TextChannel, and discord.Member respectively.
+        """
+        embed=discord.Embed(title="Data",description=f"Invite: {result.invite.guild}\nChannel: {result.channel.mention}\nMember: {result.member.mention}")
+        await ctx.send(embed=embed)
 
 This results in a form with 3 questions, as shown below (The output is not sent to the channel in the code above):
 
-.. image:: https://mikey.has-no-bra.in/eWrLkN.gif
+.. image:: https://mikey.has-no-bra.in/cFCv4s.gif
 
 Making a Basic Reaction Form
 ============================
@@ -61,5 +66,6 @@ Making a Basic Reaction Menu
         embed3=discord.Embed(description="This is embed3")
         rmenu = forms.ReactionMenu(ctx,[embed1,embed2,embed3])
         await rmenu.start()
+
 
 .. image:: https://mikey.has-no-bra.in/4XCG7t.gif

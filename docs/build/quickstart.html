@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1"/><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="forms.form module" href="API.html" /><link rel="prev" title="Welcome to discord.ext.forms’s docs!" href="index.html" />
 
     <meta name="generator" content="sphinx-3.4.2, furo 2020.12.30.beta24"/>
-        <title>Guide - discord-ext-forms 2.6.0 documentation</title>
+        <title>Guide - discord-ext-forms 2.6.12 documentation</title>
       <link rel="stylesheet" href="_static/styles/furo.css?digest=33d2fc4f3f180ec1ffc6524e273e21d7d58cbe49">
     <link rel="stylesheet" href="_static/pygments.css">
     <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="_static/pygments_dark.css">
@@ -94,7 +94,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">discord-ext-forms 2.6.0 documentation</div></a>
+      <a href="index.html"><div class="brand">discord-ext-forms 2.6.12 documentation</div></a>
     </div>
     <div class="header-right">
       <label class="toc-overlay-icon toc-header-icon" for="__toc">
@@ -108,7 +108,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
   
   
-  <span class="sidebar-brand-text">discord-ext-forms 2.6.0 documentation</span>
+  <span class="sidebar-brand-text">discord-ext-forms 2.6.12 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html">
   <input class="sidebar-search" placeholder=Search name="q">
@@ -153,22 +153,27 @@
 <span class="nd">@bot</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
 <span class="k">async</span> <span class="k">def</span> <span class="nf">testform</span><span class="p">(</span><span class="n">ctx</span><span class="p">):</span>
     <span class="sd">"""Creates a basic form using discord.ext.forms!"""</span>
-    <span class="n">form</span> <span class="o">=</span> <span class="n">Form</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="s1">'Title'</span><span class="p">)</span> <span class="c1"># Let's initialize our Form object!</span>
+    <span class="n">form</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="s1">'Title'</span><span class="p">)</span> <span class="c1"># Initialize our form with the title "Title"</span>
 
-    <span class="n">form</span><span class="o">.</span><span class="n">add_question</span><span class="p">(</span><span class="s1">'Question 1'</span><span class="p">)</span> <span class="c1"># Adding question 'Question 1'</span>
-    <span class="n">form</span><span class="o">.</span><span class="n">add_question</span><span class="p">(</span><span class="s1">'Question 2'</span><span class="p">)</span> <span class="c1"># So on...</span>
-    <span class="n">form</span><span class="o">.</span><span class="n">add_question</span><span class="p">(</span><span class="s1">'Question 3'</span><span class="p">)</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">form</span><span class="o">.</span><span class="n">start</span><span class="p">()</span> <span class="c1"># Let's start the form in the context's channel!</span>
+    <span class="n">form</span><span class="o">.</span><span class="n">add_question</span><span class="p">(</span><span class="s1">'Give me an invite link!'</span><span class="p">,</span><span class="s1">'invite'</span><span class="p">,</span><span class="s1">'invite'</span><span class="p">)</span> <span class="c1"># Add question "Give me an invite link" that should be called 'invite' and the type is an invite.</span>
+    <span class="n">form</span><span class="o">.</span><span class="n">add_question</span><span class="p">(</span><span class="s1">'Mention a Channel'</span><span class="p">,</span><span class="s1">'channel'</span><span class="p">,</span><span class="s1">'channel'</span><span class="p">)</span> <span class="c1"># Question: Mention a channel; Name: 'channel'; Type: Channel        form.add_question('Ping a User!','member','member')</span>
+    <span class="n">form</span><span class="o">.</span><span class="n">add_question</span><span class="p">(</span><span class="s1">'Ping a User!'</span><span class="p">,</span><span class="s1">'member'</span><span class="p">,</span><span class="s1">'member'</span><span class="p">)</span> <span class="c1"># Question: Ping a user; Name: 'member'; Type: member</span>
+
+    <span class="n">form</span><span class="o">.</span><span class="n">edit_and_delete</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># The form will now edit the existing embed and delete the response.</span>
+
+    <span class="n">form</span><span class="o">.</span><span class="n">set_timeout</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span> <span class="c1"># Set the timeout to 60s</span>
+    <span class="k">await</span> <span class="n">form</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="s2">"#7289DA"</span><span class="p">)</span> <span class="c1"># Set the color of the form's embeds</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">form</span><span class="o">.</span><span class="n">start</span><span class="p">()</span> <span class="c1"># Run the form!</span>
     <span class="sd">"""</span>
-<span class="sd">    Result is a list of dictionaries containing each question and its answer.</span>
+<span class="sd">    The form returned a FormResponse object with the attributes 'invite', 'channel', and 'member'. They return a discord.Invite, discord.TextChannel, and discord.Member respectively.</span>
 <span class="sd">    """</span>
-    <span class="k">return</span> <span class="n">result</span>
-
-<span class="o">&gt;&gt;</span> <span class="p">[{</span><span class="s1">'Question 1'</span><span class="p">,</span><span class="s1">'user input'</span><span class="p">},{</span><span class="s1">'Question 2'</span><span class="p">,</span><span class="s1">'user input'</span><span class="p">},{</span><span class="s1">'Question 3'</span><span class="p">,</span><span class="s1">'user input'</span><span class="p">}]</span><span class="o">.</span>
+    <span class="n">embed</span><span class="o">=</span><span class="n">discord</span><span class="o">.</span><span class="n">Embed</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">"Data"</span><span class="p">,</span><span class="n">description</span><span class="o">=</span><span class="sa">f</span><span class="s2">"Invite: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">invite</span><span class="o">.</span><span class="n">guild</span><span class="si">}</span><span class="se">\n</span><span class="s2">Channel: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">mention</span><span class="si">}</span><span class="se">\n</span><span class="s2">Member: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">member</span><span class="o">.</span><span class="n">mention</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">embed</span><span class="o">=</span><span class="n">embed</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>This results in a form with 3 questions, as shown below (The output is not sent to the channel in the code above):</p>
-<img alt="https://mikey.has-no-bra.in/eWrLkN.gif" src="https://mikey.has-no-bra.in/eWrLkN.gif"/>
+<img alt="https://mikey.has-no-bra.in/cFCv4s.gif" src="https://mikey.has-no-bra.in/cFCv4s.gif"/>
 </div>
 <div class="section" id="making-a-basic-reaction-form">
 <h1>Making a Basic Reaction Form<a class="headerlink" href="#making-a-basic-reaction-form" title="Permalink to this headline">¶</a></h1>
@@ -227,7 +232,7 @@
         </div>
 
         <div class="related-information">
-              Copyright &#169; 2021, Mikey B
+              Copyright &#169; 2021, Mikey
             |
             Built with <a href="https://www.sphinx-doc.org/">Sphinx</a>
               and

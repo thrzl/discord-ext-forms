@@ -36,8 +36,8 @@ extensions = [
     "sphinx.ext.napoleon",
     "sphinx.ext.viewcode",
     "numpydoc",
-    "sphinx.ext.apidoc",
-]  # ,'sphinx.ext.autodoc','sphinx.ext.autosummary']
+    'sphinx.ext.autodoc',
+    'sphinx.ext.autosummary']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
