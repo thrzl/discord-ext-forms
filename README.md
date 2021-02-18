@@ -32,7 +32,7 @@ async def testform(ctx):
 
 >> [{'Question 1','user input'},{'Question 2','user input'},{'Question 3','user input'}]
 ```
-![Example GIF](https://mikey.has-no-bra.in/eWrLkN.gif)
+![Example GIF](https://mikey.has-no-bra.in/9NoRXO.gif)
 Using this module, you can make a 3 question form with only 5 lines of code.
 
 ## Links
