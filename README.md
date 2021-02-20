@@ -29,8 +29,8 @@ async def testform(ctx):
     result = await form.start()
     return result
 
-result.first
->> "This was my response to question 1"
+>> result.first
+"This was my response to question 1"
 ```
 ![Example GIF](https://mikey.has-no-bra.in/9NoRXO.gif)
 Using this module, you can make a 3 question form with only 5 lines of code.
