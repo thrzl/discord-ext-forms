@@ -23,14 +23,14 @@ bot = commands.Bot(command_prefix="!")
 @bot.command()
 async def testform(ctx):
     form = Form(ctx,'Title')
-    form.add_question('Question 1')
-    form.add_question('Question 2')
-    form.add_question('Question 3')
+    form.add_question('Question 1','first')
+    form.add_question('Question 2','second')
+    form.add_question('Question 3','third')
     result = await form.start()
     return result
 
-
->> [{'Question 1','user input'},{'Question 2','user input'},{'Question 3','user input'}]
+result.first
+>> "This was my response to question 1"
 ```
 ![Example GIF](https://mikey.has-no-bra.in/9NoRXO.gif)
 Using this module, you can make a 3 question form with only 5 lines of code.
