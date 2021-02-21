@@ -204,7 +204,7 @@ class Form:
             newclr = color.replace("#","")
             color = f"0x{newclr}"
         color = await commands.ColourConverter().convert(self._ctx,color)
-        self._color = color
+        self.color = color
 
     async def start(self,channel=None) -> dict:
         """Starts the form in the current channel.
@@ -226,7 +226,7 @@ class Form:
 
         qlist = []
         for n, q in enumerate(self._questions.values()):
-            embed=discord.Embed(description=q['question'],color=self._color)
+            embed=discord.Embed(description=q['question'],color=self.color)
 
             embed.set_author(name=f"{self.title}: {n+1}/{len(self._questions)}",icon_url=self._bot.user.avatar_url)
 
