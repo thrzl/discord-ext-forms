@@ -1,5 +1,5 @@
 import discord
-from discord.ext import commands
+import discord.ext.commands as commands
 import re
 from typing import List
 import json
@@ -107,6 +107,12 @@ class Form:
                 return invite
             except Exception as e:
                 return False
+        elif qtype.lower() == 'category':
+            try:
+                category = await commands.CategoryChannelConverter().convert(self._ctx, answer)
+                return category
+            except Exception:
+                return False
         elif qtype.lower() == 'channel':
             try:
                 channel = await commands.TextChannelConverter().convert(self._ctx,answer)
@@ -143,10 +149,10 @@ class Form:
                 return emoji
             except:
                 try:
-                    assert emoji in UNICODE_EMOJI
+                    assert answer in UNICODE_EMOJI
                 except:
-                    return emoji
-                return True
+                    return False
+                return answer
         else:
             self._tries -= 1
             raise InvalidFormType(f"Type '{qtype}' is invalid!")

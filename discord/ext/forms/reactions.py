@@ -229,7 +229,6 @@ class ReactionMenu(object):
                 await msg.remove_reaction(r.emoji, ctx.author)
 
 
-""" # Soon...
 class NeoPaginator(object):
     def __init__(self, limit_per_page:int, entries:List):
         self._limit = limit_per_page
@@ -242,7 +241,10 @@ class NeoPaginator(object):
                 page = []
             else:
                 page.append(i)
-"""
+
+    @property
+    def pages(self):
+        return self.pages
 
 
 class InvalidColor(Exception):
