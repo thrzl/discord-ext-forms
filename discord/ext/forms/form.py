@@ -30,7 +30,7 @@ class Form:
         self.title = title
         self.timeout = 120
         self.editanddelete = False
-        self.color = None
+        self.color = 0x2F3136
         self._incorrectmsg = None
         self._retrymsg = None
         self._tries = None
@@ -86,7 +86,7 @@ class Form:
         """
         if not key:
             key = question
-        valid_qtypes = ['invite','channel','user','member','role','category']
+        valid_qtypes = ['invite','channel','user','member','role','category','emoji']
         dictionary = {'res':None,'question':question}
         if qtype:
             dictionary['type'] = None
