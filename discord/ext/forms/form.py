@@ -246,7 +246,6 @@ class Form:
 
         for embed in elist:
             ot = self._tries
-            self._tries = ot
             if self.editanddelete:
                 if not prompt:
                     prompt = await self._ctx.channel.send(embed=embed)
@@ -260,17 +259,16 @@ class Form:
                 return m.channel == prompt.channel and m.author == self._ctx.author
             question = None
             for x in self._questions.keys():
-                nx = self._questions[x]
-                if nx['question'] == embed.description:
+                if self._questions[x]['question'].lower() == embed.description.lower():
                     question = x
-
+                    nx = self._questions[x]
 
             msg = await self._bot.wait_for('message',check=check,timeout=self.timeout)
             ans = msg.content
             if self.editanddelete:
                 await msg.delete()
-            if self._tries:
-                key = question
+            key = question
+            if 'type' in self._questions[question].keys():
                 question = self._questions[question]
                 if 'type' in question.keys():
                     while True:
@@ -290,9 +288,11 @@ class Form:
                             if self.editanddelete:
                                 await msg.delete()
                 else:
-                    self._questions[key] = ans
+                    nx['res'] = ans
+                    self._questions[key] = nx
             else:
-                self._questions[key] = ans
+                nx['res'] = ans
+                self._questions[key] = nx
         for i in self._questions.keys():
             self._questions[i] = self._questions[i]
         return FormResponse(self._questions)
