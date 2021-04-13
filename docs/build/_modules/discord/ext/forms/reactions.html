@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/><link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" />
 
-    <meta name="generator" content="sphinx-3.4.2, furo 2020.12.30.beta24"/>
+    <meta name="generator" content="sphinx-3.5.4, furo 2020.12.30.beta24"/>
         <title>discord.ext.forms.reactions - discord-ext-forms 2.6.12 documentation</title>
       <link rel="stylesheet" href="../../../../_static/styles/furo.css?digest=33d2fc4f3f180ec1ffc6524e273e21d7d58cbe49">
     <link rel="stylesheet" href="../../../../_static/pygments.css">
@@ -372,20 +372,22 @@
                 <span class="k">await</span> <span class="n">msg</span><span class="o">.</span><span class="n">remove_reaction</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">emoji</span><span class="p">,</span> <span class="n">ctx</span><span class="o">.</span><span class="n">author</span><span class="p">)</span></div></div>
 
 
-<span class="sd">""" # Soon...</span>
-<span class="sd">class NeoPaginator(object):</span>
-<span class="sd">    def __init__(self, limit_per_page:int, entries:List):</span>
-<span class="sd">        self._limit = limit_per_page</span>
-<span class="sd">        self._entries = entries</span>
-<span class="sd">        self.pages = []</span>
-<span class="sd">        page = []</span>
-<span class="sd">        for i in entries:</span>
-<span class="sd">            if (entries.index(i)+1) % limit_per_page == 0:</span>
-<span class="sd">                self.pages.append(page)</span>
-<span class="sd">                page = []</span>
-<span class="sd">            else:</span>
-<span class="sd">                page.append(i)</span>
-<span class="sd">"""</span>
+<div class="viewcode-block" id="NeoPaginator"><a class="viewcode-back" href="../../../../API.html#discord.ext.forms.reactions.NeoPaginator">[docs]</a><span class="k">class</span> <span class="nc">NeoPaginator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">limit_per_page</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">entries</span><span class="p">:</span><span class="n">List</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_limit</span> <span class="o">=</span> <span class="n">limit_per_page</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_entries</span> <span class="o">=</span> <span class="n">entries</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pages</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">page</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">entries</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">entries</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">limit_per_page</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">pages</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">page</span><span class="p">)</span>
+                <span class="n">page</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">page</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">pages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pages</span></div>
 
 
 <div class="viewcode-block" id="InvalidColor"><a class="viewcode-back" href="../../../../API.html#discord.ext.forms.reactions.InvalidColor">[docs]</a><span class="k">class</span> <span class="nc">InvalidColor</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
