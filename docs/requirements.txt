@@ -2,3 +2,4 @@ furo
 Sphinx==3.5.4
 numpydoc
 discord.ext.forms
+emoji
