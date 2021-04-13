@@ -13,9 +13,9 @@
 import os
 import sys
 
-sys.path.insert(0, os.path.abspath("../discord"))
-sys.path.insert(0, os.path.abspath("../discord/ext"))
-sys.path.insert(0, os.path.abspath("../discord/ext/forms"))
+sys.path.insert(0, os.path.abspath("../../discord"))
+sys.path.insert(0, os.path.abspath("../../discord/ext"))
+sys.path.insert(0, os.path.abspath("../../discord/ext/forms"))
 
 # -- Project information -----------------------------------------------------
 
@@ -24,7 +24,7 @@ copyright = "2021, Mikey"
 author = "Mikey"
 
 # The full version, including alpha/beta/rc tags
-release = "2.6.12"
+release = "2.7.4"
 
 
 # -- General configuration ---------------------------------------------------
@@ -66,4 +66,4 @@ html_theme_options = {
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
 autosummary_gernerate = True
-# autodoc_mock_imports = ['discord']
+#autodoc_mock_imports = ['discord']
