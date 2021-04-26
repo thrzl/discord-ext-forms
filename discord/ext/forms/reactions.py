@@ -61,8 +61,7 @@ class ReactionForm:  # I don't like subclassing shut up
             The emoji to add.
         """
 
-        assert reaction in UNICODE_EMOJI
-        self._reactions[reaction] = result
+        self._reactions[str(reaction)] = result
         return self._reactions
 
     async def start(self) -> Any:
