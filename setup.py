@@ -24,5 +24,5 @@ setuptools.setup(
             'Topic :: Communications :: Chat',
             'Intended Audience :: Developers',
         ],
-        python_requires='>=3.7', install_requires=['discord.py>=1.5']
+        python_requires='>=3.7', install_requires=['discord.py>=1.5', 'emoji']
 )
