@@ -36,6 +36,7 @@ class Form:
         self._incorrectmsg = None
         self._retrymsg = None
         self._tries = None
+        self.cancelkeywords = ['cancel', 'stop', 'quit']
 
     def set_timeout(self,timeout:int) -> None:
         """Sets the timeout for the form.
@@ -57,6 +58,16 @@ class Form:
         """
         int(tries)
         self._tries = tries
+
+    def enable_cancelkeywords(self, enabled: bool):
+        if enabled:
+            self.cancelkeywords = ['cancel', 'stop', 'quit']
+        else:
+            self.cancelkeywords = []
+
+    def add_cancelkeyword(self, word):
+        self.cancelkeywords.append(word.lower())
+        return True
 
     def add_question(self,question,key:str=None,qtype=None) -> List[dict]:
         """Adds a question to the form.
@@ -267,6 +278,8 @@ class Form:
 
             msg = await self._bot.wait_for('message',check=check,timeout=self.timeout)
             ans = msg.content
+            if ans.lower() in self.cancelkeywords:
+                return None
             if self.editanddelete:
                 await msg.delete()
             key = question
@@ -325,6 +338,15 @@ class NaiveForm:
         self._incorrectmsg = None
         self._retrymsg = None
         self._tries = None
+        self.cancelkeywords = ['cancel', 'stop', 'quit']
+
+    def enable_cancelkeywords(self, enabled: bool):
+        if enabled:
+            self.cancelkeywords = ['cancel', 'stop', 'quit']
+
+    def add_cancelkeyword(self, word):
+        self.cancelkeywords.append(word.lower())
+        return True
 
     def set_timeout(self,timeout:int) -> None:
         """Sets the timeout for the form.
@@ -454,14 +476,8 @@ class NaiveForm:
 
     async def set_color(self,color:str) -> None:
         """Sets the color of the form embeds."""
-        match = re.match(r'(0x|#)(\d|(f|F|d|D|a|A|c|C)){6}', str(color))
-        if not match:
-            raise InvalidColor(f"{color} is invalid. Be sure to use colors such as '0xffffff'")
-        if color.startswith("#"):
-            newclr = color.replace("#","")
-            color = f"0x{newclr}"
-        color = await commands.ColourConverter().convert(self._ctx,color)
-        self.color = color
+        if isinstance(color, discord.Color): self.color = color
+        else: raise InvalidColor("This color is invalid! It should be a `discord.Color` instance.")
 
     async def start(self,channel=None) -> dict:
         """Starts the form in the current channel.
@@ -513,6 +529,7 @@ class NaiveForm:
 
             msg = await self._bot.wait_for('message',check=check,timeout=self.timeout)
             ans = msg.content
+            if ans.lower() in self.cancelkeywords: return None
             if self.editanddelete:
                 await msg.delete()
             key = question
