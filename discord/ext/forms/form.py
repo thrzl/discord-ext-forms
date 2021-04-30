@@ -250,12 +250,12 @@ class Form:
             ot = self._tries
             if self.editanddelete:
                 if not prompt:
-                    prompt = await self._ctx.channel.send(embed=embed)
+                    prompt = await channel.send(embed=embed)
                 else:
                     await prompt.edit(embed=embed)
 
             else:
-                prompt = await self._ctx.channel.send(embed=embed)
+                prompt = await channel.send(embed=embed)
 
             def check(m):
                 return m.channel == prompt.channel and m.author == self._ctx.author
@@ -308,11 +308,13 @@ class NaiveForm:
     Parameters:
     -----------
 
-        ctx (discord.ext.commands.Context): The context of the form.
-
         title (str): The title of the form.
+
+        channel (discord.TextChannel): The channel that the form should be sent to.
+
+        bot (discord.ext.commands.Bot): The bot that will be running the form.
     """
-    def __init__(self,  title, channel: typing.Union[discord.abc.PrivateChannel, discord.abc.GuildChannel]=None, bot: commands.Bot=None):
+    def __init__(self,  title, channel: typing.Union[discord.abc.PrivateChannel, discord.abc.GuildChannel], bot: commands.Bot):
         self._channel = channel
         self._bot = bot
         self._questions = {}
@@ -497,12 +499,12 @@ class NaiveForm:
             ot = self._tries
             if self.editanddelete:
                 if not prompt:
-                    prompt = await self._ctx.channel.send(embed=embed)
+                    prompt = await channel.send(embed=embed)
                 else:
                     await prompt.edit(embed=embed)
 
             else:
-                prompt = await self._ctx.channel.send(embed=embed)
+                prompt = await channel.send(embed=embed)
 
             def check(m):
                 return m.channel == prompt.channel and m.author == self._ctx.author
