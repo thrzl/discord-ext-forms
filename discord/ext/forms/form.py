@@ -478,9 +478,6 @@ class NaiveForm:
         """
         elist = []
 
-        if not channel:
-            channel = self._ctx.channel
-
         qlist = []
         for n, q in enumerate(self._questions.values()):
             embed=discord.Embed(description=q['question'],color=self.color)
