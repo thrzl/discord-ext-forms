@@ -415,7 +415,7 @@ class NaiveForm:
 
     async def __validate_input(self,qtype,answer):
         if qtype.lower() == 'invite':
-            with aiohttp.ClientSession() as session:
+            async with aiohttp.ClientSession() as session:
                 r = await session.get(f'https://discord.com/api/invites/{answer}')
                 return r.status == 200
         elif qtype.lower() == 'channel':
@@ -479,7 +479,7 @@ class NaiveForm:
         if isinstance(color, discord.Color): self.color = color
         else: raise InvalidColor("This color is invalid! It should be a `discord.Color` instance.")
 
-    async def start(self,channel=None) -> dict:
+    async def start(self, author: typing.Union[discord.Member, discord.User]) -> dict:
         """Starts the form in the current channel.
 
         Parameters
@@ -505,6 +505,7 @@ class NaiveForm:
 
             elist.append(embed)
 
+        channel = self._channel
 
         prompt = None
 
@@ -520,7 +521,7 @@ class NaiveForm:
                 prompt = await channel.send(embed=embed)
 
             def check(m):
-                return m.channel == prompt.channel and m.author == self._ctx.author
+                return m.channel == prompt.channel and m.author == author
             question = None
             for x in self._questions.keys():
                 if self._questions[x]['question'].lower() == embed.description.lower():
