@@ -6,7 +6,6 @@ from typing import List
 import typing
 import json
 from emoji import UNICODE_EMOJI
-
 class FormResponse:
     def __init__(self,data:dict) -> None:
         for d in data.keys():
@@ -99,7 +98,7 @@ class Form:
         """
         if not key:
             key = question
-        valid_qtypes = ['invite','channel','user','member','role','category','emoji']
+        valid_qtypes = ['invite','channel','user','member','role','category','emoji', 'file']
         dictionary = {'res':None,'question':question}
         if qtype:
             dictionary['type'] = None
@@ -113,7 +112,8 @@ class Form:
         self.set_retry_message(f'Please try again.')
         return self._questions
 
-    async def __validate_input(self,qtype,answer):
+    async def __validate_input(self,qtype,message):
+        answer = message.content
         if qtype.lower() == 'invite':
             try:
                 invite = await commands.InviteConverter().convert(self._ctx,answer)
@@ -166,6 +166,11 @@ class Form:
                 except:
                     return False
                 return answer
+        elif qtype.lower() == "file":
+            try:
+                return message.attachments[0]
+            except IndexError:
+                return False
         else:
             self._tries -= 1
             raise InvalidFormType(f"Type '{qtype}' is invalid!")
@@ -287,7 +292,7 @@ class Form:
                 question = self._questions[question]
                 if 'type' in question.keys():
                     while True:
-                        result = await self.__validate_input(question['type'],ans)
+                        result = await self.__validate_input(question['type'],msg)
                         if result:
                             nx = question
                             nx['res'] = result
@@ -312,7 +317,8 @@ class Form:
             self._questions[i] = self._questions[i]
         return FormResponse(self._questions)
 
-class ContextAndChannelMissing(Exception):
+
+class MissingRequiredArgument(Exception):
     pass
 
 class NaiveForm:
@@ -327,11 +333,12 @@ class NaiveForm:
 
         bot (discord.ext.commands.Bot): The bot that will be running the form.
     """
-    def __init__(self,  title, channel: typing.Union[discord.abc.PrivateChannel, discord.abc.GuildChannel], bot: commands.Bot):
+    def __init__(self,  title, channel: typing.Union[discord.abc.PrivateChannel, discord.abc.GuildChannel], bot: commands.Bot, author: typing.Union[discord.Member, discord.User]):
         self._channel = channel
         self._bot = bot
         self._questions = {}
         self.title = title
+        self._author = author
         self.timeout = 120
         self.editanddelete = False
         self.color = 0x2F3136
@@ -343,6 +350,8 @@ class NaiveForm:
     def enable_cancelkeywords(self, enabled: bool):
         if enabled:
             self.cancelkeywords = ['cancel', 'stop', 'quit']
+        else:
+            self.cancelkeywords = []
 
     def add_cancelkeyword(self, word):
         self.cancelkeywords.append(word.lower())
@@ -399,7 +408,7 @@ class NaiveForm:
         """
         if not key:
             key = question
-        valid_qtypes = ['invite','channel', 'member', 'role', 'category', 'emoji']
+        valid_qtypes = ['invite','channel', 'member', 'role', 'category', 'emoji', 'file']
         dictionary = {'res':None,'question':question}
         if qtype:
             dictionary['type'] = None
@@ -413,7 +422,8 @@ class NaiveForm:
         self.set_retry_message(f'Please try again.')
         return self._questions
 
-    async def __validate_input(self,qtype,answer):
+    async def __validate_input(self,qtype,message):
+        answer = message.content
         if qtype.lower() == 'invite':
             async with aiohttp.ClientSession() as session:
                 r = await session.get(f'https://discord.com/api/invites/{answer}')
@@ -426,6 +436,11 @@ class NaiveForm:
             return bool(re.match(r'<@&\d{18}>', answer))
         elif qtype.lower() == 'emoji':
             return bool(re.match(r'<@&\d{18}>', answer)) or answer in UNICODE_EMOJI
+        elif qtype.lower() == "file":
+            try:
+                return message.attachments[0]
+            except IndexError:
+                return False
         else:
             raise InvalidFormType(f"Type '{qtype}' is invalid!")
 
@@ -479,7 +494,7 @@ class NaiveForm:
         if isinstance(color, discord.Color): self.color = color
         else: raise InvalidColor("This color is invalid! It should be a `discord.Color` instance.")
 
-    async def start(self, author: typing.Union[discord.Member, discord.User]) -> dict:
+    async def start(self) -> dict:
         """Starts the form in the current channel.
 
         Parameters
@@ -492,6 +507,7 @@ class NaiveForm:
         FormResponse
             An object containing all of your keys as attributes.
         """
+        author = self._author
         elist = []
 
         qlist = []
@@ -538,7 +554,7 @@ class NaiveForm:
                 question = self._questions[question]
                 if 'type' in question.keys():
                     while True:
-                        result = await self.__validate_input(question['type'],ans)
+                        result = await self.__validate_input(question['type'],msg)
                         if result:
                             nx = question
                             nx['res'] = result
