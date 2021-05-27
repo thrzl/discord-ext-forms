@@ -221,7 +221,7 @@ class Form:
 
     async def set_color(self,color:str) -> None:
         """Sets the color of the form embeds."""
-        match = re.match(r'(0x|#)(\d|(f|F|d|D|a|A|c|C)){6}', str(color))
+        match = re.match(r'(0x|#)(\d|(f|F|d|D|a|A|c|C|E|e|b|B)){6}', str(color))
         if not match:
             raise InvalidColor(f"{color} is invalid. Be sure to use colors such as '0xffffff'")
         if color.startswith("#"):
