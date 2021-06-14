@@ -24,7 +24,7 @@ class Form:
 
         title (str): The title of the form.
     """
-    def __init__(self, ctx:commands.Context, title):
+    def __init__(self, ctx:commands.Context, title, cleanup=False):
         self._ctx = ctx
         self._bot = ctx.bot
         self._questions = {}
@@ -36,6 +36,7 @@ class Form:
         self._retrymsg = None
         self._tries = None
         self.cancelkeywords = ['cancel', 'stop', 'quit']
+        self.cleanup = cleanup
 
     def set_timeout(self,timeout:int) -> None:
         """Sets the timeout for the form.
@@ -284,6 +285,12 @@ class Form:
             msg = await self._bot.wait_for('message',check=check,timeout=self.timeout)
             ans = msg.content
             if ans.lower() in self.cancelkeywords:
+                if self.cleanup:
+                    try:
+                        await msg.delete()
+                    except Exception:
+                        pass
+                    await prompt.delete()
                 return None
             if self.editanddelete:
                 await msg.delete()
@@ -315,6 +322,12 @@ class Form:
                 self._questions[key] = nx
         for i in self._questions.keys():
             self._questions[i] = self._questions[i]
+        if self.cleanup:
+            try:
+                await msg.delete()
+            except Exception:
+                pass
+            await prompt.delete()
         return FormResponse(self._questions)
 
 
