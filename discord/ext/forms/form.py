@@ -6,6 +6,7 @@ from typing import List
 import typing
 import json
 from emoji import UNICODE_EMOJI
+
 class FormResponse:
     def __init__(self,data:dict) -> None:
         for d in data.keys():
@@ -241,6 +242,9 @@ class Form:
         channel : discord.TextChannel, optional
             The channel to open the form in. If none, it is gotten from the context object set during initialization.
 
+        cleanup : bool
+            Whether to cleanup and delete the form after finishing or not.
+
         Returns
         -------
         FormResponse
@@ -348,7 +352,7 @@ class NaiveForm:
 
         bot (discord.ext.commands.Bot): The bot that will be running the form.
     """
-    def __init__(self,  title, channel: typing.Union[discord.abc.PrivateChannel, discord.abc.GuildChannel], bot: commands.Bot, author: typing.Union[discord.Member, discord.User]):
+    def __init__(self,  title, channel: typing.Union[discord.abc.PrivateChannel, discord.abc.GuildChannel], bot: commands.Bot, author: typing.Union[discord.Member, discord.User], cleanup=False):
         self._channel = channel
         self._bot = bot
         self._questions = {}
@@ -361,6 +365,7 @@ class NaiveForm:
         self._retrymsg = None
         self._tries = None
         self.cancelkeywords = ['cancel', 'stop', 'quit']
+        self.cleanup=cleanup
 
     def enable_cancelkeywords(self, enabled: bool):
         if enabled:
@@ -561,7 +566,14 @@ class NaiveForm:
 
             msg = await self._bot.wait_for('message',check=check,timeout=self.timeout)
             ans = msg.content
-            if ans.lower() in self.cancelkeywords: return None
+            if ans.lower() in self.cancelkeywords:
+                if self.cleanup:
+                    try:
+                        await msg.delete()
+                    except Exception:
+                        pass
+                    await prompt.delete()
+                return None
             if self.editanddelete:
                 await msg.delete()
             key = question
