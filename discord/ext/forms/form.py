@@ -68,7 +68,7 @@ class Form:
         self.cancelkeywords.append(word.lower())
         return True
 
-    def add_question(self,question,key:str=None,qtype=None) -> List[dict]:
+    def add_question(self,question,key:str=None,qtype=None,v=None) -> List[dict]:
         """Adds a question to the form.
         The valid qtypes are:
         `invite`,`channel`,`user`,`member`,`role`, and `category`
@@ -83,6 +83,9 @@ class Form:
 
         qtype : str, optional
             The input validation to be used, by default None
+
+        v : Callable[..., bool], optional
+            Custom validation for form fields, by default None
 
         Returns
         -------
@@ -105,6 +108,9 @@ class Form:
             if qtype.lower() not in valid_qtypes:
                 raise InvalidFormType(f"Type '{qtype}' is invalid!")
             dictionary['type'] = qtype
+            self._tries = 3
+        if v:
+            dictionary['type'] = v
             self._tries = 3
 
         self._questions[key] = dictionary
