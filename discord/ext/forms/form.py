@@ -298,7 +298,13 @@ class Form:
                 question = self._questions[question]
                 if 'type' in question.keys():
                     while True:
-                        result = await self.__validate_input(question['type'],msg)
+                        if callable(question['type']):
+                            if question['type'](ans):
+                                result = ans
+                            else:
+                                result = False
+                        else:
+                            result = await self.__validate_input(question['type'], ans)
                         if result:
                             nx = question
                             nx['res'] = result
