@@ -23,6 +23,8 @@ class Form:
         ctx (discord.ext.commands.Context): The context of the form.
 
         title (str): The title of the form.
+
+        cleanup (bool): Whether to cleanup and delete the form after finishing or not.
     """
     def __init__(self, ctx:commands.Context, title, cleanup=False):
         self._ctx = ctx
