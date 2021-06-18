@@ -1,4 +1,5 @@
 #from discord.ext.forms import Form, ReactionForm, ReactionMenu
+from discord.ext.forms.form import Validator
 import discord.ext.forms as forms
 from discord.ext import commands
 import discord
@@ -6,10 +7,16 @@ bot = commands.Bot(command_prefix="!")
 
 @bot.command()
 async def testform(ctx):
+    async def to_int(ctx, msg: discord.Message):
+        try:
+            return int(msg.content)
+        except Exception as e:
+            return False
     form = forms.Form(ctx,'Title')
-    form.add_question('Give me an invite link!','invite','invite')
-    form.add_question('Mention a Channel','channel','channel')
-    form.add_question('Ping a User!','member','member')
+    form.add_question('Give me an invite link!', 'invite', Validator('invite'))
+    form.add_question('Mention a Channel','channel', Validator('channel'))
+    form.add_question('Ping a User!','member', Validator('member'))
+    form.add_question('Give me a number!', 'number', to_int)
     form.edit_and_delete(True)
     form.set_timeout(60)
     await form.set_color("#7289DA")

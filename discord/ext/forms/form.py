@@ -4,8 +4,15 @@ import re
 import aiohttp
 from typing import List
 import typing
+from .helpers import funcs
 import json
 from emoji import UNICODE_EMOJI
+
+def Validator(qtype: str):
+    try:
+        return funcs[qtype]
+    except KeyError:
+        raise InvalidFormType(f'Type {qtype} is invalid!')
 
 class FormResponse:
     def __init__(self,data:dict) -> None:
@@ -36,7 +43,7 @@ class Form:
         self.editanddelete = False
         self.color = 0x2F3136
         self._incorrectmsg = None
-        self._retrymsg = None
+        self._retrymsg = "You have answered incorrectly."
         self._tries = None
         self.cancelkeywords = ['cancel', 'stop', 'quit']
         self.cleanup = cleanup
@@ -72,7 +79,7 @@ class Form:
         self.cancelkeywords.append(word.lower())
         return True
 
-    def add_question(self,question,key:str=None,qtype=None) -> List[dict]:
+    def add_question(self,question,key:str=None,qtype: List[typing.Union[Validator, typing.Callable]] = []) -> List[dict]:
         """Adds a question to the form.
         The valid qtypes are:
         `invite`,`channel`,`user`,`member`,`role`, and `category`
@@ -85,7 +92,7 @@ class Form:
         key : str
             What the attribute containing the answer should be called.
 
-        qtype : str, optional
+        qtype : List[Validator, function], optional
             The input validation to be used, by default None
 
         Returns
@@ -100,84 +107,22 @@ class Form:
             Is raised when the input validation type is invalid.
 
         """
+        if not isinstance(qtype, list):
+            qtype = [qtype]
         if not key:
             key = question
-        valid_qtypes = ['invite','channel','user','member','role','category','emoji', 'file']
         dictionary = {'res':None,'question':question}
-        if qtype:
-            dictionary['type'] = None
-            if qtype.lower() not in valid_qtypes:
-                raise InvalidFormType(f"Type '{qtype}' is invalid!")
-            dictionary['type'] = qtype
-            self._tries = 3
+        print(dictionary)
+        dictionary['type'] = qtype
+        print(dictionary)
+        self._tries = 3
 
         self._questions[key] = dictionary
+        print(self._questions)
         self.set_incorrect_message('You answered incorrectly too many times. Please try again.')
         self.set_retry_message(f'Please try again.')
+        print('-------------------------------------------')
         return self._questions
-
-    async def __validate_input(self,qtype,message):
-        answer = message.content
-        if qtype.lower() == 'invite':
-            try:
-                invite = await commands.InviteConverter().convert(self._ctx,answer)
-                return invite
-            except Exception as e:
-                return False
-        elif qtype.lower() == 'category':
-            try:
-                category = await commands.CategoryChannelConverter().convert(self._ctx, answer)
-                return category
-            except Exception:
-                return False
-        elif qtype.lower() == 'channel':
-            try:
-                channel = await commands.TextChannelConverter().convert(self._ctx,answer)
-                return channel
-            except:
-                return False
-        elif qtype.lower() == 'user':
-            try:
-                user = await commands.UserConverter().convert(self._ctx,answer)
-                return user
-            except:
-                return False
-        elif qtype.lower() == 'member':
-            try:
-                member = await commands.MemberConverter().convert(self._ctx,answer)
-                return member
-            except:
-                return False
-        elif qtype.lower() == 'role':
-            try:
-                role = await commands.RoleConverter().convert(self._ctx,answer)
-                return role
-            except:
-                return False
-        elif qtype.lower() == 'category':
-            try:
-                category = await commands.CategoryChannelConverter().convert(self._ctx,answer)
-                return category
-            except:
-                return False
-        elif qtype.lower() == 'emoji':
-            try:
-                emoji = await commands.EmojiConverter().convert(self._ctx,answer)
-                return emoji
-            except:
-                try:
-                    assert answer in UNICODE_EMOJI
-                except:
-                    return False
-                return answer
-        elif qtype.lower() == "file":
-            try:
-                return message.attachments[0]
-            except IndexError:
-                return False
-        else:
-            self._tries -= 1
-            raise InvalidFormType(f"Type '{qtype}' is invalid!")
 
     def edit_and_delete(self,choice:bool=None) -> bool:
         """Toggles the edit and delete feature.
@@ -221,7 +166,6 @@ class Form:
             The message to be set.
         """
         self._incorrectmsg = message
-
 
     async def set_color(self,color:str) -> None:
         """Sets the color of the form embeds."""
@@ -287,45 +231,48 @@ class Form:
                 if self._questions[x]['question'].lower() == embed.description.lower():
                     question = x
                     nx = self._questions[x]
-
-            msg = await self._bot.wait_for('message',check=check,timeout=self.timeout)
-            ans = msg.content
-            if ans.lower() in self.cancelkeywords:
-                if self.cleanup:
-                    try:
-                        await msg.delete()
-                    except Exception:
-                        pass
-                    await prompt.delete()
-                return None
-            if self.editanddelete:
-                await msg.delete()
-            key = question
-            if 'type' in self._questions[question].keys():
-                question = self._questions[question]
-                if 'type' in question.keys():
-                    while True:
-                        result = await self.__validate_input(question['type'],msg)
-                        if result:
-                            nx = question
+            while True:
+                msg = await self._bot.wait_for('message',check=check,timeout=self.timeout)
+                ans = msg.content
+                if ans.lower() in self.cancelkeywords:
+                    if self.cleanup:
+                        try:
+                            await msg.delete()
+                        except Exception:
+                            pass
+                        await prompt.delete()
+                    return None
+                if self.editanddelete:
+                    await msg.delete()
+                key = question
+                if 'type' in self._questions[question].keys():
+                    qinfo = self._questions[question]
+                    print(self._questions)
+                    for func in qinfo['type']:
+                        correct = False
+                        print(qinfo)
+                        print(type(func), func)
+                        result = await func(self._ctx, msg)
+                        print(bool(result is not None), result)
+                        if bool(result) is False:
+                            print('here')
+                            ot -= 1
+                            if ot <= 0:
+                                await channel.send(self._incorrectmsg)
+                                return None
+                            await channel.send(self._retrymsg + f" You have `{ot}` remaining.", delete_after=3)
+                        else:
+                            print('else')
+                            nx = qinfo
                             nx['res'] = result
                             self._questions[key] = nx
-                                    #self._questions[x] = ans
-                            #self._questions[question] = ans
-                            break
-                        else:
-                            self._tries -= 1
-                            await channel.send(self._retrymsg+f" You have `{self._tries}` remaining.",delete_after=3)
-                            msg = await self._bot.wait_for('message',check=check,timeout=self.timeout)
-                            ans = msg.content
-                            if self.editanddelete:
-                                await msg.delete()
+                            correct=True
                 else:
                     nx['res'] = ans
                     self._questions[key] = nx
-            else:
-                nx['res'] = ans
-                self._questions[key] = nx
+                    break
+                if correct:
+                    break
         for i in self._questions.keys():
             self._questions[i] = self._questions[i]
         if self.cleanup:
