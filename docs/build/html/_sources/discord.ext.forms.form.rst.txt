@@ -1,7 +1,0 @@
-discord.ext.forms.form module
-=============================
-
-.. automodule:: discord.ext.forms.form
-   :members:
-   :undoc-members:
-   :show-inheritance:

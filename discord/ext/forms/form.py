@@ -70,16 +70,30 @@ class Form:
         self._tries = tries
 
     def enable_cancelkeywords(self, enabled: bool):
+        """Enables or disables the cancellation of the form.
+
+        Parameters
+        ----------
+        enabled : bool
+            Whether the form is enabled or disabled.
+        """
         if enabled:
             self.cancelkeywords = ['cancel', 'stop', 'quit']
         else:
             self.cancelkeywords = []
 
-    def add_cancelkeyword(self, word):
+    def add_cancelkeyword(self, word: str):
+        """Adds a word that will cancel the form.
+
+        Parameters
+        ----------
+        word : str
+            The word to listen for.
+        """
         self.cancelkeywords.append(word.lower())
         return True
 
-    def add_question(self,question,key:str=None,qtype: List[typing.Union[Validator, typing.Callable]] = []) -> List[dict]:
+    def add_question(self, question, key:str=None, qtype: List[typing.Union[Validator, typing.Callable]] = []) -> List[dict]:
         """Adds a question to the form.
         The valid qtypes are:
         `invite`,`channel`,`user`,`member`,`role`, and `category`
@@ -315,14 +329,27 @@ class NaiveForm:
         self.cleanup=cleanup
 
     def enable_cancelkeywords(self, enabled: bool):
+        """Enables or disables the cancellation of the form.
+
+        Parameters
+        ----------
+        enabled : bool
+            Whether the form is enabled or disabled.
+        """
         if enabled:
             self.cancelkeywords = ['cancel', 'stop', 'quit']
         else:
             self.cancelkeywords = []
 
-    def add_cancelkeyword(self, word):
+    def add_cancelkeyword(self, word: str):
+        """Adds a word that will cancel the form.
+
+        Parameters
+        ----------
+        word : str
+            The word to listen for.
+        """
         self.cancelkeywords.append(word.lower())
-        return True
 
     def set_timeout(self,timeout:int) -> None:
         """Sets the timeout for the form.

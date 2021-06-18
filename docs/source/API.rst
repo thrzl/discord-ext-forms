@@ -1,5 +1,8 @@
+API Reference
+=============
+
 forms.form module
-=================
+^^^^^^^^^^^^^^^^^
 
 .. automodule:: discord.ext.forms.form
    :members:
@@ -7,7 +10,7 @@ forms.form module
    :show-inheritance:
 
 forms.reactions module
-======================
+^^^^^^^^^^^^^^^^^^^^^^
 
 .. automodule:: discord.ext.forms.reactions
    :members:

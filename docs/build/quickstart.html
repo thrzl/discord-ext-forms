@@ -1,13 +1,14 @@
 <!doctype html>
 <html class="no-js">
   <head><meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1"/><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="forms.form module" href="API.html" /><link rel="prev" title="Welcome to discord.ext.forms’s docs!" href="index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Validation Guide" href="validation.html" /><link rel="prev" title="Welcome to the docs of discord.ext.forms!" href="index.html" />
 
-    <meta name="generator" content="sphinx-3.5.4, furo 2020.12.30.beta24"/>
-        <title>Guide - discord-ext-forms 2.7.4 documentation</title>
-      <link rel="stylesheet" href="_static/styles/furo.css?digest=33d2fc4f3f180ec1ffc6524e273e21d7d58cbe49">
+    <meta name="generator" content="sphinx-4.0.2, furo 2021.06.18.beta36"/>
+        <title>Quickstart Guide - forms 3.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/styles/furo.css?digest=9b17055c4366e8b2949c66d6a9d8b0efe4dbaa60">
     <link rel="stylesheet" href="_static/pygments.css">
-    <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="_static/pygments_dark.css">
     
 
 
@@ -40,12 +41,10 @@
   --color-brand-content: #7289DA;
   
   }
-</style><link rel="stylesheet" href="_static/styles/furo-extensions.css?digest=26485485040e7aaf717c13fd0188a5ad2c2deb60">
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script defer="defer" src="_static/jquery.js"></script>
-    <script defer="defer" src="_static/underscore.js"></script>
-    <script defer="defer" src="_static/doctools.js"></script>
-    <script defer src="_static/scripts/main.js?digest=e931d09b2a40c1bb82b542effe772014573baf67"></script></head>
+</style><link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css" />
+    <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="_static/pygments_dark.css">
+    <link rel="stylesheet" href="_static/styles/furo-extensions.css?digest=ee12cdd73c4bbac24afec78d92c4afd7c2d8ea7f"></head>
   <body dir="">
     
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -94,7 +93,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">discord-ext-forms 2.7.4 documentation</div></a>
+      <a href="index.html"><div class="brand">forms 3.0.0 documentation</div></a>
     </div>
     <div class="header-right">
       <label class="toc-overlay-icon toc-header-icon" for="__toc">
@@ -108,7 +107,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
   
   
-  <span class="sidebar-brand-text">discord-ext-forms 2.7.4 documentation</span>
+  <span class="sidebar-brand-text">forms 3.0.0 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html">
   <input class="sidebar-search" placeholder=Search name="q">
@@ -117,10 +116,11 @@
 </form><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption"><span class="caption-text">Usage</span></p>
 <ul class="current">
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Guide</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Quickstart Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#making-a-basic-text-form">Making a Basic Text Form</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#making-a-basic-reaction-form">Making a Basic Reaction Form</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#making-a-basic-reaction-menu">Making a Basic Reaction Menu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="validation.html">Validation Guide</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Reference</span></p>
 <ul>
@@ -140,11 +140,11 @@
         <label class="toc-overlay-icon toc-content-icon" for="__toc">
           <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
         </label>
-        <div class="section" id="guide">
-<h1>Guide<a class="headerlink" href="#guide" title="Permalink to this headline">¶</a></h1>
-<p>These examples are to help you with your development in discord.ext.forms! They are well commented and will help you out a lot! If you ever need more help, join the [Discord Server](<a class="reference external" href="https://discord.gg/bNtj2nFnYA">https://discord.gg/bNtj2nFnYA</a>)!</p>
-</div>
-<div class="section" id="making-a-basic-text-form">
+        <section id="quickstart-guide">
+<h1>Quickstart Guide<a class="headerlink" href="#quickstart-guide" title="Permalink to this headline">¶</a></h1>
+<p>These examples are to help you with your development in discord.ext.forms! They are well commented and will help you out a lot! If you ever need more help, join the <a class="reference external" href="https://discord.gg/bNtj2nFnYA">Discord Server!</a></p>
+</section>
+<section id="making-a-basic-text-form">
 <h1>Making a Basic Text Form<a class="headerlink" href="#making-a-basic-text-form" title="Permalink to this headline">¶</a></h1>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">discord.ext.forms</span> <span class="kn">import</span> <span class="n">Form</span>
 <span class="kn">from</span> <span class="nn">discord.ext</span> <span class="kn">import</span> <span class="n">commands</span>
@@ -174,8 +174,8 @@
 </div>
 <p>This results in a form with 3 questions, as shown below (The output is not sent to the channel in the code above):</p>
 <img alt="https://mikey.has-no-bra.in/cFCv4s.gif" src="https://mikey.has-no-bra.in/cFCv4s.gif"/>
-</div>
-<div class="section" id="making-a-basic-reaction-form">
+</section>
+<section id="making-a-basic-reaction-form">
 <h1>Making a Basic Reaction Form<a class="headerlink" href="#making-a-basic-reaction-form" title="Permalink to this headline">¶</a></h1>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@bot</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
 <span class="k">async</span> <span class="k">def</span> <span class="nf">reactionform</span><span class="p">(</span><span class="n">ctx</span><span class="p">):</span>
@@ -190,8 +190,8 @@
 </pre></div>
 </div>
 <img alt="https://mikey.has-no-bra.in/0ODqXf.gif" src="https://mikey.has-no-bra.in/0ODqXf.gif"/>
-</div>
-<div class="section" id="making-a-basic-reaction-menu">
+</section>
+<section id="making-a-basic-reaction-menu">
 <h1>Making a Basic Reaction Menu<a class="headerlink" href="#making-a-basic-reaction-menu" title="Permalink to this headline">¶</a></h1>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@bot</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
 <span class="k">async</span> <span class="k">def</span> <span class="nf">menu</span><span class="p">(</span><span class="n">ctx</span><span class="p">):</span>
@@ -203,18 +203,18 @@
 </pre></div>
 </div>
 <img alt="https://mikey.has-no-bra.in/4XCG7t.gif" src="https://mikey.has-no-bra.in/4XCG7t.gif"/>
-</div>
+</section>
 
       </article>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="API.html">
+          <a class="next-page" href="validation.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">forms.form module</div>
+                <div class="title">Validation Guide</div>
               </div>
               <svg><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -259,7 +259,7 @@
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">Guide</a></li>
+<li><a class="reference internal" href="#">Quickstart Guide</a></li>
 <li><a class="reference internal" href="#making-a-basic-text-form">Making a Basic Text Form</a></li>
 <li><a class="reference internal" href="#making-a-basic-reaction-form">Making a Basic Reaction Form</a></li>
 <li><a class="reference internal" href="#making-a-basic-reaction-menu">Making a Basic Reaction Menu</a></li>
@@ -273,5 +273,10 @@
     </aside>
   </main>
 </div>
-  </body>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/scripts/main.js?digest=e931d09b2a40c1bb82b542effe772014573baf67"></script></body>
 </html>

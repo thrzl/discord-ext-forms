@@ -1,13 +1,13 @@
 <!doctype html>
 <html class="no-js">
   <head><meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1"/><link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" />
 
-    <meta name="generator" content="sphinx-3.5.4, furo 2020.12.30.beta24"/>
-        <title>discord.ext.forms.reactions - discord-ext-forms 2.6.12 documentation</title>
-      <link rel="stylesheet" href="../../../../_static/styles/furo.css?digest=33d2fc4f3f180ec1ffc6524e273e21d7d58cbe49">
+    <meta name="generator" content="sphinx-4.0.2, furo 2021.06.18.beta36"/>
+        <title>discord.ext.forms.reactions - discord-ext-forms 2.7.4 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/styles/furo.css?digest=9b17055c4366e8b2949c66d6a9d8b0efe4dbaa60">
     <link rel="stylesheet" href="../../../../_static/pygments.css">
-    <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="../../../../_static/pygments_dark.css">
     
 
 
@@ -40,12 +40,10 @@
   --color-brand-content: #7289DA;
   
   }
-</style><link rel="stylesheet" href="../../../../_static/styles/furo-extensions.css?digest=26485485040e7aaf717c13fd0188a5ad2c2deb60">
-    <script id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
-    <script defer="defer" src="../../../../_static/jquery.js"></script>
-    <script defer="defer" src="../../../../_static/underscore.js"></script>
-    <script defer="defer" src="../../../../_static/doctools.js"></script>
-    <script defer src="../../../../_static/scripts/main.js?digest=e931d09b2a40c1bb82b542effe772014573baf67"></script></head>
+</style><link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css" />
+    <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="../../../../_static/pygments_dark.css">
+    <link rel="stylesheet" href="../../../../_static/styles/furo-extensions.css?digest=ee12cdd73c4bbac24afec78d92c4afd7c2d8ea7f"></head>
   <body dir="">
     
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -94,7 +92,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../../index.html"><div class="brand">discord-ext-forms 2.6.12 documentation</div></a>
+      <a href="../../../../index.html"><div class="brand">discord-ext-forms 2.7.4 documentation</div></a>
     </div>
     <div class="header-right">
       <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
@@ -108,7 +106,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../../index.html">
   
   
-  <span class="sidebar-brand-text">discord-ext-forms 2.6.12 documentation</span>
+  <span class="sidebar-brand-text">discord-ext-forms 2.7.4 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../../../search.html">
   <input class="sidebar-search" placeholder=Search name="q">
@@ -204,8 +202,7 @@
 <span class="sd">            The emoji to add.</span>
 <span class="sd">        """</span>
 
-        <span class="k">assert</span> <span class="n">reaction</span> <span class="ow">in</span> <span class="n">UNICODE_EMOJI</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_reactions</span><span class="p">[</span><span class="n">reaction</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reactions</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">reaction</span><span class="p">)]</span> <span class="o">=</span> <span class="n">result</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reactions</span></div>
 
 <div class="viewcode-block" id="ReactionForm.start"><a class="viewcode-back" href="../../../../API.html#discord.ext.forms.reactions.ReactionForm.start">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
@@ -419,5 +416,10 @@
     </aside>
   </main>
 </div>
-  </body>
+    <script id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/scripts/main.js?digest=e931d09b2a40c1bb82b542effe772014573baf67"></script></body>
 </html>

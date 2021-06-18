@@ -1,7 +1,0 @@
-ext.forms.form module
-=====================
-
-.. automodule:: ext.forms.form
-   :members:
-   :undoc-members:
-   :show-inheritance:

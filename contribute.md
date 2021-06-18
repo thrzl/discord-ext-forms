@@ -1,7 +1,11 @@
 # How to contribute
-To contribute, fork the project:
-![How to Fork](https://mikey.has-no-bra.in/ap8oYB.gif)
+### Step 1
+fork project
 
-Once you've forked it, a new repository will be available under your name! Once you make the edits to your repository, submit a pull request. All that's left is for me to look over your code!
+### Step 2
+do codes
+
+### Step 3
+Pull request time!
 
 **Working on your first Pull Request?** You can learn how from this *free* series [How to Contribute to an Open Source Project on GitHub](https://kcd.im/pull-request)
