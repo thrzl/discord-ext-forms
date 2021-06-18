@@ -461,7 +461,7 @@ class NaiveForm:
         if isinstance(color, discord.Color): self.color = color
         else: raise InvalidColor("This color is invalid! It should be a `discord.Color` instance.")
 
-    async def start(self) -> dict:
+    async def start(self,channel=None) -> dict:
         """Starts the form in the current channel.
 
         Parameters
@@ -469,13 +469,18 @@ class NaiveForm:
         channel : discord.TextChannel, optional
             The channel to open the form in. If none, it is gotten from the context object set during initialization.
 
+        cleanup : bool
+            Whether to cleanup and delete the form after finishing or not.
+
         Returns
         -------
         FormResponse
             An object containing all of your keys as attributes.
         """
-        author = self._author
         elist = []
+
+        if not channel:
+            channel = self._channel
 
         qlist = []
         for n, q in enumerate(self._questions.values()):
@@ -488,7 +493,6 @@ class NaiveForm:
 
             elist.append(embed)
 
-        channel = self._channel
 
         prompt = None
 
@@ -503,54 +507,63 @@ class NaiveForm:
             else:
                 prompt = await channel.send(embed=embed)
 
-            def check(m):
-                return m.channel == prompt.channel and m.author == author
+            def check(m: discord.Message):
+                return m.channel == prompt.channel and m.author == self._author
             question = None
             for x in self._questions.keys():
                 if self._questions[x]['question'].lower() == embed.description.lower():
                     question = x
                     nx = self._questions[x]
-
-            msg = await self._bot.wait_for('message',check=check,timeout=self.timeout)
-            ans = msg.content
-            if ans.lower() in self.cancelkeywords:
-                if self.cleanup:
-                    try:
-                        await msg.delete()
-                    except Exception:
-                        pass
-                    await prompt.delete()
-                return None
-            if self.editanddelete:
-                await msg.delete()
-            key = question
-            if 'type' in self._questions[question].keys():
-                question = self._questions[question]
-                if 'type' in question.keys():
-                    while True:
-                        result = await self.__validate_input(question['type'],msg)
-                        if result:
-                            nx = question
+            while True:
+                msg = await self._bot.wait_for('message',check=check,timeout=self.timeout)
+                ans = msg.content
+                if ans.lower() in self.cancelkeywords:
+                    if self.cleanup:
+                        try:
+                            await msg.delete()
+                        except Exception:
+                            pass
+                        await prompt.delete()
+                    return None
+                if self.editanddelete:
+                    await msg.delete()
+                key = question
+                if 'type' in self._questions[question].keys():
+                    qinfo = self._questions[question]
+                    print(self._questions)
+                    for func in qinfo['type']:
+                        correct = False
+                        print(qinfo)
+                        print(type(func), func)
+                        result = await func(self._channel, msg)
+                        print(bool(result is not None), result)
+                        if bool(result) is False:
+                            print('here')
+                            ot -= 1
+                            if ot <= 0:
+                                await channel.send(self._incorrectmsg)
+                                return None
+                            await channel.send(self._retrymsg + f" You have `{ot}` remaining.", delete_after=3)
+                        else:
+                            print('else')
+                            nx = qinfo
                             nx['res'] = result
                             self._questions[key] = nx
-                                    #self._questions[x] = ans
-                            #self._questions[question] = ans
-                            break
-                        else:
-                            self._tries -= 1
-                            await channel.send(self._retrymsg+f" You have `{self._tries}` remaining.",delete_after=3)
-                            msg = await self._bot.wait_for('message',check=check,timeout=self.timeout)
-                            ans = msg.content
-                            if self.editanddelete:
-                                await msg.delete()
+                            correct=True
                 else:
                     nx['res'] = ans
                     self._questions[key] = nx
-            else:
-                nx['res'] = ans
-                self._questions[key] = nx
+                    break
+                if correct:
+                    break
         for i in self._questions.keys():
             self._questions[i] = self._questions[i]
+        if self.cleanup:
+            try:
+                await msg.delete()
+            except Exception:
+                pass
+            await prompt.delete()
         return FormResponse(self._questions)
 
 
