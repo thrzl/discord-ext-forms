@@ -1,5 +1,4 @@
 # discord-ext-forms
-[![Documentation Status](https://readthedocs.org/projects/discord-ext-forms/badge/?version=latest)](https://discord-ext-forms.readthedocs.io/en/latest/?badge=latest)
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/isigebengu-mikey/discord-ext-forms/LICENSE)
 [![PR's Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](http://makeapullrequest.com)
 [![Downloads](https://pepy.tech/badge/discord-ext-forms)](https://pepy.tech/project/discord-ext-forms)
