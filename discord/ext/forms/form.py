@@ -15,12 +15,12 @@ def Validator(qtype: str):
         raise InvalidFormType(f'Type {qtype} is invalid!')
 
 class FormResponse:
-    def __init__(self,data:dict) -> None:
-        for d in data.keys():
+    def __init__(self, data:list) -> None:
+        for d in data:
             if isinstance(data[d], dict):
-                setattr(self,d,data[d]['res'])
+                setattr(self, d, data[d]['res'])
             else:
-                setattr(self,d,data[d])
+                setattr(self, d, data[d])
 
 class Form:
     """The basic form object.
@@ -37,7 +37,7 @@ class Form:
     def __init__(self, ctx:commands.Context, title, cleanup=False):
         self._ctx = ctx
         self._bot = ctx.bot
-        self._questions = {}
+        self._questions = []
         self.title = title
         self.timeout = 120
         self.editanddelete = False
@@ -48,7 +48,7 @@ class Form:
         self.cancelkeywords = ['cancel', 'stop', 'quit']
         self.cleanup = cleanup
 
-    def set_timeout(self,timeout:int) -> None:
+    def set_timeout(self, timeout:int) -> None:
         """Sets the timeout for the form.
 
         Parameters
@@ -58,7 +58,7 @@ class Form:
         """
         self.timeout = timeout
 
-    def set_tries(self,tries:int) -> None:
+    def set_tries(self, tries:int) -> None:
         """Set the amount of tries that are allowed during input validation. Defaults to 3.
 
         Parameters
@@ -96,7 +96,7 @@ class Form:
     def add_question(self, question, key:str=None, qtype: List[typing.Union[Validator, typing.Callable]] = []) -> List[dict]:
         """Adds a question to the form.
         The valid qtypes are:
-        `invite`,`channel`,`user`,`member`,`role`, and `category`
+        `invite`, `channel`, `user`, `member`, `role`, and `category`
 
         Parameters
         ----------
@@ -125,7 +125,7 @@ class Form:
             qtype = [qtype]
         if not key:
             key = question
-        dictionary = {'res':None,'question':question}
+        dictionary = {'res':None, 'question':question}
         print(dictionary)
         dictionary['type'] = qtype
         print(dictionary)
@@ -138,7 +138,7 @@ class Form:
         print('-------------------------------------------')
         return self._questions
 
-    def edit_and_delete(self,choice:bool=None) -> bool:
+    def edit_and_delete(self, choice:bool=None) -> bool:
         """Toggles the edit and delete feature.
 
         Parameters
@@ -161,7 +161,7 @@ class Form:
         else:
             self.editanddelete = choice
 
-    def set_retry_message(self,message:str):
+    def set_retry_message(self, message:str):
         """Sets the message to send if input validation fails.
 
         Parameters
@@ -171,7 +171,7 @@ class Form:
         """
         self._retrymsg = message
 
-    def set_incorrect_message(self,message:str):
+    def set_incorrect_message(self, message:str):
         """Sets the message to send if input validation fails and there are no more tries left..
 
         Parameters
@@ -181,18 +181,18 @@ class Form:
         """
         self._incorrectmsg = message
 
-    async def set_color(self,color:str) -> None:
+    async def set_color(self, color:str) -> None:
         """Sets the color of the form embeds."""
         match = re.match(r'(0x|#)(\d|(f|F|d|D|a|A|c|C|E|e|b|B)){6}', str(color))
         if not match:
             raise InvalidColor(f"{color} is invalid. Be sure to use colors such as '0xffffff'")
         if color.startswith("#"):
-            newclr = color.replace("#","")
+            newclr = color.replace("#", "")
             color = f"0x{newclr}"
-        color = await commands.ColourConverter().convert(self._ctx,color)
+        color = await commands.ColourConverter().convert(self._ctx, color)
         self.color = color
 
-    async def start(self,channel=None) -> dict:
+    async def start(self, channel=None) -> dict:
         """Starts the form in the current channel.
 
         Parameters
@@ -215,9 +215,9 @@ class Form:
 
         qlist = []
         for n, q in enumerate(self._questions.values()):
-            embed=discord.Embed(description=q['question'],color=self.color)
+            embed=discord.Embed(description=q['question'], color=self.color)
 
-            embed.set_author(name=f"{self.title}: {n+1}/{len(self._questions)}",icon_url=self._bot.user.avatar_url)
+            embed.set_author(name=f"{self.title}: {n+1}/{len(self._questions)}", icon_url=self._bot.user.avatar_url)
 
             if self.color:
                 embed.color=self.color
@@ -246,7 +246,7 @@ class Form:
                     question = x
                     nx = self._questions[x]
             while True:
-                msg = await self._bot.wait_for('message',check=check,timeout=self.timeout)
+                msg = await self._bot.wait_for('message', check=check, timeout=self.timeout)
                 ans = msg.content
                 if ans.lower() in self.cancelkeywords:
                     if self.cleanup:
@@ -351,7 +351,7 @@ class NaiveForm:
         """
         self.cancelkeywords.append(word.lower())
 
-    def set_timeout(self,timeout:int) -> None:
+    def set_timeout(self, timeout:int) -> None:
         """Sets the timeout for the form.
 
         Parameters
@@ -361,7 +361,7 @@ class NaiveForm:
         """
         self.timeout = timeout
 
-    def set_tries(self,tries:int) -> None:
+    def set_tries(self, tries:int) -> None:
         """Set the amount of tries that are allowed during input validation. Defaults to 3.
 
         Parameters
@@ -372,10 +372,10 @@ class NaiveForm:
         int(tries)
         self._tries = tries
 
-    def add_question(self,question,key:str=None,qtype=None) -> List[dict]:
+    def add_question(self, question, key:str=None, qtype=None) -> List[dict]:
         """Adds a question to the form.
         The valid qtypes are:
-        `invite`,`channel`,`member`,`role`, and `emoji`
+        `invite`, `channel`, `member`, `role`, and `emoji`
 
         Parameters
         ----------
@@ -402,8 +402,8 @@ class NaiveForm:
         """
         if not key:
             key = question
-        valid_qtypes = ['invite','channel', 'member', 'role', 'category', 'emoji', 'file']
-        dictionary = {'res':None,'question':question}
+        valid_qtypes = ['invite', 'channel', 'member', 'role', 'category', 'emoji', 'file']
+        dictionary = {'res':None, 'question':question}
         if qtype:
             dictionary['type'] = None
             if qtype.lower() not in valid_qtypes:
@@ -416,7 +416,7 @@ class NaiveForm:
         self.set_retry_message(f'Please try again.')
         return self._questions
 
-    async def __validate_input(self,qtype,message):
+    async def __validate_input(self, qtype, message):
         answer = message.content
         if qtype.lower() == 'invite':
             async with aiohttp.ClientSession() as session:
@@ -439,7 +439,7 @@ class NaiveForm:
             raise InvalidFormType(f"Type '{qtype}' is invalid!")
 
 
-    def edit_and_delete(self,choice:bool=None) -> bool:
+    def edit_and_delete(self, choice:bool=None) -> bool:
         """Toggles the edit and delete feature.
 
         Parameters
@@ -462,7 +462,7 @@ class NaiveForm:
         else:
             self.editanddelete = choice
 
-    def set_retry_message(self,message:str):
+    def set_retry_message(self, message:str):
         """Sets the message to send if input validation fails.
 
         Parameters
@@ -472,7 +472,7 @@ class NaiveForm:
         """
         self._retrymsg = message
 
-    def set_incorrect_message(self,message:str):
+    def set_incorrect_message(self, message:str):
         """Sets the message to send if input validation fails and there are no more tries left..
 
         Parameters
@@ -483,12 +483,12 @@ class NaiveForm:
         self._incorrectmsg = message
 
 
-    async def set_color(self,color:str) -> None:
+    async def set_color(self, color:str) -> None:
         """Sets the color of the form embeds."""
         if isinstance(color, discord.Color): self.color = color
         else: raise InvalidColor("This color is invalid! It should be a `discord.Color` instance.")
 
-    async def start(self,channel=None) -> dict:
+    async def start(self, channel=None) -> dict:
         """Starts the form in the current channel.
 
         Parameters
@@ -511,9 +511,9 @@ class NaiveForm:
 
         qlist = []
         for n, q in enumerate(self._questions.values()):
-            embed=discord.Embed(description=q['question'],color=self.color)
+            embed=discord.Embed(description=q['question'], color=self.color)
 
-            embed.set_author(name=f"{self.title}: {n+1}/{len(self._questions)}",icon_url=self._bot.user.avatar_url)
+            embed.set_author(name=f"{self.title}: {n+1}/{len(self._questions)}", icon_url=self._bot.user.avatar_url)
 
             if self.color:
                 embed.color=self.color
@@ -542,7 +542,7 @@ class NaiveForm:
                     question = x
                     nx = self._questions[x]
             while True:
-                msg = await self._bot.wait_for('message',check=check,timeout=self.timeout)
+                msg = await self._bot.wait_for('message', check=check, timeout=self.timeout)
                 ans = msg.content
                 if ans.lower() in self.cancelkeywords:
                     if self.cleanup:

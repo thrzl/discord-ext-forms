@@ -26,10 +26,10 @@ class ReactionForm:  # I don't like subclassing shut up
     """
 
     def __init__(
-        self,
-        message: discord.Message,
-        bot: Union[discord.Client, commands.Bot],
-        user: Union[discord.Member, discord.User] = None,
+        self, 
+        message: discord.Message, 
+        bot: Union[discord.Client, commands.Bot], 
+        user: Union[discord.Member, discord.User] = None, 
     ):
         self._msg = message
         self._bot = bot
@@ -103,10 +103,10 @@ class ReactionForm:  # I don't like subclassing shut up
 
 class ReactConfirm(ReactionForm):
     def __init__(
-        self,
-        message: discord.Message,
-        bot: Union[discord.Client, commands.Bot],
-        user: Union[discord.Member, discord.User],
+        self, 
+        message: discord.Message, 
+        bot: Union[discord.Client, commands.Bot], 
+        user: Union[discord.Member, discord.User], 
     ):
         super().__init__(message, bot, user=user)
         self._reactions = {"✅": True, "❌": False}
