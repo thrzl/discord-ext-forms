@@ -1,5 +1,7 @@
 version = 1
 
+exclude_patterns = ['sphinx-source/**', 'docs/**', '.vscode/**', '.pytest_cache/**', '.vscode/**', '.github/**', 'discord_ext_forms.egg-info/**']
+
 [[analyzers]]
 name = "python"
 enabled = true
