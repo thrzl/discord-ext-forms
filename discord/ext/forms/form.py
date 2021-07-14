@@ -5,14 +5,7 @@ import aiohttp
 from typing import List
 import typing
 from .helpers import funcs
-import json
-from inspect import getfullargspec
 from emoji import UNICODE_EMOJI
-
-# a function that prints and returns arguments
-def dbg(args):
-    print('dbg | ' + str(args))
-    return args
 
 def Validator(qtype: str):
     try:
@@ -317,7 +310,7 @@ class Form:
 class MissingRequiredArgument(Exception):
     pass
 
-class NaiveForm:
+class NaiveForm(Form):
     """The basic form object with naive validation. Should be used in scenarios where there is no context, such as reactions.
 
     Parameters:
@@ -339,54 +332,10 @@ class NaiveForm:
         self.editanddelete = False
         self.color = 0x2F3136
         self._incorrectmsg = None
-        self._retrymsg = None
+        self._retrymsg = "You have answered incorrectly"
         self._tries = None
         self.cancelkeywords = ['cancel', 'stop', 'quit']
         self.cleanup=cleanup
-
-    def enable_cancelkeywords(self, enabled: bool):
-        """Enables or disables the cancellation of the form.
-
-        Parameters
-        ----------
-        enabled : bool
-            Whether the form is enabled or disabled.
-        """
-        if enabled:
-            self.cancelkeywords = ['cancel', 'stop', 'quit']
-        else:
-            self.cancelkeywords = []
-
-    def add_cancelkeyword(self, word: str):
-        """Adds a word that will cancel the form.
-
-        Parameters
-        ----------
-        word : str
-            The word to listen for.
-        """
-        self.cancelkeywords.append(word.lower())
-
-    def set_timeout(self, timeout:int) -> None:
-        """Sets the timeout for the form.
-
-        Parameters
-        ----------
-
-            timeout (int): The timeout to be used.
-        """
-        self.timeout = timeout
-
-    def set_tries(self, tries:int) -> None:
-        """Set the amount of tries that are allowed during input validation. Defaults to 3.
-
-        Parameters
-        ----------
-        tries : int
-            The number of tries to set.
-        """
-        int(tries)
-        self._tries = tries
 
     def add_question(self, question, key:str=None, qtype=None) -> List[dict]:
         """Adds a question to the form.
@@ -525,20 +474,14 @@ class NaiveForm:
         if not channel:
             channel = self._channel
 
-        qlist = []
         for n, q in enumerate(self._questions.values()):
             embed=discord.Embed(description=q['question'], color=self.color)
-
             embed.set_author(name=f"{self.title}: {n+1}/{len(self._questions)}", icon_url=self._bot.user.avatar_url)
-
             if self.color:
                 embed.color=self.color
-
             elist.append(embed)
 
-
         prompt = None
-
         for embed in elist:
             ot = self._tries
             if self.editanddelete:
@@ -571,6 +514,7 @@ class NaiveForm:
                 if self.editanddelete:
                     await msg.delete()
                 key = question
+                self._questions[question]['res'] = ans
                 if 'type' in self._questions[question].keys():
                     qinfo = self._questions[question]
                     print(self._questions)
