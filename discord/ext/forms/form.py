@@ -6,7 +6,13 @@ from typing import List
 import typing
 from .helpers import funcs
 import json
+from inspect import getfullargspec
 from emoji import UNICODE_EMOJI
+
+# a function that prints and returns arguments
+def dbg(args):
+    print('dbg | ' + str(args))
+    return args
 
 def Validator(qtype: str):
     try:
@@ -15,12 +21,12 @@ def Validator(qtype: str):
         raise InvalidFormType(f'Type {qtype} is invalid!')
 
 class FormResponse:
-    def __init__(self, data:list) -> None:
+    def __init__(self, data: list) -> None:
         for d in data:
-            if isinstance(data[d], dict):
-                setattr(self, d, data[d]['res'])
+            if isinstance(data[data.index(d)], dict):
+                setattr(self, d['key'], data[data.index(d)]['res'])
             else:
-                setattr(self, d, data[d])
+                setattr(self, d['key'], data[d])
 
 class Form:
     """The basic form object.
@@ -125,13 +131,15 @@ class Form:
             qtype = [qtype]
         if not key:
             key = question
+
         dictionary = {'res':None, 'question':question}
         print(dictionary)
         dictionary['type'] = qtype
+        dictionary['key'] = key
         print(dictionary)
         self._tries = 3
 
-        self._questions[key] = dictionary
+        self._questions.append(dictionary)
         print(self._questions)
         self.set_incorrect_message('You answered incorrectly too many times. Please try again.')
         self.set_retry_message(f'Please try again.')
@@ -214,7 +222,7 @@ class Form:
             channel = self._ctx.channel
 
         qlist = []
-        for n, q in enumerate(self._questions.values()):
+        for n, q in enumerate(self._questions):
             embed=discord.Embed(description=q['question'], color=self.color)
 
             embed.set_author(name=f"{self.title}: {n+1}/{len(self._questions)}", icon_url=self._bot.user.avatar_url)
@@ -241,10 +249,10 @@ class Form:
             def check(m):
                 return m.channel == prompt.channel and m.author == self._ctx.author
             question = None
-            for x in self._questions.keys():
-                if self._questions[x]['question'].lower() == embed.description.lower():
+            for x in self._questions:
+                if self._questions[self._questions.index(x)]['question'].lower() == embed.description.lower():
                     question = x
-                    nx = self._questions[x]
+                    nx = self._questions[self._questions.index(x)]
             while True:
                 msg = await self._bot.wait_for('message', check=check, timeout=self.timeout)
                 ans = msg.content
@@ -259,8 +267,8 @@ class Form:
                 if self.editanddelete:
                     await msg.delete()
                 key = question
-                if 'type' in self._questions[question].keys():
-                    qinfo = self._questions[question]
+                if 'type' in self._questions[self._questions.index(question)].keys():
+                    qinfo = self._questions[self._questions.index(question)]
                     print(self._questions)
                     for func in qinfo['type']:
                         correct = False
@@ -279,16 +287,24 @@ class Form:
                             print('else')
                             nx = qinfo
                             nx['res'] = result
-                            self._questions[key] = nx
+                            for n, i in enumerate(self._questions):
+                                if (i) == (key):
+                                    self._questions[n] = nx
                             correct=True
+                    if len(qinfo['type']) == 0:
+                        nx = qinfo
+                        nx['res'] = ans
+                        for n, i in enumerate(self._questions):
+                            if (i) == (key):
+                                self._questions[n] = nx
                 else:
-                    nx['res'] = ans
-                    self._questions[key] = nx
+                    nx['res'] = msg.content
+                    self._questions[self._questions.index(question)] = nx
                     break
                 if correct:
                     break
-        for i in self._questions.keys():
-            self._questions[i] = self._questions[i]
+        # for i in self._questions.keys():
+        #     self._questions[i] = self._questions[i]
         if self.cleanup:
             try:
                 await msg.delete()
