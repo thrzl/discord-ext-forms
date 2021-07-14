@@ -403,51 +403,6 @@ class NaiveForm(Form):
         else:
             raise InvalidFormType(f"Type '{qtype}' is invalid!")
 
-
-    def edit_and_delete(self, choice:bool=None) -> bool:
-        """Toggles the edit and delete feature.
-
-        Parameters
-        ----------
-        choice : bool, optional
-            Whether you want the bot to edit the prompt and delete the input or not. If none, it toggles. The default for edit and delete is off. Default input is `None`
-
-        Returns
-        -------
-        bool
-            The state of edit and delete (after this is completed)
-        """
-        if choice == None:
-            if self.editanddelete == True:
-                self.editanddelete = False
-                return False
-            else:
-                self.editanddelete = True
-                return True
-        else:
-            self.editanddelete = choice
-
-    def set_retry_message(self, message:str):
-        """Sets the message to send if input validation fails.
-
-        Parameters
-        ----------
-        message : str
-            The message to be set.
-        """
-        self._retrymsg = message
-
-    def set_incorrect_message(self, message:str):
-        """Sets the message to send if input validation fails and there are no more tries left..
-
-        Parameters
-        ----------
-        message : str
-            The message to be set.
-        """
-        self._incorrectmsg = message
-
-
     async def set_color(self, color:str) -> None:
         """Sets the color of the form embeds."""
         if isinstance(color, discord.Color): self.color = color
