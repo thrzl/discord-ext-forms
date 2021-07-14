@@ -22,9 +22,9 @@ async def testform(ctx):
     form.edit_and_delete(True)
     form.set_timeout(60)
     await form.set_color("#7289DA")
-    print("Starting form...")
+    
     result = await form.start()
-    print("Completed form!")
+    
     embed=discord.Embed(title="Data", description=f"Invite: {result.invite.guild}\nChannel: {result.channel.mention}\nMember: {result.member.mention}\nNumber: `{result.number}`\n Feels: `{result.feels}`")
     await ctx.send(embed=embed)
 

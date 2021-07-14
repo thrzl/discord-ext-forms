@@ -126,17 +126,17 @@ class Form:
             key = question
 
         dictionary = {'res':None, 'question':question}
-        print(dictionary)
+        
         dictionary['type'] = qtype
         dictionary['key'] = key
-        print(dictionary)
+        
         self._tries = 3
 
         self._questions.append(dictionary)
-        print(self._questions)
+        
         self.set_incorrect_message('You answered incorrectly too many times. Please try again.')
         self.set_retry_message(f'Please try again.')
-        print('-------------------------------------------')
+        
         return self._questions
 
     def edit_and_delete(self, choice:bool=None) -> bool:
@@ -262,22 +262,22 @@ class Form:
                 key = question
                 if 'type' in self._questions[self._questions.index(question)].keys():
                     qinfo = self._questions[self._questions.index(question)]
-                    print(self._questions)
+                    
                     for func in qinfo['type']:
                         correct = False
-                        print(qinfo)
-                        print(type(func), func)
+                        
+                        
                         result = await func(self._ctx, msg)
-                        print(bool(result is not None), result)
+                        
                         if bool(result) is False:
-                            print('here')
+                            
                             ot -= 1
                             if ot <= 0:
                                 await channel.send(self._incorrectmsg)
                                 return None
                             await channel.send(self._retrymsg + f" You have `{ot}` remaining.", delete_after=3)
                         else:
-                            print('else')
+                            
                             nx = qinfo
                             nx['res'] = result
                             for n, i in enumerate(self._questions):
@@ -472,22 +472,22 @@ class NaiveForm(Form):
                 self._questions[question]['res'] = ans
                 if 'type' in self._questions[question].keys():
                     qinfo = self._questions[question]
-                    print(self._questions)
+                    
                     for func in qinfo['type']:
                         correct = False
-                        print(qinfo)
-                        print(type(func), func)
+                        
+                        
                         result = await func(self._channel, msg)
-                        print(bool(result is not None), result)
+                        
                         if bool(result) is False:
-                            print('here')
+                            
                             ot -= 1
                             if ot <= 0:
                                 await channel.send(self._incorrectmsg)
                                 return None
                             await channel.send(self._retrymsg + f" You have `{ot}` remaining.", delete_after=3)
                         else:
-                            print('else')
+                            
                             nx = qinfo
                             nx['res'] = result
                             self._questions[key] = nx
