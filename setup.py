@@ -5,11 +5,11 @@ with open('README.md', 'r') as file:
 
 setuptools.setup(
         name='discord-ext-forms', 
-        version='3.0.0', 
+        version='3.0.1',
         packages=["discord.ext.forms"], 
         author='Mikey B', 
         author_email='mikey@mikeyo.ml', 
-        license='MIT', 
+        license='MIT',
         description='Easy forms and surveys for discord.py.', 
         long_description=long_description, 
         long_description_content_type='text/markdown', 
