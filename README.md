@@ -8,7 +8,6 @@
 
 
 
-
 ### An easier way to make forms and surveys in discord.​py.
 This module is a very simple way to ask questions and create complete forms in discord.py without using an entire 30 lines!
 
