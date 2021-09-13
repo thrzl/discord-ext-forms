@@ -1,5 +1,5 @@
 furo
-Sphinx==3.5.4
+Sphinx==4.2.0
 numpydoc
 discord.ext.forms
 discord.py
