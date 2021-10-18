@@ -260,7 +260,8 @@ class Form:
                 if self.editanddelete:
                     await msg.delete()
                 key = question
-                if 'type' in self._questions[self._questions.index(question)].keys():
+                
+                if self._questions[self._questions.index(question)].get('type', None):
                     qinfo = self._questions[self._questions.index(question)]
                     
                     for func in qinfo['type']:
