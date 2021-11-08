@@ -5,15 +5,15 @@ with open('README.md', 'r') as file:
 
 setuptools.setup(
         name='discord-ext-forms', 
-        version='3.0.1',
+        version='3.0.2',
         packages=["discord.ext.forms"], 
-        author='Mikey B', 
-        author_email='mikey@mikeyo.ml', 
+        author='terabyte3', 
+        author_email='terabyte@terabyteis.me', 
         license='MIT',
         description='Easy forms and surveys for discord.py.', 
         long_description=long_description, 
         long_description_content_type='text/markdown', 
-        url='https://github.com/isigebengu-mikey/discord-ext-forms', 
+        url='https://github.com/terabyte3/discord-ext-forms', 
 #        packages=setuptools.find_packages(), 
         classifiers=[
             'Programming Language :: Python :: 3.7', 
