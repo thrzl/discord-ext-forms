@@ -10,10 +10,15 @@ python = "^3.8"
 furo = "^2022.3.4"
 Sphinx = "^4.4.0"
 numpydoc = "^1.2"
-"discord.py" = "^1.7.3"
+"discord.py" = {git = "https://github.com/Rapptz/discord.py.git", branch = "master"}
 emoji = "^1.7.0"
+aiohttp = "^3.8.1"
 
 [tool.poetry.dev-dependencies]
+types-emoji = "^1.2.7"
+mypy = "^0.940"
+bandit = "^1.7.4"
+black = "^22.1.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

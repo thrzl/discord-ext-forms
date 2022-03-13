@@ -50,11 +50,7 @@ async def emoji(ctx: commands.Context, message: discord.Message):
         emoji = await commands.EmojiConverter().convert(ctx,message.content)
         return emoji
     except:
-        try:
-            assert message.content in __UNICODE_EMOJI__['en']
-        except CommandError:
-            return False
-        return message.content
+        return message.content if message.content in __UNICODE_EMOJI__['en'] else False
 
 async def file(ctx: commands.Context, message: discord.Message):
     try:

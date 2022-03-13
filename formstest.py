@@ -1,10 +1,21 @@
 from discord.ext.forms.form import Validator
 import discord.ext.forms as forms
-from discord.ext import commands
+from discord import Client, app_commands, Object, Interaction
 import discord
-bot = commands.Bot(command_prefix="!")
+client = Client()
 
-@bot.command()
+slash = app_commands.CommandTree(client)
+
+TEST_GUILD = Object(758827653842075709)
+
+@client.event
+async def on_ready():
+    print("ready")
+    await slash.sync(guild=TEST_GUILD)
+
+
+
+@slash.command(guild=TEST_GUILD, description="test")
 async def testform(ctx):
 
     async def to_int(ctx, msg: discord.Message):
@@ -14,37 +25,34 @@ async def testform(ctx):
             return False
 
     form = forms.Form(ctx, 'Title')
-    form.add_question('Give me an invite link!', 'invite', Validator('invite'))
-    form.add_question('Mention a Channel', 'channel', Validator('channel'))
-    form.add_question('Ping a User!', 'member', Validator('member'))
-    form.add_question('Give me a number!', 'number', to_int)
-    form.add_question('How are you?', 'feels')
-    form.edit_and_delete(True)
-    form.set_timeout(60)
-    await form.set_color("#7289DA")
+    form.add_question(question='Give me an invite link!', validator=Validator('invite'))
+    form.add_question(question='Mention a Channel', validator=Validator('channel'))
+    form.add_question(question='Ping a User!', validator=Validator('member'))
+    form.add_question(question='Give me a number!', validator=to_int)
+    form.add_question(question='How are you?')
     
     result = await form.start()
     
-    embed=discord.Embed(title="Data", description=f"Invite: {result.invite.guild}\nChannel: {result.channel.mention}\nMember: {result.member.mention}\nNumber: `{result.number}`\n Feels: `{result.feels}`")
+    embed=discord.Embed(title="Data", description=f"Here's the data you gave me! \n {chr(10).join([i.answer for i in result])}")
     await ctx.send(embed=embed)
 
-@bot.command()
+@slash.command()
 async def reactionform(ctx):
     embed=discord.Embed(title="Reaction Menu Test", description="Delete 20 messages?")
     message = await ctx.send(embed=embed)
-    form = forms.ReactionForm(message, bot, ctx.author)
+    form = forms.ReactionForm(message, client, ctx.author)
     form.add_reaction("✅", True)
     form.add_reaction("❌", False)
     choice = await form.start()
     if choice:
         await ctx.channel.purge(limit=20)
 
-@bot.command()
-async def reactionmenu(ctx):
+@slash.command()
+async def reactionmenu(ctx: Interaction):
     embed1=discord.Embed(description="This is embed1")
     embed2=discord.Embed(description="This is embed2")
     embed3=discord.Embed(description="This is embed3")
     rmenu = forms.ReactionMenu(ctx, [embed1, embed2, embed3])
     await rmenu.start()
 
-bot.run('NzkxMjkwMDg1MzU3MTI1NjMz.X-NAUQ.9Wop9mq_7AsgXOcnkld4tAiKDiU')
+client.run()

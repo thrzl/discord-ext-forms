@@ -20,11 +20,11 @@ sys.path.insert(0, os.path.abspath("../../discord/ext/forms"))
 # -- Project information -----------------------------------------------------
 
 project = "forms"
-copyright = "2021, Mikey"
-author = "Mikey"
+copyright = "2022, thrizzle"
+author = "thrizzle"
 
 # The full version, including alpha/beta/rc tags
-release = "3.0.1"
+release = "3.0.3"
 
 
 # -- General configuration ---------------------------------------------------

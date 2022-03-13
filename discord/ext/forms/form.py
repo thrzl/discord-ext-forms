@@ -1,199 +1,147 @@
-import discord
-import discord.ext.commands as commands
-import re
-import aiohttp
-from typing import List
+from discord import (
+    Interaction,
+    Invite,
+    TextChannel,
+    Member,
+    CategoryChannel,
+    Role,
+    Emoji,
+    File,
+    TextStyle,
+)
+from discord.ui import Modal, TextInput
+from typing import List, Union
 import typing
 from .helpers import funcs
-from emoji import UNICODE_EMOJI
 
-def Validator(qtype: str):
+
+def Validator(name: str):
     try:
-        return funcs[qtype]
+        return funcs[name]
     except KeyError:
-        raise InvalidFormType(f'Type {qtype} is invalid!')
+        raise InvalidFormType(f"Type {name} is invalid!")
 
-class FormResponse:
-    def __init__(self, data: list) -> None:
-        for d in data:
-            if isinstance(data[data.index(d)], dict):
-                setattr(self, d['key'], data[data.index(d)]['res'])
-            else:
-                setattr(self, d['key'], data[d])
+
+class Question:
+    """a question to be asked in a form
+
+    parameters
+    ----------
+    name : str
+        the name of the question
+    validator : typing.Union[typing.Callable, str], optional
+        the validator of the question, by default None
+    answer : Union[Invite, TextChannel, Member, CategoryChannel, Role, Emoji, File], optional
+        the answer, shouldn't be set manually, by default None
+    placeholder : str, optional
+        the placeholder of the question, by default None
+    required : bool, optional
+        whether or not the question should be required, by default True
+    min_length : int, optional
+        the minimum length of the question, by default None
+    max_length : int, optional
+        the maximum length of the question, by default None
+    style : TextStyle, optional
+        whether the question should have one line (short), or multiple (paragraph), by default TextStyle.short
+    """
+
+    def __init__(
+        self,
+        name: str,
+        validator: typing.Union[typing.Callable, str] = None,
+        answer: Union[
+            Invite, TextChannel, Member, CategoryChannel, Role, Emoji, File
+        ] = None,
+        placeholder: str = None,
+        required: bool = True,
+        min_length: int = None,
+        max_length: int = None,
+        style: TextStyle = TextStyle.short,
+    ):
+        self.name = name
+        self.validator = validator
+        self.answer = answer
+        self.placeholder = placeholder
+        self.required = required
+        self.style = style
+        self.min_length = min_length
+        self.max_length = max_length
+
+    def validate(self) -> bool:
+        return self.validator(self.answer)
+
 
 class Form:
-    """The basic form object.
+    """the basic form object.
 
     Parameters:
     -----------
 
-        ctx (discord.ext.commands.Context): The context of the form.
+        interaction (discord.Interaction): the interaction object of the form.
 
-        title (str): The title of the form.
+        title (str): the title of the form.
 
-        cleanup (bool): Whether to cleanup and delete the form after finishing or not.
+        cleanup (bool): whether to cleanup and delete the form after finishing or not.
     """
-    def __init__(self, ctx:commands.Context, title, cleanup=False):
-        self._ctx = ctx
-        self._bot = ctx.bot
-        self._questions = []
-        self.title = title
-        self.timeout = 120
-        self.editanddelete = False
-        self.color = 0x2F3136
-        self._incorrectmsg = None
-        self._retrymsg = "You have answered incorrectly."
-        self._tries = None
-        self.cancelkeywords = ['cancel', 'stop', 'quit']
-        self.cleanup = cleanup
 
-    def set_timeout(self, timeout:int) -> None:
-        """Sets the timeout for the form.
+    def __init__(self, interaction: Interaction, title: str):
+        self._interaction: Interaction = interaction
+        self._questions: List[Question] = []
+        self.title: str = title
 
-        Parameters
-        ----------
-
-            timeout (int): The timeout to be used.
-        """
-        self.timeout = timeout
-
-    def set_tries(self, tries:int) -> None:
-        """Set the amount of tries that are allowed during input validation. Defaults to 3.
-
-        Parameters
-        ----------
-        tries : int
-            The number of tries to set.
-        """
-        int(tries)
-        self._tries = tries
-
-    def enable_cancelkeywords(self, enabled: bool):
-        """Enables or disables the cancellation of the form.
-
-        Parameters
-        ----------
-        enabled : bool
-            Whether the form is enabled or disabled.
-        """
-        if enabled:
-            self.cancelkeywords = ['cancel', 'stop', 'quit']
-        else:
-            self.cancelkeywords = []
-
-    def add_cancelkeyword(self, word: str):
-        """Adds a word that will cancel the form.
-
-        Parameters
-        ----------
-        word : str
-            The word to listen for.
-        """
-        self.cancelkeywords.append(word.lower())
-        return True
-
-    def add_question(self, question, key:str=None, qtype: List[typing.Union[Validator, typing.Callable]] = []) -> List[dict]:
-        """Adds a question to the form.
-        The valid qtypes are:
+    def add_question(
+        self,
+        question: str,
+        placeholder: str = None,
+        required: bool = True,
+        min_length: int = None,
+        max_length: int = None,
+        style: TextStyle = TextStyle.short,
+        validator: typing.Union[Validator, typing.Callable] = None,
+    ) -> List[dict]:
+        """adds a question to the form.
+        the valid qtypes are:
         `invite`, `channel`, `user`, `member`, `role`, and `category`
 
         Parameters
         ----------
         question : str
-            The question as a string that should be added.
+            the question as a string that should be added.
 
         key : str
-            What the attribute containing the answer should be called.
+            what the attribute containing the answer should be called.
 
-        qtype : List[Validator, function], optional
-            The input validation to be used, by default None
+        validator : List[Validator, function], optional
+            the input validation to be used, by default None
 
         Returns
         -------
         List[dict]
-            A list of all of the questions, stored as dictionaries.
+            a list of all of the questions, stored as dictionaries.
 
         Raises
         ------
         InvalidFormType
 
-            Is raised when the input validation type is invalid.
+            is raised when the input validation type is invalid.
 
         """
-        if not isinstance(qtype, list):
-            qtype = [qtype]
-        if not key:
-            key = question
+        self._questions.append(
+            Question(
+                name=question,
+                validator=validator,
+                answer=None,
+                placeholder=placeholder,
+                required=required,
+                min_length=min_length,
+                max_length=max_length,
+                style=style,
+            )
+        )
 
-        dictionary = {'res':None, 'question':question}
-        
-        dictionary['type'] = qtype
-        dictionary['key'] = key
-        
-        self._tries = 3
-
-        self._questions.append(dictionary)
-        
-        self.set_incorrect_message('You answered incorrectly too many times. Please try again.')
-        self.set_retry_message(f'Please try again.')
-        
         return self._questions
 
-    def edit_and_delete(self, choice:bool=None) -> bool:
-        """Toggles the edit and delete feature.
-
-        Parameters
-        ----------
-        choice : bool, optional
-            Whether you want the bot to edit the prompt and delete the input or not. If none, it toggles. The default for edit and delete is off. Default input is `None`
-
-        Returns
-        -------
-        bool
-            The state of edit and delete (after this is completed)
-        """
-        if choice == None:
-            if self.editanddelete == True:
-                self.editanddelete = False
-                return False
-            else:
-                self.editanddelete = True
-                return True
-        else:
-            self.editanddelete = choice
-
-    def set_retry_message(self, message:str):
-        """Sets the message to send if input validation fails.
-
-        Parameters
-        ----------
-        message : str
-            The message to be set.
-        """
-        self._retrymsg = message
-
-    def set_incorrect_message(self, message:str):
-        """Sets the message to send if input validation fails and there are no more tries left..
-
-        Parameters
-        ----------
-        message : str
-            The message to be set.
-        """
-        self._incorrectmsg = message
-
-    async def set_color(self, color:str) -> None:
-        """Sets the color of the form embeds."""
-        match = re.match(r'(0x|#)(\d|(f|F|d|D|a|A|c|C|E|e|b|B)){6}', str(color))
-        if not match:
-            raise InvalidColor(f"{color} is invalid. Be sure to use colors such as '0xffffff'")
-        if color.startswith("#"):
-            newclr = color.replace("#", "")
-            color = f"0x{newclr}"
-        color = await commands.ColourConverter().convert(self._ctx, color)
-        self.color = color
-
-    async def start(self, channel=None) -> dict:
+    async def start(self) -> List[Question]:
         """Starts the form in the current channel.
 
         Parameters
@@ -209,310 +157,43 @@ class Form:
         FormResponse
             An object containing all of your keys as attributes.
         """
-        elist = []
 
-        if not channel:
-            channel = self._ctx.channel
-
-        qlist = []
-        for n, q in enumerate(self._questions):
-            embed=discord.Embed(description=q['question'], color=self.color)
-
-            embed.set_author(name=f"{self.title}: {n+1}/{len(self._questions)}", icon_url=self._bot.user.avatar_url)
-
-            if self.color:
-                embed.color=self.color
-
-            elist.append(embed)
-
-
-        prompt = None
-
-        for embed in elist:
-            ot = self._tries
-            if self.editanddelete:
-                if not prompt:
-                    prompt = await channel.send(embed=embed)
-                else:
-                    await prompt.edit(embed=embed)
-
+        modal = Modal(title=self.title)
+        for i in self._questions:
+            modal.add_item(
+                TextInput(
+                    label=i.name,
+                    placeholder=i.placeholder,
+                    required=i.required,
+                    min_length=i.min_length,
+                    max_length=i.max_length,
+                )
+            )
+        answers: List[TextInput] = None
+        incorrect = True
+        while incorrect:
+            await self._interaction.response.send_modal(modal)
+            answers = modal.children
+            for i, q in enumerate(self._questions):
+                q.answer = answers[i].value
+            if all(q.validate() for q in self._questions):
+                incorrect = False
             else:
-                prompt = await channel.send(embed=embed)
-
-            def check(m):
-                return m.channel == prompt.channel and m.author == self._ctx.author
-            question = None
-            for x in self._questions:
-                if self._questions[self._questions.index(x)]['question'].lower() == embed.description.lower():
-                    question = x
-                    nx = self._questions[self._questions.index(x)]
-            while True:
-                msg = await self._bot.wait_for('message', check=check, timeout=self.timeout)
-                ans = msg.content
-                if ans.lower() in self.cancelkeywords:
-                    if self.cleanup:
-                        try:
-                            await msg.delete()
-                        except Exception:
-                            pass
-                        await prompt.delete()
-                    return None
-                if self.editanddelete:
-                    await msg.delete()
-                key = question
-                
-                if self._questions[self._questions.index(question)].get('type', None):
-                    qinfo = self._questions[self._questions.index(question)]
-                    
-                    for func in qinfo['type']:
-                        correct = False
-                        
-                        
-                        result = await func(self._ctx, msg)
-                        
-                        if bool(result) is False:
-                            
-                            ot -= 1
-                            if ot <= 0:
-                                await channel.send(self._incorrectmsg)
-                                return None
-                            await channel.send(self._retrymsg + f" You have `{ot}` remaining.", delete_after=3)
-                        else:
-                            
-                            nx = qinfo
-                            nx['res'] = result
-                            for n, i in enumerate(self._questions):
-                                if (i) == (key):
-                                    self._questions[n] = nx
-                            correct=True
-                    if len(qinfo['type']) == 0:
-                        nx = qinfo
-                        nx['res'] = ans
-                        for n, i in enumerate(self._questions):
-                            if (i) == (key):
-                                self._questions[n] = nx
-                else:
-                    nx['res'] = msg.content
-                    self._questions[self._questions.index(question)] = nx
-                    break
-                if correct:
-                    break
-        # for i in self._questions.keys():
-        #     self._questions[i] = self._questions[i]
-        if self.cleanup:
-            try:
-                await msg.delete()
-            except Exception:
-                pass
-            await prompt.delete()
-        return FormResponse(self._questions)
+                await self._interaction.response.send_message(
+                    "One or more of your answers were invalid!"
+                )
+        return self._questions
 
 
 class MissingRequiredArgument(Exception):
     pass
 
-class NaiveForm(Form):
-    """The basic form object with naive validation. Should be used in scenarios where there is no context, such as reactions.
-
-    Parameters:
-    -----------
-
-        title (str): The title of the form.
-
-        channel (discord.TextChannel): The channel that the form should be sent to.
-
-        bot (discord.ext.commands.Bot): The bot that will be running the form.
-    """
-    def __init__(self,  title, channel: typing.Union[discord.abc.PrivateChannel, discord.abc.GuildChannel], bot: commands.Bot, author: typing.Union[discord.Member, discord.User], cleanup=False):
-        self._channel = channel
-        self._bot = bot
-        self._questions = {}
-        self.title = title
-        self._author = author
-        self.timeout = 120
-        self.editanddelete = False
-        self.color = 0x2F3136
-        self._incorrectmsg = None
-        self._retrymsg = "You have answered incorrectly"
-        self._tries = None
-        self.cancelkeywords = ['cancel', 'stop', 'quit']
-        self.cleanup=cleanup
-
-    def add_question(self, question, key:str=None, qtype=None) -> List[dict]:
-        """Adds a question to the form.
-        The valid qtypes are:
-        `invite`, `channel`, `member`, `role`, and `emoji`
-
-        Parameters
-        ----------
-        question : str
-            The question as a string that should be added.
-
-        key : str
-            What the attribute containing the answer should be called.
-
-        qtype : str, optional
-            The input validation to be used, by default None
-
-        Returns
-        -------
-        List[dict]
-            A list of all of the questions, stored as dictionaries.
-
-        Raises
-        ------
-        InvalidFormType
-
-            Is raised when the input validation type is invalid.
-
-        """
-        if not key:
-            key = question
-        valid_qtypes = ['invite', 'channel', 'member', 'role', 'category', 'emoji', 'file']
-        dictionary = {'res':None, 'question':question}
-        if qtype:
-            dictionary['type'] = None
-            if qtype.lower() not in valid_qtypes:
-                raise InvalidFormType(f"Type '{qtype}' is invalid!")
-            dictionary['type'] = qtype
-            self._tries = 3
-
-        self._questions[key] = dictionary
-        self.set_incorrect_message('You answered incorrectly too many times. Please try again.')
-        self.set_retry_message(f'Please try again.')
-        return self._questions
-
-    async def __validate_input(self, qtype, message):
-        answer = message.content
-        if qtype.lower() == 'invite':
-            async with aiohttp.ClientSession() as session:
-                r = await session.get(f'https://discord.com/api/invites/{answer}')
-                return r.status == 200
-        elif qtype.lower() == 'channel':
-            return bool(re.match(r'<#\d{18}>', answer))
-        elif qtype.lower() == 'member':
-            return bool(re.match(r'<@!\d{18}>', answer))
-        elif qtype.lower() == 'role':
-            return bool(re.match(r'<@&\d{18}>', answer))
-        elif qtype.lower() == 'emoji':
-            return bool(re.match(r'<@&\d{18}>', answer)) or answer in UNICODE_EMOJI
-        elif qtype.lower() == "file":
-            try:
-                return message.attachments[0]
-            except IndexError:
-                return False
-        else:
-            raise InvalidFormType(f"Type '{qtype}' is invalid!")
-
-    async def set_color(self, color:str) -> None:
-        """Sets the color of the form embeds."""
-        if isinstance(color, discord.Color): self.color = color
-        else: raise InvalidColor("This color is invalid! It should be a `discord.Color` instance.")
-
-    async def start(self, channel=None) -> dict:
-        """Starts the form in the current channel.
-
-        Parameters
-        ----------
-        channel : discord.TextChannel, optional
-            The channel to open the form in. If none, it is gotten from the context object set during initialization.
-
-        cleanup : bool
-            Whether to cleanup and delete the form after finishing or not.
-
-        Returns
-        -------
-        FormResponse
-            An object containing all of your keys as attributes.
-        """
-        elist = []
-
-        if not channel:
-            channel = self._channel
-
-        for n, q in enumerate(self._questions.values()):
-            embed=discord.Embed(description=q['question'], color=self.color)
-            embed.set_author(name=f"{self.title}: {n+1}/{len(self._questions)}", icon_url=self._bot.user.avatar_url)
-            if self.color:
-                embed.color=self.color
-            elist.append(embed)
-
-        prompt = None
-        for embed in elist:
-            ot = self._tries
-            if self.editanddelete:
-                if not prompt:
-                    prompt = await channel.send(embed=embed)
-                else:
-                    await prompt.edit(embed=embed)
-
-            else:
-                prompt = await channel.send(embed=embed)
-
-            def check(m: discord.Message):
-                return m.channel == prompt.channel and m.author == self._author
-            question = None
-            for x in self._questions.keys():
-                if self._questions[x]['question'].lower() == embed.description.lower():
-                    question = x
-                    nx = self._questions[x]
-            while True:
-                msg = await self._bot.wait_for('message', check=check, timeout=self.timeout)
-                ans = msg.content
-                if ans.lower() in self.cancelkeywords:
-                    if self.cleanup:
-                        try:
-                            await msg.delete()
-                        except Exception:
-                            pass
-                        await prompt.delete()
-                    return None
-                if self.editanddelete:
-                    await msg.delete()
-                key = question
-                self._questions[question]['res'] = ans
-                if 'type' in self._questions[question].keys():
-                    qinfo = self._questions[question]
-                    
-                    for func in qinfo['type']:
-                        correct = False
-                        
-                        
-                        result = await func(self._channel, msg)
-                        
-                        if bool(result) is False:
-                            
-                            ot -= 1
-                            if ot <= 0:
-                                await channel.send(self._incorrectmsg)
-                                return None
-                            await channel.send(self._retrymsg + f" You have `{ot}` remaining.", delete_after=3)
-                        else:
-                            
-                            nx = qinfo
-                            nx['res'] = result
-                            self._questions[key] = nx
-                            correct=True
-                else:
-                    nx['res'] = ans
-                    self._questions[key] = nx
-                    break
-                if correct:
-                    break
-        for i in self._questions.keys():
-            self._questions[i] = self._questions[i]
-        if self.cleanup:
-            try:
-                await msg.delete()
-            except Exception:
-                pass
-            await prompt.delete()
-        return FormResponse(self._questions)
-
 
 class InvalidColor(Exception):
     pass
 
+
 class InvalidFormType(Exception):
     """The exception raised when a form type is invalid."""
+
     pass
