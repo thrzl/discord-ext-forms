@@ -1,4 +1,4 @@
-API Reference
+api reference
 =============
 
 forms.form module

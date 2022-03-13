@@ -1,8 +1,8 @@
-Quickstart Guide
+quickstart guide
 ================
-These examples are to help you with your development in discord.ext.forms! They are well commented and will help you out a lot! If you ever need more help, join the `Discord Server! <https://discord.gg/bNtj2nFnYA>`_
+these examples are to help you with your development in discord.ext.forms! they are well commented and will help you out a lot! if you ever need more help, join the `discord server! <https://discord.gg/bNtj2nFnYA>`_
 
-Making a Basic Text Form
+making a basic text form
 ========================
 
 ::
@@ -13,28 +13,28 @@ Making a Basic Text Form
 
     @bot.command()
     async def testform(ctx):
-        """Creates a basic form using discord.ext.forms!"""
-        form = forms.Form(ctx,'Title') # Initialize our form with the title "Title"
+        """creates a basic form using discord.ext.forms!"""
+        form = forms.Form(ctx,'Title') # initialize our form with the title "Title"
 
-        form.add_question('Give me an invite link!','invite','invite') # Add question "Give me an invite link" that should be called 'invite' and the type is an invite.
-        form.add_question('Mention a Channel','channel','channel') # Question: Mention a channel; Name: 'channel'; Type: Channel        form.add_question('Ping a User!','member','member')
-        form.add_question('Ping a User!','member','member') # Question: Ping a user; Name: 'member'; Type: member
+        form.add_question('Give me an invite link!','invite','invite') # add question "Give me an invite link" that should be called 'invite' and the type is an invite.
+        form.add_question('Mention a Channel','channel','channel') # question: Mention a channel; Name: 'channel'; Type: Channel        form.add_question('Ping a User!','member','member')
+        form.add_question('Ping a User!','member','member') # question: Ping a user; Name: 'member'; Type: member
 
-        form.edit_and_delete(True) # The form will now edit the existing embed and delete the response.
+        form.edit_and_delete(True) # the form will now edit the existing embed and delete the response.
 
-        form.set_timeout(60) # Set the timeout to 60s
-        await form.set_color("#7289DA") # Set the color of the form's embeds
+        form.set_timeout(60) # set the timeout to 60s
+        await form.set_color("#7289DA") # set the color of the form's embeds
 
-        result = await form.start() # Run the form!
+        result = await form.start() # run the form!
         """
-        The form returned a FormResponse object with the attributes 'invite', 'channel', and 'member'. They return a discord.Invite, discord.TextChannel, and discord.Member respectively.
+        the form returned a FormResponse object with the attributes 'invite', 'channel', and 'member'. they return a discord.Invite, discord.TextChannel, and discord.Member respectively.
         """
-        embed=discord.Embed(title="Data",description=f"Invite: {result.invite.guild}\nChannel: {result.channel.mention}\nMember: {result.member.mention}")
+        embed=discord.Embed(title="Data",description=f"invite: {result.invite.guild}\nchannel: {result.channel.mention}\nmember: {result.member.mention}")
         await ctx.send(embed=embed)
 
-This results in a form with 3 questions, as shown below (The output is not sent to the channel in the code above):
+this results in a form with 3 questions, as shown below (The output is not sent to the channel in the code above):
 
-Making a Basic Reaction Form
+making a basic reaction form
 ============================
 
 ::
@@ -50,7 +50,7 @@ Making a Basic Reaction Form
         if choice: # If choice is true:
             await ctx.channel.purge(limit=20) # delete 20 messages!
 
-Making a Basic Reaction Menu
+making a basic reaction menu
 ============================
 
 ::

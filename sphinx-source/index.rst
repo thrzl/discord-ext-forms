@@ -3,13 +3,13 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to the docs of discord.ext.forms!
+welcome to the docs of discord.ext.forms!
 =============================================
 
-Guide
+guide
 ^^^^^
 
-This module is meant to make creating forms and surveys in discord.py a whole lot easier. It allows you to use simply 5 lines to create a 3 question form!
+this module is meant to make creating forms and surveys in discord.py a whole lot easier. it allows you to use simply 5 lines to create a 3 question form!
 
 .. toctree::
    :maxdepth: 2
@@ -22,9 +22,9 @@ This module is meant to make creating forms and surveys in discord.py a whole lo
    :maxdepth: 3
    :caption: Reference
 
-   API
+   api
 
-Indices and tables
+indices and tables
 ==================
 
 * :ref:`genindex`
