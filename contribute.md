@@ -1,11 +1,11 @@
-# How to contribute
-### Step 1
+# how to contribute
+### step 1
 fork project
 
-### Step 2
-do codes
+### step 2
+do some codes
 
-### Step 3
-Pull request time!
+### step 3
+pull request time!
 
-**Working on your first Pull Request?** You can learn how from this *free* series [How to Contribute to an Open Source Project on GitHub](https://kcd.im/pull-request)
+**working on your first pull request?** you can learn how from this *free* series [how to contribute to an open source project on github](https://kcd.im/pull-request)

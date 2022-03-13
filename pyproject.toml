@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "discord-ext-forms"
+version = "3.0.3"
+description = "easy form and survey creation for discord.py"
+authors = ["thrizzle. <thrizzle@terabyteis.me>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+furo = "^2022.3.4"
+Sphinx = "^4.4.0"
+numpydoc = "^1.2"
+"discord.py" = "^1.7.3"
+emoji = "^1.7.0"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
