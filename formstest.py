@@ -1,7 +1,9 @@
+from discord.ext.forms.buttons import ButtonForm
 from discord.ext.forms.form import Validator
 import discord.ext.forms as forms
 from discord import Client, app_commands, Object, Interaction
 import discord
+
 client = Client()
 
 slash = app_commands.CommandTree(client)
@@ -36,16 +38,18 @@ async def testform(ctx):
     embed=discord.Embed(title="Data", description=f"Here's the data you gave me! \n {chr(10).join([i.answer for i in result])}")
     await ctx.send(embed=embed)
 
-@slash.command()
-async def reactionform(ctx):
+@slash.command(guild=TEST_GUILD, description="test button")
+async def reactionform(interaction: Interaction):
     embed=discord.Embed(title="Reaction Menu Test", description="Delete 20 messages?")
-    message = await ctx.send(embed=embed)
-    form = forms.ReactionForm(message, client, ctx.author)
-    form.add_reaction("✅", True)
-    form.add_reaction("❌", False)
-    choice = await form.start()
+    form = ButtonForm(embed=embed, interaction=interaction)
+    form.add_button(custom_id="confirm", emoji="✅", text="confirm", result=True, style=discord.ButtonStyle.green)
+    form.add_button(custom_id="deny", emoji="❌", text="confirm", result=False, style=discord.ButtonStyle.red)
+    choice, inter = await form.start()
+    print(choice)
     if choice:
-        await ctx.channel.purge(limit=20)
+        await interaction.channel.purge(limit=20)
+    else:
+        await inter.response.send_message(content="Action Cancelled.", embed=embed)
 
 @slash.command()
 async def reactionmenu(ctx: Interaction):

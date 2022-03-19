@@ -1,13 +1,12 @@
-from discord.ext import commands
+from discord import ButtonStyle, Interaction
 import discord
-from typing import Any, List, Union
-from emoji import UNICODE_EMOJI
-import typing
+from discord.ext import commands
+from discord.ui import View, Button
+from typing import Any, Dict, List, Union
 import asyncio
-import re
 
 
-class ReactionForm:  # I don't like subclassing shut up
+class ButtonForm:
     """
     The Reaction input object.
 
@@ -15,28 +14,35 @@ class ReactionForm:  # I don't like subclassing shut up
 
     Parameters
     ----------
-    message : discord.Message
-        The message of the reaction form object.
+    message : str
+        The message of the reaction form object, by default none
 
-    bot : typing.Union[discord.Client, discord.ext.commands.Bot]
-        The bot being used for the form.
+    embed : typing.Union[discord.Client, discord.ext.commands.Bot]
+        The bot being used for the form, by default none
 
     user : typing.Union[discord.Member, discord.User]
         The member or user who should be able to use the form. If none, the form will be open to anyone.
     """
 
     def __init__(
-        self, 
-        message: discord.Message, 
-        bot: Union[discord.Client, commands.Bot], 
-        user: Union[discord.Member, discord.User] = None, 
+        self,
+        interaction: Interaction,
+        embed: discord.Embed = None,
+        message: str = None,
+        user: Union[discord.Member, discord.User] = None,
     ):
-        self._msg = message
-        self._bot = bot
-        self._reactions = {}
-        self.timeout = 120
-        self.persist = False
-        self._user = user
+        if not (embed or message):
+            raise ValueError("You must provide either an embed or a message.")
+        self._msg: discord.Message = message
+        self._interaction: Interaction = interaction
+        self._buttons: List[Button] = []
+        self._results: Dict[str, Any] = {}
+        self.timeout: int = 120
+        self.persist: bool = False
+        self._user: Union[discord.Member, discord.User] = user
+        self.embed: discord.Embed = embed
+        self.value = None
+        self._new_interaction: Interaction = None
 
     def set_timeout(self, timeout: int) -> None:
         """Set the timeout for the form. Defaults to 120 seconds.
@@ -48,7 +54,9 @@ class ReactionForm:  # I don't like subclassing shut up
         """
         self.timeout = timeout
 
-    def add_reaction(self, reaction: str, result) -> dict:
+    def add_button(
+        self, custom_id: str, emoji: str, text: str, result: Any, style: ButtonStyle
+    ) -> dict:
         """Adds a question to the form.
 
         Returns the full list of questions the form has, including the newly added one. The questions are held
@@ -57,12 +65,14 @@ class ReactionForm:  # I don't like subclassing shut up
 
         Parameters
         ----------
-        reaction : str
+        button : str
             The emoji to add.
         """
 
-        self._reactions[str(reaction)] = result
-        return self._reactions
+        self._buttons.append(
+            Button(label=text, emoji=emoji, style=style, custom_id=custom_id)
+        )
+        self._results[custom_id] = result
 
     async def start(self) -> Any:
         """Starts the reaction form on the given message.
@@ -72,41 +82,37 @@ class ReactionForm:  # I don't like subclassing shut up
         Any
             Whatever the given reaction was set to return.
         """
-        message = self._msg
-        rl = []
-        for i in self._reactions.keys():
-            await message.add_reaction(str(i))
-            rl.append(str(i))
-
-        await asyncio.sleep(0.5)
-        for i in message.reactions:
-            rl.append(str(i.emoji))
-
-        def check(r):
-            if self._user is not None:
-                return (
-                    r.message_id == message.id
-                    and str(r.emoji) in rl
-                    and r.user_id == self._user.id
-                )
-            else:
-                return r.message_id == message.id and str(r.emoji) in rl
-
-        try:
-            r = await self._bot.wait_for(
-                "raw_reaction_add", check=check, timeout=self.timeout
-            )
-        except:
-            return await message.edit("Timeout!")
-        return self._reactions[str(r.emoji)]
+        print(self._results)
+        view = View(timeout=self.timeout)
+        for button in self._buttons:
+            def callback_func(interaction: Interaction):
+                self.value = self._results[button.custom_id]
+                self._new_interaction = interaction
+                view.stop()
+            button.callback = callback_func
+            view.add_item(button)
+        
+        await self._interaction.response.send_message(
+            self._msg, embed=self.embed, view=view
+        )
+        await view.wait()
+        view.clear_items()
+        for button in self._buttons:
+            button.disabled = True
+            view.add_item(button)
+        await self._new_interaction.response.send_message(
+            content=self._msg, embed=self.embed, view=view
+        )
+        print(self.value)
+        return self.value, self._interaction
 
 
-class ReactConfirm(ReactionForm):
+class Confirm(ButtonForm):
     def __init__(
-        self, 
-        message: discord.Message, 
-        bot: Union[discord.Client, commands.Bot], 
-        user: Union[discord.Member, discord.User], 
+        self,
+        message: discord.Message,
+        bot: Union[discord.Client, commands.Bot],
+        user: Union[discord.Member, discord.User],
     ):
         super().__init__(message, bot, user=user)
         self._reactions = {"✅": True, "❌": False}
@@ -229,13 +235,13 @@ class ReactionMenu(object):
 
 
 class NeoPaginator(object):
-    def __init__(self, limit_per_page:int, entries:List):
+    def __init__(self, limit_per_page: int, entries: List):
         self._limit = limit_per_page
         self._entries = entries
         self.pages = []
         page = []
         for i in entries:
-            if (entries.index(i)+1) % limit_per_page == 0:
+            if (entries.index(i) + 1) % limit_per_page == 0:
                 self.pages.append(page)
                 page = []
             else:

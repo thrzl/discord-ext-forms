@@ -9,6 +9,6 @@ an extension module to provide a user input system for discord.py
 """
 
 from .form import Form, InvalidFormType
-from .reactions import ReactionForm, ReactionMenu, InvalidColor, ReactConfirm
+from .buttons import ButtonForm, ReactionMenu, InvalidColor, Confirm
 from .helpers import funcs
-__all__ = ['form', 'reactions']
+__all__ = ['form', 'buttons']
