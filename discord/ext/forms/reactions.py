@@ -97,7 +97,7 @@ class ReactionForm:  # I don't like subclassing shut up
                 "raw_reaction_add", check=check, timeout=self.timeout
             )
         except:
-            return await message.edit("Timeout!")
+            return await message.edit(content="Timeout!")
         return self._reactions[str(r.emoji)]
 
 
@@ -208,7 +208,7 @@ class ReactionMenu(object):
                     "raw_reaction_add", check=check, timeout=self.timeout
                 )
             except asyncio.TimeoutError:
-                return await msg.edit("Timeout!")
+                return await msg.edit(content="Timeout!")
             if str(r.emoji) in emojis:
                 if str(r.emoji) == emojis[0]:
                     if current != 0:
