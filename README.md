@@ -19,7 +19,8 @@ bot = commands.Bot(command_prefix="!")
 
 @bot.command()
 async def testform(ctx):
-    form = Form(ctx,'Title')
+    channel, user = ctx.channel, ctx.author
+    form = Form(ctx,'Title', channel=channel, client=user, bot=bot)
     form.add_question('Question 1','first')
     form.add_question('Question 2','second')
     form.add_question('Question 3','third')
