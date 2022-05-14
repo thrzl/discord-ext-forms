@@ -33,9 +33,11 @@ class Form:
 
         cleanup (bool): Whether to cleanup and delete the form after finishing or not.
     """
-    def __init__(self, ctx:commands.Context, title, cleanup=False):
+    def __init__(self, ctx:commands.Context, title, bot=None, cleanup=False, client=None, channel=None):
         self._ctx = ctx
-        self._bot = ctx.bot
+        self._bot = bot
+        self._channel = channel
+        self._client = client 
         self._questions = []
         self.title = title
         self.timeout = 120
@@ -212,7 +214,7 @@ class Form:
         elist = []
 
         if not channel:
-            channel = self._ctx.channel
+            channel = self._channel
 
         qlist = []
         for n, q in enumerate(self._questions):
@@ -240,7 +242,7 @@ class Form:
                 prompt = await channel.send(embed=embed)
 
             def check(m):
-                return m.channel == prompt.channel and m.author == self._ctx.author
+                return m.channel == prompt.channel and m.author == self._client
             question = None
             for x in self._questions:
                 if self._questions[self._questions.index(x)]['question'].lower() == embed.description.lower():
